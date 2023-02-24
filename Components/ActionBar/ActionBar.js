@@ -8,38 +8,64 @@ import {
   ViewBase,
 } from "react-native";
 
-export const ActionBar = ({ title, backButtonLink, closeButtonLink }) => {
+export const ActionBar = ({
+  title,
+  backButtonLink,
+  addButtonLink,
+  closeButtonLink,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Pressable onPress={backButtonLink} style={styles.backButtonLink}>
-          <Image
-            source={require("../../assets/icons/backButtonIcon.png")}
-            style={styles.backButtonImage}
-          />
-        </Pressable>
+        {backButtonLink && (
+          <Pressable onPress={backButtonLink} style={styles.backButtonLink}>
+            <Image
+              source={require("../../assets/icons/backButtonIcon.png")}
+              style={styles.backButtonImage}
+            />
+          </Pressable>
+        )}
+        {addButtonLink && (
+          <Pressable onPress={addButtonLink} style={styles.addButtonLink}>
+            <Image
+              source={require("../../assets/icons/plusButtonIcon.png")}
+              style={styles.addButtonImage}
+            />
+          </Pressable>
+        )}
         <Text style={styles.title}>{title}</Text>
       </View>
-      <Pressable onPress={closeButtonLink} style={styles.closeButtonLink}>
-        <Image
-          source={require("../../assets/icons/closeButtonIcon.png")}
-          style={styles.closeButtonImage}
-        />
-      </Pressable>
+      {closeButtonLink && (
+        <Pressable onPress={closeButtonLink} style={styles.closeButtonLink}>
+          <Image
+            source={require("../../assets/icons/closeButtonIcon.png")}
+            style={styles.closeButtonImage}
+          />
+        </Pressable>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     flexDirection: "row",
-    padding: 10,
+    height: 50,
     backgroundColor: "skyblue",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   innerContainer: {
     flexDirection: "row",
+  },
+  addButtonLink: {
+    paddingTop: -10,
+    paddingLeft: 10,
+  },
+  addButtonImage: {
+    height: 27,
+    width: 30,
+    resizeMode: "contain",
   },
   backButtonImage: {
     height: 30,
@@ -55,7 +81,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   title: {
-    paddingLeft: 30,
+    paddingLeft: 20,
     fontFamily: "Roboto",
     fontSize: 18,
     fontWeight: "500",

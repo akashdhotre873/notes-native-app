@@ -1,12 +1,12 @@
 import { StyleSheet, View } from "react-native";
-import { ActionBar } from "../../Components/ActionBar/ActionBar";
+import { ActionBar } from "../../components/ActionBar";
 
 export const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <ActionBar
-        backButtonLink={() => console.log("back")}
-        title="Home Screen"
+        addButtonLink={() => console.log("back")}
+        title="All Notes"
         closeButtonLink={() => console.log("close")}
       />
     </View>
