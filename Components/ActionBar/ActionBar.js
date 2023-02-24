@@ -1,12 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  ViewBase,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 export const ActionBar = ({
   title,
@@ -63,9 +55,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   addButtonImage: {
-    height: 27,
+    height: 30,
     width: 30,
     resizeMode: "contain",
+  },
+  backButtonLink: {
+    paddingTop: -10,
+    paddingLeft: 10,
   },
   backButtonImage: {
     height: 30,
