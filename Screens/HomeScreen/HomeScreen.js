@@ -1,17 +1,34 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ActionBar } from "../../components/ActionBar";
 import { useNavigation } from "@react-navigation/native";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotes } from "../../dux/notes";
+import { NoteListCard } from "../../components/NoteListCard";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const notes = useSelector(getNotes);
+  console.log("notes", notes);
+
   return (
     <View style={styles.container}>
       <ActionBar
-        addButtonLink={() => navigation.navigate(NOTE_EDITOR_SCREEN_PATH, {})}
+        leftIconSource={require("../../assets/icons/plusButtonIcon.png")}
+        leftIconLink={() => navigation.navigate(NOTE_EDITOR_SCREEN_PATH, {})}
         title="All Notes"
-        closeButtonLink={() => console.log("close")}
       />
+      <ScrollView>
+        {Object.values(notes).map(({ name, content }, index) => (
+          <NoteListCard
+            name={name}
+            content={content}
+            key={name}
+            index={index}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 };
