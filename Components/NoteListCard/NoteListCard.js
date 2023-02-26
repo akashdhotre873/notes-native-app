@@ -13,8 +13,11 @@ export const NoteListCard = (note) => {
 
   const openNote = (password) => {
     const plainText = getPlainText(content, password);
-    note.content = plainText;
-    navigation.navigate(NOTE_EDITOR_SCREEN_PATH, note);
+    const newNote = { ...note };
+    console.log("palintext", plainText, note);
+    newNote.content = plainText;
+    console.log("reherh", note);
+    navigation.navigate(NOTE_EDITOR_SCREEN_PATH, newNote);
   };
 
   const onPress = () => {

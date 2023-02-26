@@ -1,9 +1,10 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { hidePrompt } from "../../dux/prompt";
 
-export const CreatePassword = ({ onAccept }) => {
+export const CreatePassword = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();
   const [enteredPassword, setEnteredPassword] = useState("");
 
@@ -13,6 +14,7 @@ export const CreatePassword = ({ onAccept }) => {
 
   const onConfirm = () => {
     onAccept(enteredPassword);
+    closeHandler();
   };
 
   return (
@@ -37,7 +39,7 @@ export const CreatePassword = ({ onAccept }) => {
         <Button
           mode="text"
           onPress={onConfirm}
-          disabled={enteredPassword.length > 0}
+          disabled={enteredPassword.length < 1}
         >
           Confirm
         </Button>

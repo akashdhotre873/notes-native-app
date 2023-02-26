@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { errorMessages, promptCategoryType } from "../../dux/constants";
 import { hidePrompt, showPrompt } from "../../dux/prompt";
 
-export const ConfirmPassword = ({ onAccept, password }) => {
+export const ConfirmPassword = ({ data: { onAccept, password } }) => {
   const dispatch = useDispatch();
   const [enteredPassword, setEnteredPassword] = useState("");
 

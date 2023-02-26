@@ -7,4 +7,8 @@ export default configureStore({
     notes: notesReducer,
     prompt: promptReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

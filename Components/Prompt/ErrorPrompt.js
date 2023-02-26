@@ -3,7 +3,7 @@ import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { hidePrompt } from "../../dux/prompt";
 
-export const ErrorPassword = ({ errorMessage }) => {
+export const ErrorPrompt = ({ data: { errorMessage } }) => {
   const dispatch = useDispatch();
 
   const closeHandler = () => {

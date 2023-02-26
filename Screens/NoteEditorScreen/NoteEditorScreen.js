@@ -86,7 +86,7 @@ export const NoteEditorScreen = () => {
       />
       <AddPasswordArea
         saveNote={saveNote}
-        isDisabled={contentIsSaved}
+        isDisabled={false}
         passwordProtected={passwordProtected}
         setpasswordProtected={setpasswordProtected}
         password={password}
