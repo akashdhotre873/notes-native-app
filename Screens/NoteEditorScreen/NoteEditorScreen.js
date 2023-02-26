@@ -24,7 +24,7 @@ export const NoteEditorScreen = () => {
 
   const [title, setTitle] = useState(header);
   const [content, setContent] = useState(originalContent);
-  const [passwordProtected, setpasswordProtected] = useState(hasPassword);
+  const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
 
   const saveNote = ({ hasPassword, password }) => {
@@ -88,7 +88,7 @@ export const NoteEditorScreen = () => {
         saveNote={saveNote}
         isDisabled={false}
         passwordProtected={passwordProtected}
-        setpasswordProtected={setpasswordProtected}
+        setPasswordProtected={setPasswordProtected}
         password={password}
       />
       <TextInput

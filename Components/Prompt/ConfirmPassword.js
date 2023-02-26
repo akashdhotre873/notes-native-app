@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { Button, Modal } from "react-native-paper";
+import { StyleSheet, Text, View } from "react-native";
+import { Button, Modal, TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { errorMessages, promptCategoryType } from "../../dux/constants";
 import { hidePrompt, showPrompt } from "../../dux/prompt";
@@ -35,20 +35,25 @@ export const ConfirmPassword = ({ data: { onAccept, password } }) => {
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text>Enter Password</Text>
+        <Text style={styles.enterPasswordText}>Enter Password</Text>
 
         <TextInput
           value={enteredPassword}
           onChangeText={setEnteredPassword}
           textContentType="password"
+          placeholder="Enter password"
+          style={styles.passwordArea}
+          autoFocus
         />
 
-        <Button mode="text" onPress={closeHandler}>
-          Cancel
-        </Button>
-        <Button mode="text" onPress={onConfirm}>
-          Confirm
-        </Button>
+        <View style={styles.buttonsContainer}>
+          <Button mode="text" onPress={onConfirm}>
+            Confirm
+          </Button>
+          <Button mode="text" onPress={closeHandler}>
+            Cancel
+          </Button>
+        </View>
       </View>
     </Modal>
   );
@@ -56,11 +61,30 @@ export const ConfirmPassword = ({ data: { onAccept, password } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "ffffff",
+    backgroundColor: "#ffffff",
     top: "-10%",
     width: "80%",
     alignSelf: "center",
     elevation: 10,
     borderRadius: 4,
+  },
+  enterPasswordText: {
+    paddingTop: 25,
+    paddingLeft: 25,
+    fontSize: 18,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    fontWeight: "500",
+  },
+  passwordArea: {
+    backgroundColor: "#ffffff",
+    marginHorizontal: 20,
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  buttonsContainer: {
+    flexDirection: "row-reverse",
+    marginVertical: 15,
+    marginLeft: 20,
   },
 });

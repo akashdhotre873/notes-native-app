@@ -1,19 +1,17 @@
-import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { promptCategoryType } from "../../dux/constants";
-import { updateNote } from "../../dux/notes";
 import { showPrompt } from "../../dux/prompt";
 
 export const AddPasswordArea = ({
   saveNote,
   isDisabled,
   passwordProtected,
+  setPasswordProtected,
   password,
 }) => {
   const dispatch = useDispatch();
-  const [isSwitchOn, setIsSwitchOn] = useState(passwordProtected);
 
   const removePassword = (password) => {
     saveNote({ hasPassword: false, password: password });
@@ -24,6 +22,7 @@ export const AddPasswordArea = ({
   };
 
   const onToggleSwitch = (switchOn) => {
+    console.log(passwordProtected);
     if (passwordProtected) {
       dispatch(
         showPrompt({
@@ -31,7 +30,7 @@ export const AddPasswordArea = ({
           data: {
             onAccept: (param) => {
               removePassword(param);
-              setIsSwitchOn(switchOn);
+              setPasswordProtected(switchOn);
             },
             password,
           },
@@ -44,7 +43,7 @@ export const AddPasswordArea = ({
           data: {
             onAccept: (param) => {
               addPassword(param);
-              setIsSwitchOn(switchOn);
+              setPasswordProtected(switchOn);
             },
           },
         })
@@ -56,7 +55,7 @@ export const AddPasswordArea = ({
     <View style={styles.container}>
       <Text style={styles.text}>Password Protected : </Text>
       <Switch
-        value={isSwitchOn}
+        value={passwordProtected}
         onValueChange={onToggleSwitch}
         disabled={isDisabled}
       />

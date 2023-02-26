@@ -1,5 +1,4 @@
 import { setItemToAsyncStorage } from "./asyncStorageHelper";
-import { getCipherText } from "./cryptographyHelper";
 
 export const updateNoteHelper = ({
   notes,
@@ -35,8 +34,5 @@ export const updateNoteInAsyncStorage = ({
     passwordProtected,
     password,
   });
-  if (passwordProtected) {
-    newNotes[currentNoteName].content = getCipherText(content, password);
-  }
   setItemToAsyncStorage("notes", JSON.stringify(newNotes));
 };

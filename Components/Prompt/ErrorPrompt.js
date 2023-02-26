@@ -18,11 +18,11 @@ export const ErrorPrompt = ({ data: { errorMessage } }) => {
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text>Oops</Text>
+        <Text style={styles.oopsMessage}>Oops</Text>
 
-        <Text>{errorMessage}</Text>
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
 
-        <Button mode="text" onPress={closeHandler}>
+        <Button mode="text" onPress={closeHandler} style={styles.button}>
           Okay
         </Button>
       </View>
@@ -32,11 +32,33 @@ export const ErrorPrompt = ({ data: { errorMessage } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "ffffff",
+    backgroundColor: "#ffffff",
     top: "-10%",
     width: "80%",
     alignSelf: "center",
     elevation: 10,
     borderRadius: 4,
+  },
+  oopsMessage: {
+    paddingTop: 25,
+    paddingLeft: 25,
+    fontSize: 18,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    fontWeight: "500",
+    color: "red",
+  },
+  errorMessage: {
+    backgroundColor: "#ffffff",
+    marginHorizontal: 25,
+    marginBottom: 10,
+    marginTop: 10,
+    fontSize: 14,
+    letterSpacing: 0.2,
+  },
+  button: {
+    marginRight: 15,
+    marginBottom: 15,
+    alignSelf: "flex-end",
   },
 });
