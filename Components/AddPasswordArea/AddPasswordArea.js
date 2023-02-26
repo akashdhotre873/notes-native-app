@@ -22,7 +22,6 @@ export const AddPasswordArea = ({
   };
 
   const onToggleSwitch = (switchOn) => {
-    console.log(passwordProtected);
     if (passwordProtected) {
       dispatch(
         showPrompt({

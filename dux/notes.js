@@ -28,7 +28,6 @@ export const updateNote = ({
 const initialState = {};
 
 const notesReducer = (state = initialState, action) => {
-  console.log(action);
   if (action.type === SET_NOTES) {
     return action.payload;
   }
