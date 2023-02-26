@@ -3,25 +3,47 @@ import { ActionBar } from "../../components/ActionBar";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateNote } from "../../dux/notes";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotes, updateNote } from "../../dux/notes";
+import { updateNoteInAsyncStorage } from "../../helpers/notesHelper";
+import { getCipherText } from "../../helpers/cryptographyHelper";
 
 export const NoteEditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { header, content: originalContent } = route?.params || {};
+  const notes = useSelector(getNotes);
+  const { name: header, content: originalContent } = route?.params || {};
   const [title, setTitle] = useState(header);
   const [content, setContent] = useState(originalContent);
+  const [passwordProtected, setpasswordProtected] = useState(false);
+  const [contentIsSaved, setContentIsSaved] = useState(true);
 
   const saveNote = () => {
+    setContentIsSaved(true);
+    let contentToSave = "";
+    if (passwordProtected) {
+      contentToSave = getCipherText(content, "password");
+    }
     dispatch(
-      updateNote({ previousNoteName: header, currentNoteName: title, content })
+      updateNote({
+        previousNoteName: header,
+        currentNoteName: title,
+        content: contentToSave,
+      })
     );
+    updateNoteInAsyncStorage({
+      notes: notes,
+      previousNoteName: header,
+      currentNoteName: title,
+      content: contentToSave,
+      passwordProtected: false,
+      password: "",
+    });
   };
 
   const getActionBarProps = () => {
-    if (!title || (title === header && content === originalContent))
+    if (!title || contentIsSaved)
       return {
         rightIconLink: () => {},
         rightIconSource: require("../../assets/icons/saveInactiveButtonIcon.png"),
@@ -31,6 +53,16 @@ export const NoteEditorScreen = () => {
       rightIconLink: () => saveNote(),
       rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
     };
+  };
+
+  const changeTitle = (newTitle) => {
+    setTitle(newTitle);
+    setContentIsSaved(false);
+  };
+
+  const changeContent = (newContent) => {
+    setContent(newContent);
+    setContentIsSaved(false);
   };
 
   return (
@@ -45,14 +77,14 @@ export const NoteEditorScreen = () => {
         placeholder="Title"
         style={styles.title}
         value={title}
-        onChangeText={setTitle}
+        onChangeText={changeTitle}
       />
       <TextInput
         placeholder="Add note here"
         style={styles.content}
         multiline
         value={content}
-        onChangeText={setContent}
+        onChangeText={changeContent}
       />
     </View>
   );

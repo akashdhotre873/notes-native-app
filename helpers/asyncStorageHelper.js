@@ -5,6 +5,10 @@ export const getItemFromAsyncStorage = async (key) => {
   return jsonValue ? JSON.parse(jsonValue) : jsonValue;
 };
 
-export const setItemFromAsyncStorage = async (key, value) => {
+export const setItemToAsyncStorage = async (key, value) => {
   await AsyncStorage.setItem(key, value);
+};
+
+export const clearAsyncStorage = () => {
+  AsyncStorage.clear();
 };

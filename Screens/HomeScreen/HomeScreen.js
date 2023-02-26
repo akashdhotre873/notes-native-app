@@ -20,13 +20,8 @@ export const HomeScreen = () => {
         title="All Notes"
       />
       <ScrollView>
-        {Object.values(notes).map(({ name, content }, index) => (
-          <NoteListCard
-            name={name}
-            content={content}
-            key={name}
-            index={index}
-          />
+        {Object.values(notes).map((note, index) => (
+          <NoteListCard {...note} key={note.name} index={index} />
         ))}
       </ScrollView>
     </View>
