@@ -1,0 +1,1 @@
+export { AddPasswordArea } from "./AddPasswordArea";

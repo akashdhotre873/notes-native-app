@@ -6,12 +6,16 @@ export const updateNoteHelper = ({
   previousNoteName,
   currentNoteName,
   content,
+  passwordProtected,
+  password,
 }) => {
   const newNotes = { ...notes };
   delete newNotes[previousNoteName];
   newNotes[currentNoteName] = {};
   newNotes[currentNoteName].name = currentNoteName;
   newNotes[currentNoteName].content = content;
+  newNotes[currentNoteName].passwordProtected = passwordProtected;
+  newNotes[currentNoteName].password = password;
   return newNotes;
 };
 
@@ -28,6 +32,8 @@ export const updateNoteInAsyncStorage = ({
     previousNoteName,
     content,
     currentNoteName,
+    passwordProtected,
+    password,
   });
   if (passwordProtected) {
     newNotes[currentNoteName].content = getCipherText(content, password);

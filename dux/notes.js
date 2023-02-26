@@ -8,9 +8,21 @@ export const setNotes = ({ notes }) => ({
   payload: notes,
 });
 
-export const updateNote = ({ previousNoteName, currentNoteName, content }) => ({
+export const updateNote = ({
+  previousNoteName,
+  currentNoteName,
+  content,
+  passwordProtected,
+  password,
+}) => ({
   type: UPDATE_NOTE,
-  payload: { previousNoteName, currentNoteName, content },
+  payload: {
+    previousNoteName,
+    currentNoteName,
+    content,
+    passwordProtected,
+    password,
+  },
 });
 
 const initialState = {};
@@ -19,15 +31,14 @@ const notesReducer = (state = initialState, action) => {
   if (action.type === SET_NOTES) {
     return action.payload;
   }
+
   if (action.type === UPDATE_NOTE) {
-    const { previousNoteName, currentNoteName, content } = action.payload;
     return updateNoteHelper({
       notes: state,
-      previousNoteName,
-      currentNoteName,
-      content,
+      ...action.payload,
     });
   }
+
   return state;
 };
 

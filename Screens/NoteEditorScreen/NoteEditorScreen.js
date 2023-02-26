@@ -7,29 +7,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNotes, updateNote } from "../../dux/notes";
 import { updateNoteInAsyncStorage } from "../../helpers/notesHelper";
 import { getCipherText } from "../../helpers/cryptographyHelper";
+import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
 
 export const NoteEditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const notes = useSelector(getNotes);
-  const { name: header, content: originalContent } = route?.params || {};
+
+  const {
+    name: header,
+    content: originalContent,
+    passwordProtected: hasPassword,
+    password,
+  } = route?.params || {};
+
   const [title, setTitle] = useState(header);
   const [content, setContent] = useState(originalContent);
-  const [passwordProtected, setpasswordProtected] = useState(false);
+  const [passwordProtected, setpasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
 
-  const saveNote = () => {
+  const saveNote = ({ hasPassword, password }) => {
     setContentIsSaved(true);
-    let contentToSave = "";
-    if (passwordProtected) {
-      contentToSave = getCipherText(content, "password");
+    let contentToSave = content;
+    if (hasPassword) {
+      contentToSave = getCipherText(content, password);
     }
     dispatch(
       updateNote({
         previousNoteName: header,
         currentNoteName: title,
         content: contentToSave,
+        passwordProtected: hasPassword,
+        password: password,
       })
     );
     updateNoteInAsyncStorage({
@@ -37,8 +47,8 @@ export const NoteEditorScreen = () => {
       previousNoteName: header,
       currentNoteName: title,
       content: contentToSave,
-      passwordProtected: false,
-      password: "",
+      passwordProtected: hasPassword,
+      password: password,
     });
   };
 
@@ -50,7 +60,8 @@ export const NoteEditorScreen = () => {
       };
 
     return {
-      rightIconLink: () => saveNote(),
+      rightIconLink: () =>
+        saveNote({ hasPassword: passwordProtected, password }),
       rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
     };
   };
@@ -72,6 +83,13 @@ export const NoteEditorScreen = () => {
         leftIconSource={require("../../assets/icons/backButtonIcon.png")}
         leftIconLink={() => navigation.goBack()}
         {...getActionBarProps()}
+      />
+      <AddPasswordArea
+        saveNote={saveNote}
+        isDisabled={contentIsSaved}
+        passwordProtected={passwordProtected}
+        setpasswordProtected={setpasswordProtected}
+        password={password}
       />
       <TextInput
         placeholder="Title"
