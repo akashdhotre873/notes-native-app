@@ -13,7 +13,8 @@ export const updateNote = ({
   currentNoteName,
   content,
   passwordProtected,
-  password,
+  passwordHash,
+  salt,
 }) => ({
   type: UPDATE_NOTE,
   payload: {
@@ -21,7 +22,8 @@ export const updateNote = ({
     currentNoteName,
     content,
     passwordProtected,
-    password,
+    passwordHash,
+    salt,
   },
 });
 

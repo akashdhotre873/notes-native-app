@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { errorMessages, promptCategoryType } from "../../dux/constants";
 import { hidePrompt, showPrompt } from "../../dux/prompt";
 
-export const ConfirmPassword = ({ data: { onAccept, password } }) => {
+export const ConfirmPassword = ({ data: { onAccept, passwordHash } }) => {
   const dispatch = useDispatch();
   const [enteredPassword, setEnteredPassword] = useState("");
 
@@ -15,8 +15,9 @@ export const ConfirmPassword = ({ data: { onAccept, password } }) => {
 
   const onConfirm = () => {
     closeHandler();
-    if (password === enteredPassword) {
-      onAccept(password);
+    // TODO
+    if (passwordHash === enteredPassword) {
+      onAccept(enteredPassword);
     } else {
       dispatch(
         showPrompt({

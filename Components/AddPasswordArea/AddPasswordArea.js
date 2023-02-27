@@ -9,7 +9,7 @@ export const AddPasswordArea = ({
   isDisabled,
   passwordProtected,
   setPasswordProtected,
-  password,
+  passwordHash,
 }) => {
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ export const AddPasswordArea = ({
               removePassword(param);
               setPasswordProtected(switchOn);
             },
-            password,
+            passwordHash,
           },
         })
       );
@@ -40,8 +40,8 @@ export const AddPasswordArea = ({
         showPrompt({
           category: promptCategoryType.CREATE_PASSWORD_PROMPT,
           data: {
-            onAccept: (param) => {
-              addPassword(param);
+            onAccept: (password) => {
+              addPassword(password);
               setPasswordProtected(switchOn);
             },
           },

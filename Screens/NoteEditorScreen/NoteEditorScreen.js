@@ -19,6 +19,7 @@ export const NoteEditorScreen = () => {
     name: header,
     content: originalContent,
     passwordProtected: hasPassword,
+    passwordHash,
     password,
   } = route?.params || {};
 
@@ -30,6 +31,7 @@ export const NoteEditorScreen = () => {
   const saveNote = ({ hasPassword, password }) => {
     setContentIsSaved(true);
     let contentToSave = content;
+    const salt = "";
     if (hasPassword) {
       contentToSave = getCipherText(content, password);
     }
@@ -39,7 +41,8 @@ export const NoteEditorScreen = () => {
         currentNoteName: title,
         content: contentToSave,
         passwordProtected: hasPassword,
-        password: password,
+        passwordHash: password,
+        salt: salt,
       })
     );
     updateNoteInAsyncStorage({
@@ -48,7 +51,8 @@ export const NoteEditorScreen = () => {
       currentNoteName: title,
       content: contentToSave,
       passwordProtected: hasPassword,
-      password: password,
+      passwordHash: password,
+      salt: salt,
     });
   };
 
@@ -89,7 +93,7 @@ export const NoteEditorScreen = () => {
         isDisabled={false}
         passwordProtected={passwordProtected}
         setPasswordProtected={setPasswordProtected}
-        password={password}
+        passwordHash={passwordHash}
       />
       <TextInput
         placeholder="Title"
