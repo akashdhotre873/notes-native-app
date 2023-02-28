@@ -46,6 +46,7 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
           placeholder="Enter password"
           style={styles.passwordArea}
           autoFocus
+          secureTextEntry={true}
         />
 
         <View style={styles.buttonsContainer}>

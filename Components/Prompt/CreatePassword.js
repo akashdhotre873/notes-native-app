@@ -34,6 +34,7 @@ export const CreatePassword = ({ data: { onAccept } }) => {
           onChangeText={setEnteredPassword}
           textContentType="password"
           autoFocus
+          secureTextEntry={true}
         />
 
         <View style={styles.buttonsContainer}>
