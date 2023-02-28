@@ -7,7 +7,7 @@ import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 
 export const NoteListCard = (note) => {
-  const { name, content, index, passwordProtected, passwordHash } = note;
+  const { name, content, index, passwordProtected, passwordHash, salt } = note;
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ export const NoteListCard = (note) => {
       dispatch(
         showPrompt({
           category: promptCategoryType.CONFIRM_PASSWORD_PROMPT,
-          data: { onAccept: openNote, passwordHash },
+          data: { onAccept: openNote, passwordHash, salt },
         })
       );
     } else {

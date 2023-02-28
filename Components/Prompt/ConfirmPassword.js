@@ -4,8 +4,9 @@ import { Button, Modal, TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { errorMessages, promptCategoryType } from "../../dux/constants";
 import { hidePrompt, showPrompt } from "../../dux/prompt";
+import { getHash } from "../../helpers/cryptographyHelper";
 
-export const ConfirmPassword = ({ data: { onAccept, passwordHash } }) => {
+export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
   const dispatch = useDispatch();
   const [enteredPassword, setEnteredPassword] = useState("");
 
@@ -15,8 +16,8 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash } }) => {
 
   const onConfirm = () => {
     closeHandler();
-    // TODO
-    if (passwordHash === enteredPassword) {
+    const hashOfPassword = getHash(enteredPassword, salt);
+    if (passwordHash === hashOfPassword) {
       onAccept(enteredPassword);
     } else {
       dispatch(

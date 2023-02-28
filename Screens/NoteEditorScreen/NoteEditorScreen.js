@@ -6,7 +6,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes, updateNote } from "../../dux/notes";
 import { updateNoteInAsyncStorage } from "../../helpers/notesHelper";
-import { getCipherText } from "../../helpers/cryptographyHelper";
+import {
+  getCipherText,
+  getHash,
+  getUUID,
+} from "../../helpers/cryptographyHelper";
 import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
 
 export const NoteEditorScreen = () => {
@@ -21,6 +25,7 @@ export const NoteEditorScreen = () => {
     passwordProtected: hasPassword,
     passwordHash,
     password,
+    salt,
   } = route?.params || {};
 
   const [title, setTitle] = useState(header);
@@ -31,9 +36,12 @@ export const NoteEditorScreen = () => {
   const saveNote = ({ hasPassword, password }) => {
     setContentIsSaved(true);
     let contentToSave = content;
-    const salt = "";
+    let salt;
+    let updatedHashOfPassword;
     if (hasPassword) {
       contentToSave = getCipherText(content, password);
+      salt = getUUID();
+      updatedHashOfPassword = getHash(password, salt);
     }
     dispatch(
       updateNote({
@@ -41,7 +49,7 @@ export const NoteEditorScreen = () => {
         currentNoteName: title,
         content: contentToSave,
         passwordProtected: hasPassword,
-        passwordHash: password,
+        passwordHash: updatedHashOfPassword,
         salt: salt,
       })
     );
@@ -51,7 +59,7 @@ export const NoteEditorScreen = () => {
       currentNoteName: title,
       content: contentToSave,
       passwordProtected: hasPassword,
-      passwordHash: password,
+      passwordHash: updatedHashOfPassword,
       salt: salt,
     });
   };
@@ -90,10 +98,11 @@ export const NoteEditorScreen = () => {
       />
       <AddPasswordArea
         saveNote={saveNote}
-        isDisabled={false}
+        isDisabled={!title}
         passwordProtected={passwordProtected}
         setPasswordProtected={setPasswordProtected}
         passwordHash={passwordHash}
+        salt={salt}
       />
       <TextInput
         placeholder="Title"

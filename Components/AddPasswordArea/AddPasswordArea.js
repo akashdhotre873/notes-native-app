@@ -10,6 +10,7 @@ export const AddPasswordArea = ({
   passwordProtected,
   setPasswordProtected,
   passwordHash,
+  salt,
 }) => {
   const dispatch = useDispatch();
 
@@ -32,6 +33,7 @@ export const AddPasswordArea = ({
               setPasswordProtected(switchOn);
             },
             passwordHash,
+            salt,
           },
         })
       );
