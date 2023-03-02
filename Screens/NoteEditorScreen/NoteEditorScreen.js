@@ -1,8 +1,15 @@
-import { StyleSheet, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { ActionBar } from "../../components/ActionBar";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes, updateNote } from "../../dux/notes";
 import { updateNoteInAsyncStorage } from "../../helpers/notesHelper";
@@ -32,6 +39,24 @@ export const NoteEditorScreen = () => {
   const [content, setContent] = useState(originalContent);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
+  const [error, setError] = useState({});
+  const contentRef = useRef();
+
+  const checkIfTitleExists = () => {
+    const sameTitleExists = Object.keys(notes).some(
+      (currentheader) => currentheader === title && currentheader !== header
+    );
+    if (sameTitleExists) {
+      setError({
+        hasError: true,
+        errorMessage: "Another note with same name exists",
+      });
+    } else {
+      setError({});
+    }
+
+    return sameTitleExists;
+  };
 
   const saveNote = ({ hasPassword, password }) => {
     setContentIsSaved(true);
@@ -64,6 +89,14 @@ export const NoteEditorScreen = () => {
     });
   };
 
+  const saveIconClick = () => {
+    if (checkIfTitleExists()) {
+      return;
+    } else {
+      saveNote({ hasPassword: passwordProtected, password });
+    }
+  };
+
   const getActionBarProps = () => {
     if (!title || contentIsSaved)
       return {
@@ -72,8 +105,7 @@ export const NoteEditorScreen = () => {
       };
 
     return {
-      rightIconLink: () =>
-        saveNote({ hasPassword: passwordProtected, password }),
+      rightIconLink: saveIconClick,
       rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
     };
   };
@@ -88,48 +120,83 @@ export const NoteEditorScreen = () => {
     setContentIsSaved(false);
   };
 
+  const onPress = () => {
+    contentRef.current?.focus();
+  };
+
   return (
-    <View>
-      <ActionBar
-        title={header ? "Editing note" : "Creating note"}
-        leftIconSource={require("../../assets/icons/backButtonIcon.png")}
-        leftIconLink={() => navigation.goBack()}
-        {...getActionBarProps()}
-      />
-      <AddPasswordArea
-        saveNote={saveNote}
-        isDisabled={!title}
-        passwordProtected={passwordProtected}
-        setPasswordProtected={setPasswordProtected}
-        passwordHash={passwordHash}
-        salt={salt}
-      />
-      <TextInput
-        placeholder="Title"
-        style={styles.title}
-        value={title}
-        onChangeText={changeTitle}
-      />
-      <TextInput
-        placeholder="Add note here"
-        style={styles.content}
-        multiline
-        value={content}
-        onChangeText={changeContent}
-      />
-    </View>
+    <Pressable style={styles.container} onPress={onPress}>
+      <ScrollView style={styles.container}>
+        <TouchableWithoutFeedback>
+          <View>
+            <ActionBar
+              title={header ? "Editing note" : "Creating note"}
+              leftIconSource={require("../../assets/icons/backButtonIcon.png")}
+              leftIconLink={() => navigation.goBack()}
+              {...getActionBarProps()}
+            />
+            {error.hasError && (
+              <View style={styles.errorMessageContainer}>
+                <Text style={styles.errorMessage}>({error.errorMessage})</Text>
+              </View>
+            )}
+            <AddPasswordArea
+              saveNote={saveNote}
+              isDisabled={!title}
+              passwordProtected={passwordProtected}
+              setPasswordProtected={setPasswordProtected}
+              passwordHash={passwordHash}
+              salt={salt}
+            />
+
+            <TextInput
+              placeholder="Title"
+              style={styles.title}
+              value={title}
+              onChangeText={changeTitle}
+              autoFocus={!title}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        <TextInput
+          placeholder="Add note here"
+          style={styles.content}
+          multiline
+          value={content}
+          onChangeText={changeContent}
+          ref={contentRef}
+        />
+        <View style={styles.marginBottom} />
+      </ScrollView>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   title: {
     paddingTop: 10,
     paddingLeft: 15,
     fontSize: 30,
+    marginHorizontal: 5,
   },
   content: {
     paddingTop: 10,
     paddingLeft: 15,
     fontSize: 20,
+    marginHorizontal: 5,
+  },
+  marginBottom: {
+    paddingVertical: 10,
+  },
+  errorMessageContainer: {
+    alignSelf: "center",
+  },
+  errorMessage: {
+    color: "red",
+    paddingTop: 2,
+    fontSize: 12,
   },
 });
