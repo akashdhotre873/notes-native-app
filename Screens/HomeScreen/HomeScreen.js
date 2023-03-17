@@ -17,7 +17,7 @@ export const HomeScreen = () => {
         leftIconLink={() => navigation.navigate(NOTE_EDITOR_SCREEN_PATH, {})}
         title="All Notes"
       />
-      <ScrollView>
+      <ScrollView style={styles.cardsContainer}>
         {Object.values(notes).map((note, index) => (
           <NoteListCard {...note} key={note.name} index={index} />
         ))}
@@ -29,5 +29,9 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  cardsContainer: {
+    backgroundColor: "#f8f8f3",
+    marginTop: 5,
   },
 });

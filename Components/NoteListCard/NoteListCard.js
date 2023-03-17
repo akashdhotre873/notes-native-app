@@ -34,9 +34,7 @@ export const NoteListCard = (note) => {
   return (
     <View style={styles.container}>
       <Pressable onPress={onPress}>
-        <Text style={styles.name}>
-          {index + 1}. {name}
-        </Text>
+        <Text style={styles.name}>{name}</Text>
       </Pressable>
     </View>
   );
@@ -44,12 +42,14 @@ export const NoteListCard = (note) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 7,
+    paddingVertical: 15,
     marginHorizontal: 10,
     marginVertical: 4,
-    borderBottomWidth: 1,
+    backgroundColor: "white",
+    borderRadius: 5,
   },
   name: {
-    fontSize: 20,
+    fontSize: 24,
+    paddingLeft: 15,
   },
 });
