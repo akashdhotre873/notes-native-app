@@ -5,11 +5,13 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  BackHandler,
+  Alert,
 } from "react-native";
 import { ActionBar } from "../../components/ActionBar";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes, updateNote } from "../../dux/notes";
 import { updateNoteInAsyncStorage } from "../../helpers/notesHelper";
@@ -19,6 +21,8 @@ import {
   getUUID,
 } from "../../helpers/cryptographyHelper";
 import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
+import { showPrompt } from "../../dux/prompt";
+import { promptCategoryType } from "../../helpers/constants";
 
 export const NoteEditorScreen = () => {
   const route = useRoute();
@@ -111,18 +115,40 @@ export const NoteEditorScreen = () => {
   };
 
   const changeTitle = (newTitle) => {
-    setTitle(newTitle);
     setContentIsSaved(false);
+    setTitle(newTitle);
   };
 
   const changeContent = (newContent) => {
-    setContent(newContent);
     setContentIsSaved(false);
+    setContent(newContent);
   };
 
   const onPress = () => {
     contentRef.current?.focus();
   };
+
+  const backAction = () => {
+    if (contentIsSaved) {
+      return false;
+    }
+    dispatch(
+      showPrompt({
+        category: promptCategoryType.EXIT_WITHOUT_SAVING,
+        data: { onAccept: () => navigation.goBack() },
+      })
+    );
+    return true;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [contentIsSaved]);
 
   return (
     <Pressable style={styles.container} onPress={onPress}>

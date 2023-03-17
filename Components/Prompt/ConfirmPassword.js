@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Modal, TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { errorMessages, promptCategoryType } from "../../dux/constants";
+import { errorMessages, promptCategoryType } from "../../helpers/constants";
 import { hidePrompt, showPrompt } from "../../dux/prompt";
 import { getHash } from "../../helpers/cryptographyHelper";
 

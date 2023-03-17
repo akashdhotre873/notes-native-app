@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { promptCategoryType } from "../../dux/constants";
+import { promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";

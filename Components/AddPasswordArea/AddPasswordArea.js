@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { promptCategoryType } from "../../dux/constants";
+import { promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 
 export const AddPasswordArea = ({
