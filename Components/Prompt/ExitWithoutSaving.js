@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Button, Modal, TextInput } from "react-native-paper";
+import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { hidePrompt } from "../../dux/prompt";
 
