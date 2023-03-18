@@ -2,7 +2,8 @@ export const promptCategoryType = {
   CREATE_PASSWORD_PROMPT: "create password prompt",
   CONFIRM_PASSWORD_PROMPT: "confirm password prompt",
   ERROR_PROMPT: "error prompt",
-  EXIT_WITHOUT_SAVING: "exit without saving",
+  EXIT_WITHOUT_SAVING_PROMPT: "exit without saving",
+  DELETE_NOTE_PROMPT: "delete note",
 };
 
 export const errorMessages = {

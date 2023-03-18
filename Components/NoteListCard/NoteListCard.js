@@ -7,7 +7,7 @@ import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 
 export const NoteListCard = (note) => {
-  const { name, content, index, passwordProtected, passwordHash, salt } = note;
+  const { name, content, passwordProtected, passwordHash, salt } = note;
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -15,7 +15,11 @@ export const NoteListCard = (note) => {
     const plainText = getPlainText(content, password);
     const newNote = { ...note };
     newNote.content = plainText;
-    navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { ...newNote, password });
+    navigation.navigate(NOTE_EDITOR_SCREEN_PATH, {
+      ...newNote,
+      password,
+      newNote: false,
+    });
   };
 
   const onPress = () => {
@@ -27,7 +31,7 @@ export const NoteListCard = (note) => {
         })
       );
     } else {
-      navigation.navigate(NOTE_EDITOR_SCREEN_PATH, note);
+      navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { ...note, newNote: false });
     }
   };
 
@@ -47,6 +51,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     backgroundColor: "white",
     borderRadius: 5,
+    elevation: 5,
   },
   name: {
     fontSize: 24,

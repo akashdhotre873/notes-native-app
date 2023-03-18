@@ -6,6 +6,7 @@ export const ActionBar = ({
   leftIconSource,
   rightIconLink,
   rightIconSource,
+  onDelete,
 }) => {
   return (
     <View style={styles.container}>
@@ -17,11 +18,21 @@ export const ActionBar = ({
         )}
         <Text style={styles.title}>{title}</Text>
       </View>
-      {rightIconLink && (
-        <Pressable onPress={rightIconLink} style={styles.rightButtonLink}>
-          <Image source={rightIconSource} style={styles.rightButtonImage} />
-        </Pressable>
-      )}
+      <View style={styles.rightSideIcons}>
+        {onDelete && (
+          <Pressable onPress={onDelete} style={styles.deleteButton}>
+            <Image
+              source={require("../../assets/icons/delete-black-icon.png")}
+              style={styles.rightButtonImage}
+            />
+          </Pressable>
+        )}
+        {rightIconLink && (
+          <Pressable onPress={rightIconLink} style={styles.rightButtonLink}>
+            <Image source={rightIconSource} style={styles.rightButtonImage} />
+          </Pressable>
+        )}
+      </View>
     </View>
   );
 };
@@ -43,7 +54,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   leftButtonLink: {
-    paddingTop: -10,
     paddingLeft: 10,
   },
   rightButtonLink: {
@@ -54,10 +64,16 @@ const styles = StyleSheet.create({
     width: 30,
     resizeMode: "contain",
   },
+  rightSideIcons: {
+    flexDirection: "row",
+  },
   title: {
     paddingLeft: 20,
     fontFamily: "Roboto",
     fontSize: 18,
     fontWeight: "500",
+  },
+  deleteButton: {
+    marginRight: 20,
   },
 });

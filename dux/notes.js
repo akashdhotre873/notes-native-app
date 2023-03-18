@@ -2,10 +2,16 @@ import { updateNoteHelper } from "../helpers/notesHelper";
 
 const SET_NOTES = `[notes] set notes`;
 const UPDATE_NOTE = `[notes] update note`;
+const DELETE_NOTE = `[notes] delete note`;
 
 export const setNotes = ({ notes }) => ({
   type: SET_NOTES,
   payload: notes,
+});
+
+export const deleteNote = ({ noteName }) => ({
+  type: DELETE_NOTE,
+  payload: { noteName },
 });
 
 export const updateNote = ({
@@ -39,6 +45,14 @@ const notesReducer = (state = initialState, action) => {
       notes: state,
       ...action.payload,
     });
+  }
+
+  if (action.type === DELETE_NOTE) {
+    console.log(action.payload);
+    const { noteName } = action.payload;
+    delete state[noteName];
+    console.log(state);
+    return { ...state };
   }
 
   return state;

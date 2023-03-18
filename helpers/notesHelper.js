@@ -40,3 +40,8 @@ export const updateNoteInAsyncStorage = ({
   });
   setItemToAsyncStorage("notes", JSON.stringify(newNotes));
 };
+
+export const deleteNoteInAsyncStorage = ({ notes, noteName }) => {
+  delete notes[noteName];
+  setItemToAsyncStorage("notes", JSON.stringify(notes));
+};

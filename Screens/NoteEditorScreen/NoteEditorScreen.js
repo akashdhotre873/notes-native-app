@@ -24,6 +24,8 @@ import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordAre
 import { showPrompt } from "../../dux/prompt";
 import { promptCategoryType } from "../../helpers/constants";
 
+const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
+
 export const NoteEditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
@@ -37,10 +39,11 @@ export const NoteEditorScreen = () => {
     passwordHash,
     password,
     salt,
+    newNote,
   } = route?.params || {};
 
-  const [title, setTitle] = useState(header);
-  const [content, setContent] = useState(originalContent);
+  const [title, setTitle] = useState(header || "");
+  const [content, setContent] = useState(originalContent || "");
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
   const [error, setError] = useState({});
@@ -134,11 +137,20 @@ export const NoteEditorScreen = () => {
     }
     dispatch(
       showPrompt({
-        category: promptCategoryType.EXIT_WITHOUT_SAVING,
+        category: EXIT_WITHOUT_SAVING_PROMPT,
         data: { onAccept: () => navigation.goBack() },
       })
     );
     return true;
+  };
+
+  const onDelete = () => {
+    dispatch(
+      showPrompt({
+        category: DELETE_NOTE_PROMPT,
+        data: { noteName: header },
+      })
+    );
   };
 
   useEffect(() => {
@@ -156,10 +168,11 @@ export const NoteEditorScreen = () => {
         <TouchableWithoutFeedback>
           <View>
             <ActionBar
-              title={header ? "Editing note" : "Creating note"}
+              title={newNote ? "Creating note" : "Editing note"}
               leftIconSource={require("../../assets/icons/backButtonIcon.png")}
               leftIconLink={() => navigation.goBack()}
               {...getActionBarProps()}
+              onDelete={!newNote && onDelete}
             />
             {error.hasError && (
               <View style={styles.errorMessageContainer}>

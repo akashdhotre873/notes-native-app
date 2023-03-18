@@ -14,7 +14,9 @@ export const HomeScreen = () => {
     <View style={styles.container}>
       <ActionBar
         leftIconSource={require("../../assets/icons/plusButtonIcon.png")}
-        leftIconLink={() => navigation.navigate(NOTE_EDITOR_SCREEN_PATH, {})}
+        leftIconLink={() =>
+          navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { newNote: true })
+        }
         title="All Notes"
       />
       <ScrollView style={styles.cardsContainer}>
