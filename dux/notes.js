@@ -21,6 +21,7 @@ export const updateNote = ({
   passwordProtected,
   passwordHash,
   salt,
+  dateUpdated,
 }) => ({
   type: UPDATE_NOTE,
   payload: {
@@ -30,6 +31,7 @@ export const updateNote = ({
     passwordProtected,
     passwordHash,
     salt,
+    dateUpdated,
   },
 });
 
@@ -48,10 +50,8 @@ const notesReducer = (state = initialState, action) => {
   }
 
   if (action.type === DELETE_NOTE) {
-    console.log(action.payload);
     const { noteName } = action.payload;
     delete state[noteName];
-    console.log(state);
     return { ...state };
   }
 

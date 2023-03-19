@@ -5,9 +5,18 @@ import { promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
+import { getDateString, getTimeString } from "../../helpers/timeHelper";
 
 export const NoteListCard = (note) => {
-  const { name, content, passwordProtected, passwordHash, salt } = note;
+  const {
+    name,
+    content,
+    passwordProtected,
+    passwordHash,
+    salt,
+    dateUpdated: dateUpdatedString,
+  } = note;
+  const dateUpdated = new Date(dateUpdatedString);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -37,8 +46,19 @@ export const NoteListCard = (note) => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPress} style={styles.innerContainer}>
         <Text style={styles.name}>{name}</Text>
+        {Boolean(dateUpdated) && (
+          <View style={styles.timeContainer}>
+            <Text style={styles.lastModifiedText}>Last Modified :</Text>
+            <Text style={styles.dateModifiedText}>
+              {getTimeString(dateUpdated)}
+            </Text>
+            <Text style={styles.dateModifiedText}>
+              {getDateString(dateUpdated)}
+            </Text>
+          </View>
+        )}
       </Pressable>
     </View>
   );
@@ -46,15 +66,31 @@ export const NoteListCard = (note) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 15,
+    paddingVertical: 7,
     marginHorizontal: 10,
     marginVertical: 4,
     backgroundColor: "white",
-    borderRadius: 5,
+    borderRadius: 7,
     elevation: 5,
+  },
+  innerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
   },
   name: {
     fontSize: 24,
-    paddingLeft: 15,
+    width: "70%",
+  },
+  timeContainer: {},
+  dateModifiedText: {
+    marginLeft: "auto",
+    opacity: 0.5,
+    fontSize: 12,
+  },
+  lastModifiedText: {
+    marginLeft: "auto",
+    fontSize: 12,
+    opacity: 0.9,
   },
 });

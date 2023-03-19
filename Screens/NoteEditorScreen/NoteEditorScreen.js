@@ -75,6 +75,7 @@ export const NoteEditorScreen = () => {
       salt = getUUID();
       updatedHashOfPassword = getHash(password, salt);
     }
+    const dateUpdated = new Date();
     dispatch(
       updateNote({
         previousNoteName: header,
@@ -82,7 +83,8 @@ export const NoteEditorScreen = () => {
         content: contentToSave,
         passwordProtected: hasPassword,
         passwordHash: updatedHashOfPassword,
-        salt: salt,
+        salt,
+        dateUpdated,
       })
     );
     updateNoteInAsyncStorage({
@@ -92,7 +94,8 @@ export const NoteEditorScreen = () => {
       content: contentToSave,
       passwordProtected: hasPassword,
       passwordHash: updatedHashOfPassword,
-      salt: salt,
+      salt,
+      dateUpdated,
     });
   };
 
