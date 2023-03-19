@@ -167,7 +167,7 @@ export const NoteEditorScreen = () => {
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <TouchableWithoutFeedback>
           <View>
             <ActionBar
@@ -221,12 +221,14 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 10,
     paddingLeft: 15,
+    paddingRight: 10,
     fontSize: 30,
     marginHorizontal: 5,
   },
   content: {
     paddingTop: 10,
     paddingLeft: 15,
+    paddingRight: 10,
     fontSize: 20,
     marginHorizontal: 5,
   },
