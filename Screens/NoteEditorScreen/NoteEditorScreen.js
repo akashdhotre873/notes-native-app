@@ -61,7 +61,8 @@ export const NoteEditorScreen = () => {
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(notes).some(
-      (currentheader) => currentheader === title && currentheader !== header
+      (currentheader) =>
+        currentheader.trim() === title?.trim() && currentheader !== header
     );
     if (sameTitleExists) {
       setError({
@@ -92,7 +93,7 @@ export const NoteEditorScreen = () => {
     dispatch(
       updateNote({
         previousNoteName: previousNoteName.current,
-        currentNoteName: title,
+        currentNoteName: title.trim(),
         content: contentToSave,
         passwordProtected: hasPassword,
         passwordHash: updatedHashOfPassword,
@@ -103,7 +104,7 @@ export const NoteEditorScreen = () => {
     updateNoteInAsyncStorage({
       notes: notes,
       previousNoteName: previousNoteName.current,
-      currentNoteName: title,
+      currentNoteName: title.trim(),
       content: contentToSave,
       passwordProtected: hasPassword,
       passwordHash: updatedHashOfPassword,
@@ -123,7 +124,7 @@ export const NoteEditorScreen = () => {
   };
 
   const getActionBarProps = () => {
-    if (!title || contentIsSaved)
+    if (!title?.trim() || contentIsSaved)
       return {
         rightIconLink: () => {},
         rightIconSource: require("../../assets/icons/saveInactiveButtonIcon.png"),
@@ -200,7 +201,7 @@ export const NoteEditorScreen = () => {
             )}
             <AddPasswordArea
               saveNote={saveNote}
-              isDisabled={!title}
+              isDisabled={!title?.trim()}
               passwordProtected={passwordProtected}
               setPasswordProtected={setPasswordProtected}
               passwordHash={passwordHash}

@@ -10,6 +10,15 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
   const notes = useSelector(getNotes);
 
+  const sortAlgo = (noteFirst, noteSecond) => {
+    if (noteFirst.name > noteSecond.name) {
+      return 1;
+    } else if (noteFirst.name < noteSecond.name) {
+      return -1;
+    }
+    return 0;
+  };
+
   return (
     <View style={styles.container}>
       <ActionBar
@@ -20,9 +29,11 @@ export const HomeScreen = () => {
         title="All Notes"
       />
       <ScrollView style={styles.cardsContainer}>
-        {Object.values(notes).map((note, index) => (
-          <NoteListCard {...note} key={note.name} index={index} />
-        ))}
+        {Object.values(notes)
+          .sort(sortAlgo)
+          .map((note, index) => (
+            <NoteListCard {...note} key={note.name} index={index} />
+          ))}
       </ScrollView>
     </View>
   );
