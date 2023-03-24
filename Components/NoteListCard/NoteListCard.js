@@ -48,17 +48,16 @@ export const NoteListCard = (note) => {
     <View style={styles.container}>
       <Pressable onPress={onPress} style={styles.innerContainer}>
         <Text style={styles.name}>{name}</Text>
-        {Boolean(dateUpdated) && (
-          <View style={styles.timeContainer}>
-            <Text style={styles.lastModifiedText}>Last Modified :</Text>
-            <Text style={styles.dateModifiedText}>
-              {getTimeString(dateUpdated)}
-            </Text>
-            <Text style={styles.dateModifiedText}>
-              {getDateString(dateUpdated)}
-            </Text>
-          </View>
-        )}
+
+        <View style={styles.timeContainer}>
+          <Text style={styles.lastModifiedText}>Last Modified :</Text>
+          <Text style={styles.dateModifiedText}>
+            {getTimeString(dateUpdated)}
+          </Text>
+          <Text style={styles.dateModifiedText}>
+            {getDateString(dateUpdated)}
+          </Text>
+        </View>
       </Pressable>
     </View>
   );

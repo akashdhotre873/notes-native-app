@@ -23,6 +23,7 @@ import {
 import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
 import { showPrompt } from "../../dux/prompt";
 import { promptCategoryType } from "../../helpers/constants";
+import { getDateString, getTimeString } from "../../helpers/timeHelper";
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
 
@@ -39,8 +40,12 @@ export const NoteEditorScreen = () => {
     passwordHash,
     password,
     salt,
+    dateUpdated: dateUpdatedString,
     newNote,
   } = route?.params || {};
+  const dateUpdated = Boolean(dateUpdatedString)
+    ? new Date(dateUpdatedString)
+    : false;
 
   const [title, setTitle] = useState(header || "");
   const [content, setContent] = useState(originalContent || "");
@@ -198,6 +203,14 @@ export const NoteEditorScreen = () => {
               onChangeText={changeTitle}
               autoFocus={!title}
             />
+            <View style={styles.timeContainer}>
+              <Text style={styles.dateModifiedText}>
+                {getTimeString(dateUpdated)}
+              </Text>
+              <Text style={styles.dateModifiedText}>
+                {getDateString(dateUpdated)}
+              </Text>
+            </View>
           </View>
         </TouchableWithoutFeedback>
         <TextInput
@@ -242,5 +255,16 @@ const styles = StyleSheet.create({
     color: "red",
     paddingTop: 2,
     fontSize: 12,
+  },
+  dateModifiedText: {
+    marginHorizontal: 5,
+    paddingLeft: 15,
+    opacity: 0.5,
+    fontSize: 11,
+    marginTop: 5,
+    marginBottom: 10,
+  },
+  timeContainer: {
+    flexDirection: "row",
   },
 });
