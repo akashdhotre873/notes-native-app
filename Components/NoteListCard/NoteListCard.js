@@ -7,7 +7,11 @@ import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 
-export const NoteListCard = (note) => {
+export const NoteListCard = ({
+  note,
+  selectedNoteName,
+  setSelectedNoteName,
+}) => {
   const {
     name,
     content,
@@ -16,6 +20,7 @@ export const NoteListCard = (note) => {
     salt,
     dateUpdated: dateUpdatedString,
   } = note;
+
   const dateUpdated = new Date(dateUpdatedString);
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -44,9 +49,22 @@ export const NoteListCard = (note) => {
     }
   };
 
+  const toggleName = (previousName) => {
+    return previousName === name ? "" : name;
+  };
+
   return (
-    <View style={styles.container}>
-      <Pressable onPress={onPress} style={styles.innerContainer}>
+    <View
+      style={[
+        styles.container,
+        selectedNoteName === name ? styles.selectedToDelete : {},
+      ]}
+    >
+      <Pressable
+        onPress={onPress}
+        onLongPress={() => setSelectedNoteName(toggleName)}
+        style={styles.innerContainer}
+      >
         <Text style={styles.name}>{name}</Text>
 
         <View style={styles.timeContainer}>
@@ -71,6 +89,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 7,
     elevation: 5,
+  },
+  selectedToDelete: {
+    backgroundColor: "#f0ad4e",
   },
   innerContainer: {
     flexDirection: "row",

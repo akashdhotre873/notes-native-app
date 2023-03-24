@@ -9,7 +9,9 @@ import { deleteNote, getNoteByName, getNotes } from "../../dux/notes";
 import { useNavigation } from "@react-navigation/native";
 import { deleteNoteInAsyncStorage } from "../../helpers/notesHelper";
 
-export const DeleteNotePrompt = ({ data: { noteName } }) => {
+export const DeleteNotePrompt = ({
+  data: { noteName, shouldGoBack = true },
+}) => {
   const dispatch = useDispatch();
   const notes = useSelector(getNotes);
   const note = useSelector(getNoteByName(noteName));
@@ -37,7 +39,7 @@ export const DeleteNotePrompt = ({ data: { noteName } }) => {
         return;
       }
     }
-    navigation.goBack();
+    shouldGoBack && navigation.goBack();
     deleteNoteInAsyncStorage({ notes, noteName });
     dispatch(deleteNote(noteName));
   };
