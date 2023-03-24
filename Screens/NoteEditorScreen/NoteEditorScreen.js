@@ -43,15 +43,19 @@ export const NoteEditorScreen = () => {
     dateUpdated: dateUpdatedString,
     newNote,
   } = route?.params || {};
-  const dateUpdated = Boolean(dateUpdatedString)
-    ? new Date(dateUpdatedString)
-    : false;
+
+  const getUpdatedDate = (dateString) => {
+    return Boolean(dateString) ? new Date(dateString) : false;
+  };
 
   const [title, setTitle] = useState(header || "");
   const [content, setContent] = useState(originalContent || "");
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
   const [error, setError] = useState({});
+  const [dateUpdated, setDateUpdated] = useState(
+    getUpdatedDate(dateUpdatedString)
+  );
   const contentRef = useRef();
 
   const checkIfTitleExists = () => {
@@ -80,7 +84,10 @@ export const NoteEditorScreen = () => {
       salt = getUUID();
       updatedHashOfPassword = getHash(password, salt);
     }
-    const dateUpdated = new Date();
+
+    const dateUpdatedLocal = new Date();
+    setDateUpdated(dateUpdatedLocal);
+
     dispatch(
       updateNote({
         previousNoteName: header,
@@ -89,7 +96,7 @@ export const NoteEditorScreen = () => {
         passwordProtected: hasPassword,
         passwordHash: updatedHashOfPassword,
         salt,
-        dateUpdated,
+        dateUpdated: dateUpdatedLocal,
       })
     );
     updateNoteInAsyncStorage({
@@ -100,7 +107,7 @@ export const NoteEditorScreen = () => {
       passwordProtected: hasPassword,
       passwordHash: updatedHashOfPassword,
       salt,
-      dateUpdated,
+      dateUpdated: dateUpdatedLocal,
     });
   };
 
@@ -203,14 +210,16 @@ export const NoteEditorScreen = () => {
               onChangeText={changeTitle}
               autoFocus={!title}
             />
-            <View style={styles.timeContainer}>
-              <Text style={styles.dateModifiedText}>
-                {getTimeString(dateUpdated)}
-              </Text>
-              <Text style={styles.dateModifiedText}>
-                {getDateString(dateUpdated)}
-              </Text>
-            </View>
+            {dateUpdated && (
+              <View style={styles.timeContainer}>
+                <Text style={styles.dateModifiedText}>
+                  {getTimeString(dateUpdated)}
+                </Text>
+                <Text style={styles.dateModifiedText}>
+                  {getDateString(dateUpdated)}
+                </Text>
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
         <TextInput
