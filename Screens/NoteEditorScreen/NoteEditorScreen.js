@@ -34,8 +34,8 @@ export const NoteEditorScreen = () => {
   const notes = useSelector(getNotes);
 
   const {
-    name: header,
-    content: originalContent,
+    name: header = "",
+    content: originalContent = "",
     passwordProtected: hasPassword,
     passwordHash,
     password,
@@ -45,11 +45,11 @@ export const NoteEditorScreen = () => {
   } = route?.params || {};
 
   const getUpdatedDate = (dateString) => {
-    return Boolean(dateString) ? new Date(dateString) : false;
+    return Boolean(dateString) ? new Date(dateString) : new Date();
   };
 
-  const [title, setTitle] = useState(header || "");
-  const [content, setContent] = useState(originalContent || "");
+  const [title, setTitle] = useState(header);
+  const [content, setContent] = useState(originalContent);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
   const [error, setError] = useState({});
@@ -57,6 +57,7 @@ export const NoteEditorScreen = () => {
     getUpdatedDate(dateUpdatedString)
   );
   const contentRef = useRef();
+  const previousNoteName = useRef(header);
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(notes).some(
@@ -90,7 +91,7 @@ export const NoteEditorScreen = () => {
 
     dispatch(
       updateNote({
-        previousNoteName: header,
+        previousNoteName: previousNoteName.current,
         currentNoteName: title,
         content: contentToSave,
         passwordProtected: hasPassword,
@@ -101,7 +102,7 @@ export const NoteEditorScreen = () => {
     );
     updateNoteInAsyncStorage({
       notes: notes,
-      previousNoteName: header,
+      previousNoteName: previousNoteName.current,
       currentNoteName: title,
       content: contentToSave,
       passwordProtected: hasPassword,
@@ -109,6 +110,8 @@ export const NoteEditorScreen = () => {
       salt,
       dateUpdated: dateUpdatedLocal,
     });
+
+    previousNoteName.current = title;
   };
 
   const saveIconClick = () => {
@@ -134,6 +137,7 @@ export const NoteEditorScreen = () => {
 
   const changeTitle = (newTitle) => {
     setContentIsSaved(false);
+
     setTitle(newTitle);
   };
 
