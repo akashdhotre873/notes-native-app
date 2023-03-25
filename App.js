@@ -31,7 +31,7 @@ export default function App() {
     <Provider store={store}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <StatusBar backgroundColor="lightblue" barStyle="dark-content" />
+          <StatusBar backgroundColor="#006efe" barStyle="dark-content" />
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={HOME_SCREEN_PATH} component={HomeScreen} />
             <Stack.Screen

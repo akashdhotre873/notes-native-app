@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "notes-app",
+    "name": "Notes",
     "slug": "notes-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon.png",
+    "icon": "./assets/icons/app-icon.webp",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/icons/splash.png",
@@ -17,12 +17,6 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"
