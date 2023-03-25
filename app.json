@@ -4,7 +4,7 @@
     "slug": "notes-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/app-icon.webp",
+    "icon": "./assets/icons/app-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/icons/splash.png",
@@ -20,6 +20,9 @@
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"
+    },
+    "android": {
+      "package": "com.akashdhotre873.notesapp"
     }
   }
 }
