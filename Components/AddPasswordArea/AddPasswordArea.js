@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "black",
   },
   text: {
-    paddingTop: 18,
+    paddingVertical: 18,
     paddingLeft: 10,
   },
 });
