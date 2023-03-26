@@ -151,6 +151,15 @@ export const NoteEditorScreen = () => {
     contentRef.current?.focus();
   };
 
+  const onDelete = () => {
+    dispatch(
+      showPrompt({
+        category: DELETE_NOTE_PROMPT,
+        data: { noteName: title },
+      })
+    );
+  };
+
   const backAction = () => {
     if (contentIsSaved) {
       return false;
@@ -162,15 +171,6 @@ export const NoteEditorScreen = () => {
       })
     );
     return true;
-  };
-
-  const onDelete = () => {
-    dispatch(
-      showPrompt({
-        category: DELETE_NOTE_PROMPT,
-        data: { noteName: header },
-      })
-    );
   };
 
   useEffect(() => {
