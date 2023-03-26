@@ -41,7 +41,7 @@ export const NoteEditorScreen = () => {
     password,
     salt,
     dateUpdated: dateUpdatedString,
-    newNote,
+    newNote: isNewNote = false,
   } = route?.params || {};
 
   const getUpdatedDate = (dateString) => {
@@ -53,6 +53,7 @@ export const NoteEditorScreen = () => {
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [contentIsSaved, setContentIsSaved] = useState(true);
   const [error, setError] = useState({});
+  const [newNote, setNewNote] = useState(isNewNote);
   const [dateUpdated, setDateUpdated] = useState(
     getUpdatedDate(dateUpdatedString)
   );
@@ -78,6 +79,7 @@ export const NoteEditorScreen = () => {
 
   const saveNote = ({ hasPassword, password }) => {
     setContentIsSaved(true);
+    setNewNote(false);
     let contentToSave = content;
     let salt;
     let updatedHashOfPassword;
@@ -138,7 +140,6 @@ export const NoteEditorScreen = () => {
 
   const changeTitle = (newTitle) => {
     setContentIsSaved(false);
-
     setTitle(newTitle);
   };
 
@@ -155,7 +156,20 @@ export const NoteEditorScreen = () => {
     dispatch(
       showPrompt({
         category: DELETE_NOTE_PROMPT,
-        data: { noteName: title },
+        data: { noteName: previousNoteName.current },
+      })
+    );
+  };
+
+  const goBack = () => {
+    if (contentIsSaved) {
+      navigation.goBack();
+      return;
+    }
+    dispatch(
+      showPrompt({
+        category: EXIT_WITHOUT_SAVING_PROMPT,
+        data: { onAccept: () => navigation.goBack() },
       })
     );
   };
@@ -190,7 +204,7 @@ export const NoteEditorScreen = () => {
             <ActionBar
               title={newNote ? "Creating note" : "Editing note"}
               leftIconSource={require("../../assets/icons/backButtonIcon.png")}
-              leftIconLink={() => navigation.goBack()}
+              leftIconLink={goBack}
               {...getActionBarProps()}
               onDelete={!newNote && onDelete}
             />
