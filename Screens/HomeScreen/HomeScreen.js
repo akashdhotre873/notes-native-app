@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ActionBar } from "../../components/ActionBar";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../../dux/notes";
@@ -8,12 +8,14 @@ import { NoteListCard } from "../../components/NoteListCard";
 import { useState } from "react";
 import { promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
+import { useEffect } from "react";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const notes = useSelector(getNotes);
   const [selectedNoteName, setSelectedNoteName] = useState("");
+  const isFocused = useIsFocused();
 
   const sortAlgo = (noteFirst, noteSecond) => {
     if (noteFirst.name > noteSecond.name) {
@@ -34,6 +36,10 @@ export const HomeScreen = () => {
     setSelectedNoteName("");
   };
 
+  useEffect(() => {
+    return () => setSelectedNoteName("");
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
       <ActionBar
@@ -47,7 +53,7 @@ export const HomeScreen = () => {
       <ScrollView style={styles.cardsContainer}>
         {Object.values(notes)
           .sort(sortAlgo)
-          .map((note, index) => (
+          .map((note) => (
             <NoteListCard
               note={note}
               key={note.name}
