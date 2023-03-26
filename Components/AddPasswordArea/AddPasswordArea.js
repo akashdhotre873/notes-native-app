@@ -5,7 +5,7 @@ import { promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 
 export const AddPasswordArea = ({
-  saveNote,
+  onSave,
   isDisabled,
   passwordProtected,
   setPasswordProtected,
@@ -15,11 +15,11 @@ export const AddPasswordArea = ({
   const dispatch = useDispatch();
 
   const removePassword = (password) => {
-    saveNote({ hasPassword: false, password: password });
+    onSave({ hasPassword: false, password: password });
   };
 
   const addPassword = (password) => {
-    saveNote({ hasPassword: true, password });
+    onSave({ hasPassword: true, password });
   };
 
   const onToggleSwitch = (switchOn) => {
