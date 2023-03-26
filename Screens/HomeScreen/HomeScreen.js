@@ -9,6 +9,7 @@ import { useState } from "react";
 import { promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 import { useEffect } from "react";
+import { Tabs } from "../../components/Tabs";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
@@ -42,6 +43,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Tabs />
       <ActionBar
         leftIconSource={require("../../assets/icons/plusButtonIcon.png")}
         leftIconLink={() =>

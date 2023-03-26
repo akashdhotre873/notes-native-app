@@ -1,4 +1,5 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { colors } from "../../helpers/constants";
 
 export const ActionBar = ({
   title,
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     height: 50,
-    backgroundColor: "#006efe",
+    backgroundColor: colors.primaryColor,
     justifyContent: "space-between",
     alignItems: "center",
   },

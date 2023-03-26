@@ -9,3 +9,18 @@ export const promptCategoryType = {
 export const errorMessages = {
   WRONG_PASSWORD: "Please enter right password",
 };
+
+export const colors = {
+  primaryColor: "#006efe",
+};
+
+export const tabs = [
+  {
+    name: "Notes",
+    value: "notes",
+  },
+  {
+    name: "Todos",
+    value: "todos",
+  },
+];
