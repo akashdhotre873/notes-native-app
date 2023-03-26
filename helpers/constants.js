@@ -4,6 +4,7 @@ export const promptCategoryType = {
   ERROR_PROMPT: "error prompt",
   EXIT_WITHOUT_SAVING_PROMPT: "exit without saving",
   DELETE_NOTE_PROMPT: "delete note",
+  DELETE_TODO_PROMPT: "delete todo",
 };
 
 export const errorMessages = {

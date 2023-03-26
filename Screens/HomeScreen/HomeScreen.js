@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Tabs } from "../../components/Tabs";
 import { getSelectedTab } from "../../dux/tabs";
 import { NotesHomeScreen } from "../NotesHomeScreen";
+import { TodosHomeScreen } from "../TodosHomeScreen";
 
 export const HomeScreen = () => {
   const selectedTab = useSelector(getSelectedTab);
@@ -11,6 +12,7 @@ export const HomeScreen = () => {
     <View style={styles.container}>
       <Tabs />
       {selectedTab === "notes" && <NotesHomeScreen />}
+      {selectedTab === "todos" && <TodosHomeScreen />}
     </View>
   );
 };
