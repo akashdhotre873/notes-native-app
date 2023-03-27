@@ -1,9 +1,11 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { ActionBar } from "../../components/ActionBar";
+import { TodoListCard } from "../../components/TodoListCard";
 import { showPrompt } from "../../dux/prompt";
+import { getTodos } from "../../dux/todos";
 import { promptCategoryType } from "../../helpers/constants";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 
@@ -11,6 +13,7 @@ export const TodosHomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
+  const todos = useSelector(getTodos);
 
   const [selectedTodoName, setSelectedTodoName] = useState("");
 
@@ -43,6 +46,18 @@ export const TodosHomeScreen = () => {
         title="All Todos"
         onDelete={selectedTodoName ? onDelete : null}
       />
+      <ScrollView style={styles.cardsContainer}>
+        {Object.values(todos)
+          .sort(sortAlgo)
+          .map((todo) => (
+            <TodoListCard
+              todo={todo}
+              key={todo.name}
+              selectedTodoName={selectedTodoName}
+              setSelectedTodoName={setSelectedTodoName}
+            />
+          ))}
+      </ScrollView>
     </View>
   );
 };
