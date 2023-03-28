@@ -6,6 +6,7 @@ import { CreatePassword } from "../../Prompt/CreatePassword";
 import { ErrorPrompt } from "../../Prompt/ErrorPrompt";
 import { ExitWithoutSaving } from "../../Prompt/ExitWithoutSaving";
 import { DeleteNotePrompt } from "../../Prompt/DeleteNotePrompt";
+import { DeleteTodoPrompt } from "../../Prompt/DeleteTodoPrompt";
 
 export const Promtps = () => {
   const { category, data } = useSelector(getPromptData);
@@ -16,6 +17,7 @@ export const Promtps = () => {
     ERROR_PROMPT,
     EXIT_WITHOUT_SAVING_PROMPT,
     DELETE_NOTE_PROMPT,
+    DELETE_TODO_PROMPT,
   } = promptCategoryType;
 
   return (
@@ -27,6 +29,7 @@ export const Promtps = () => {
         <ExitWithoutSaving data={data} />
       )}
       {category === DELETE_NOTE_PROMPT && <DeleteNotePrompt data={data} />}
+      {category === DELETE_TODO_PROMPT && <DeleteTodoPrompt data={data} />}
     </>
   );
 };

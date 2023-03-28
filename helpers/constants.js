@@ -25,3 +25,10 @@ export const tabs = [
     value: "todos",
   },
 ];
+
+export const todoStatus = {
+  CREATED: "CREATED",
+  IN_PROGRESS: "IN_PROGRESS",
+  COMPLETED: "COMPLETED",
+  UNSURE: "UNSURE",
+};

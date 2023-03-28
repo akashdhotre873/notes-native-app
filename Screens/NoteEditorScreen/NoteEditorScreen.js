@@ -6,11 +6,10 @@ import {
   TouchableWithoutFeedback,
   View,
   BackHandler,
-  Alert,
+  TextInput,
 } from "react-native";
 import { ActionBar } from "../../components/ActionBar";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes, updateNote } from "../../dux/notes";
@@ -198,7 +197,7 @@ export const NoteEditorScreen = () => {
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         <TouchableWithoutFeedback>
           <View>
             <ActionBar

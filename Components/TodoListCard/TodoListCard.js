@@ -3,6 +3,7 @@ import { StyleSheet, View, Pressable, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { promptCategoryType } from "../../helpers/constants";
 import { getPlainText } from "../../helpers/cryptographyHelper";
+import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 
 export const TodoListCard = ({
@@ -18,6 +19,7 @@ export const TodoListCard = ({
     salt,
     dateUpdated: dateUpdatedString,
   } = todo;
+  const dateUpdated = new Date(dateUpdatedString);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -25,7 +27,7 @@ export const TodoListCard = ({
   const openNote = (password) => {
     const plainText = getPlainText(content, password);
     const newTodo = { ...todo };
-    newTodo.content = JSON.parse(plainText);
+    newTodo.content = plainText;
     navigation.navigate(TODO_EDITOR_SCREEN_PATH, {
       ...newTodo,
       password,

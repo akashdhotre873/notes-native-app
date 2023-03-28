@@ -1,3 +1,5 @@
+import { updateTodoHelper } from "../helpers/todosHelper";
+
 const SET_TODOS = `[todos] set todos`;
 const UPDATE_TODO = `[todos] update todo`;
 const DELETE_TODO = `[todos] delete todo`;
@@ -40,12 +42,12 @@ const todosReducer = (state = initialState, action) => {
     return action.payload;
   }
 
-  //   if (action.type === UPDATE_TODO) {
-  //     return updateTodoHelper({
-  //       todos: state,
-  //       ...action.payload,
-  //     });
-  //   }
+  if (action.type === UPDATE_TODO) {
+    return updateTodoHelper({
+      todos: state,
+      ...action.payload,
+    });
+  }
 
   if (action.type === DELETE_TODO) {
     const { todoName } = action.payload;
