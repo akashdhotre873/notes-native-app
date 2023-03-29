@@ -62,8 +62,9 @@ export const NoteEditorScreen = () => {
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(notes).some(
-      (currentheader) =>
-        currentheader.trim() === title?.trim() && currentheader !== header
+      (otherNoteName) =>
+        otherNoteName.trim() === title?.trim() &&
+        otherNoteName !== previousNoteName.current
     );
     if (sameTitleExists) {
       setError({
