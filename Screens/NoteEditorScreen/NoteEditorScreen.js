@@ -199,7 +199,7 @@ export const NoteEditorScreen = () => {
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         <TouchableWithoutFeedback>
           <View>
             <ActionBar
