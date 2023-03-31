@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button, Modal, TextInput } from "react-native-paper";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { hidePrompt } from "../../dux/prompt";
+import { Ionicons } from "@expo/vector-icons";
 
 export const CreatePassword = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();
   const [enteredPassword, setEnteredPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -27,15 +29,32 @@ export const CreatePassword = ({ data: { onAccept } }) => {
       <View>
         <Text style={styles.createPasswordText}>Create Password</Text>
 
-        <TextInput
-          style={styles.passwordArea}
-          value={enteredPassword}
-          placeholder="Enter password"
-          onChangeText={setEnteredPassword}
-          textContentType="password"
-          autoFocus
-          secureTextEntry={true}
-        />
+        <View style={styles.passwordAreaContainer}>
+          <TextInput
+            style={styles.passwordArea}
+            value={enteredPassword}
+            placeholder="Enter password"
+            onChangeText={setEnteredPassword}
+            textContentType="password"
+            autoFocus
+            secureTextEntry={!showPassword}
+          />
+          {showPassword ? (
+            <Ionicons
+              onPress={() => setShowPassword(!showPassword)}
+              name="eye-off"
+              size={20}
+              color="black"
+            />
+          ) : (
+            <Ionicons
+              onPress={() => setShowPassword(!showPassword)}
+              name="eye"
+              size={20}
+              color="black"
+            />
+          )}
+        </View>
 
         <View style={styles.buttonsContainer}>
           <Button
@@ -73,14 +92,23 @@ const styles = StyleSheet.create({
   },
   passwordArea: {
     backgroundColor: "#ffffff",
-
-    marginHorizontal: 20,
     marginBottom: 10,
     marginTop: 10,
+    paddingTop: 10,
+    fontSize: 20,
   },
   buttonsContainer: {
     flexDirection: "row-reverse",
     marginVertical: 15,
     marginLeft: 20,
+  },
+  passwordAreaContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginRight: 30,
+    marginLeft: 25,
+    borderBottomWidth: 2,
+    borderBottomColor: "#006efe",
   },
 });

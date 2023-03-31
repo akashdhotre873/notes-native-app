@@ -118,11 +118,12 @@ export const NoteEditorScreen = () => {
     previousNoteName.current = title;
   };
 
-  const saveIconClick = () => {
+  const checkAndSaveNote = ({ password, hasPassword }) => {
     if (checkIfTitleExists()) {
-      return;
+      return false;
     } else {
-      saveNote({ hasPassword: passwordProtected, password });
+      saveNote({ hasPassword, password });
+      return true;
     }
   };
 
@@ -134,7 +135,8 @@ export const NoteEditorScreen = () => {
       };
 
     return {
-      rightIconLink: saveIconClick,
+      rightIconLink: () =>
+        checkAndSaveNote({ hasPassword: passwordProtected, password }),
       rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
     };
   };
@@ -215,7 +217,7 @@ export const NoteEditorScreen = () => {
               </View>
             )}
             <AddPasswordArea
-              onSave={saveNote}
+              onSave={checkAndSaveNote}
               isDisabled={!title?.trim()}
               passwordProtected={passwordProtected}
               setPasswordProtected={setPasswordProtected}

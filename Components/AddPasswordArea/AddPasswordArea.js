@@ -14,12 +14,18 @@ export const AddPasswordArea = ({
 }) => {
   const dispatch = useDispatch();
 
-  const removePassword = (password) => {
-    onSave({ hasPassword: false, password: password });
+  const removePassword = (password, switchOn) => {
+    const noteIsSaved = onSave({ hasPassword: false, password: password });
+    if (noteIsSaved) {
+      setPasswordProtected(switchOn);
+    }
   };
 
-  const addPassword = (password) => {
-    onSave({ hasPassword: true, password });
+  const addPassword = (password, switchOn) => {
+    const noteIsSaved = onSave({ hasPassword: true, password });
+    if (noteIsSaved) {
+      setPasswordProtected(switchOn);
+    }
   };
 
   const onToggleSwitch = (switchOn) => {
@@ -28,10 +34,7 @@ export const AddPasswordArea = ({
         showPrompt({
           category: promptCategoryType.CONFIRM_PASSWORD_PROMPT,
           data: {
-            onAccept: (param) => {
-              removePassword(param);
-              setPasswordProtected(switchOn);
-            },
+            onAccept: (param) => removePassword(param, switchOn),
             passwordHash,
             salt,
           },
@@ -42,10 +45,7 @@ export const AddPasswordArea = ({
         showPrompt({
           category: promptCategoryType.CREATE_PASSWORD_PROMPT,
           data: {
-            onAccept: (password) => {
-              addPassword(password);
-              setPasswordProtected(switchOn);
-            },
+            onAccept: (password) => addPassword(password, switchOn),
           },
         })
       );

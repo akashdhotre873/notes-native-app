@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button, Modal, TextInput } from "react-native-paper";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { errorMessages, promptCategoryType } from "../../helpers/constants";
 import { hidePrompt, showPrompt } from "../../dux/prompt";
 import { getHash } from "../../helpers/cryptographyHelper";
+import { Ionicons } from "@expo/vector-icons";
 
 export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
   const dispatch = useDispatch();
   const [enteredPassword, setEnteredPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -39,15 +41,32 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
       <View>
         <Text style={styles.enterPasswordText}>Enter Password</Text>
 
-        <TextInput
-          value={enteredPassword}
-          onChangeText={setEnteredPassword}
-          textContentType="password"
-          placeholder="Enter password"
-          style={styles.passwordArea}
-          autoFocus
-          secureTextEntry={true}
-        />
+        <View style={styles.passwordAreaContainer}>
+          <TextInput
+            value={enteredPassword}
+            onChangeText={setEnteredPassword}
+            textContentType="password"
+            placeholder="Enter password"
+            style={styles.passwordArea}
+            autoFocus
+            secureTextEntry={!showPassword}
+          />
+          {showPassword ? (
+            <Ionicons
+              onPress={() => setShowPassword(!showPassword)}
+              name="eye-off"
+              size={20}
+              color="black"
+            />
+          ) : (
+            <Ionicons
+              onPress={() => setShowPassword(!showPassword)}
+              name="eye"
+              size={20}
+              color="black"
+            />
+          )}
+        </View>
 
         <View style={styles.buttonsContainer}>
           <Button mode="text" onPress={onConfirm}>
@@ -81,13 +100,23 @@ const styles = StyleSheet.create({
   },
   passwordArea: {
     backgroundColor: "#ffffff",
-    marginHorizontal: 20,
     marginBottom: 10,
     marginTop: 10,
+    paddingTop: 10,
+    fontSize: 20,
   },
   buttonsContainer: {
     flexDirection: "row-reverse",
     marginVertical: 15,
     marginLeft: 20,
+  },
+  passwordAreaContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginRight: 30,
+    marginLeft: 25,
+    borderBottomWidth: 2,
+    borderBottomColor: "#006efe",
   },
 });
