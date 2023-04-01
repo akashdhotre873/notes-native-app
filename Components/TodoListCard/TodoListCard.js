@@ -5,6 +5,7 @@ import { promptCategoryType } from "../../helpers/constants";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
+import { showPrompt } from "../../dux/prompt";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export const TodoListCard = ({
@@ -14,7 +15,7 @@ export const TodoListCard = ({
 }) => {
   const {
     name,
-    content,
+    tasks,
     passwordProtected,
     passwordHash,
     salt,
@@ -26,9 +27,9 @@ export const TodoListCard = ({
   const dispatch = useDispatch();
 
   const openNote = (password) => {
-    const plainText = getPlainText(content, password);
+    const plainText = getPlainText(tasks, password);
     const newTodo = { ...todo };
-    newTodo.content = plainText;
+    newTodo.tasks = plainText;
     navigation.navigate(TODO_EDITOR_SCREEN_PATH, {
       ...newTodo,
       password,
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    width: "70%",
+    paddingLeft: 15,
+    marginRight: 10,
   },
   timeContainer: {},
   dateModifiedText: {

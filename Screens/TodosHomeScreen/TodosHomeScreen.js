@@ -8,6 +8,7 @@ import { showPrompt } from "../../dux/prompt";
 import { getTodos } from "../../dux/todos";
 import { promptCategoryType } from "../../helpers/constants";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
+import { useEffect } from "react";
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
@@ -35,6 +36,10 @@ export const TodosHomeScreen = () => {
     );
     setSelectedTodoName("");
   };
+
+  useEffect(() => {
+    return () => setSelectedTodoName("");
+  }, [isFocused]);
 
   return (
     <View>

@@ -17,7 +17,7 @@ export const deleteTodo = ({ todoName }) => ({
 export const updateTodo = ({
   previousTodoName,
   currentTodoName,
-  content,
+  tasks,
   passwordProtected,
   passwordHash,
   salt,
@@ -27,7 +27,7 @@ export const updateTodo = ({
   payload: {
     previousTodoName,
     currentTodoName,
-    content,
+    tasks,
     passwordProtected,
     passwordHash,
     salt,

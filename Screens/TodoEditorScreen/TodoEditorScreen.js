@@ -19,6 +19,11 @@ import { getTodos, updateTodo } from "../../dux/todos";
 import { promptCategoryType, todoStatus } from "../../helpers/constants";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
+import {
+  getCipherText,
+  getHash,
+  getUUID,
+} from "../../helpers/cryptographyHelper";
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 
@@ -30,7 +35,7 @@ export const TodoEditorScreen = () => {
 
   const {
     name: header = "",
-    content: originalContentStringified = "[]",
+    tasks: originalTasksStringified = "[]",
     passwordProtected: hasPassword,
     passwordHash,
     password,
@@ -42,24 +47,24 @@ export const TodoEditorScreen = () => {
   const getUpdatedDate = (dateString) => {
     return Boolean(dateString) ? new Date(dateString) : new Date();
   };
-  const originalContent = JSON.parse(originalContentStringified);
+  const originalTasks = JSON.parse(originalTasksStringified);
   const [title, setTitle] = useState(header);
-  const [content, setContent] = useState(originalContent);
-  const index = useRef(content.length);
+  const [tasks, setTasks] = useState(originalTasks);
+  const index = useRef(tasks.length);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
-  const [contentIsSaved, setContentIsSaved] = useState(true);
+  const [TasksAreSaved, setTasksAreSaved] = useState(true);
   const [error, setError] = useState({});
   const [newTodo, setNewTodo] = useState(isNewTodo);
   const [dateUpdated, setDateUpdated] = useState(
     getUpdatedDate(dateUpdatedString)
   );
-  const contentRef = useRef();
   const previousTodoName = useRef(header);
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(todos).some(
-      (currentheader) =>
-        currentheader.trim() === title?.trim() && currentheader !== header
+      (otherTodoName) =>
+        otherTodoName.trim() === title?.trim() &&
+        otherTodoName !== previousTodoName.current
     );
     if (sameTitleExists) {
       setError({
@@ -74,13 +79,13 @@ export const TodoEditorScreen = () => {
   };
 
   const saveTodo = ({ hasPassword, password }) => {
-    setContentIsSaved(true);
+    setTasksAreSaved(true);
     setNewTodo(false);
-    let contentToSave = JSON.stringify(content);
+    let tasksToSave = JSON.stringify(tasks);
     let salt;
     let updatedHashOfPassword;
     if (hasPassword) {
-      contentToSave = getCipherText(content, password);
+      tasksToSave = getCipherText(tasksToSave, password);
       salt = getUUID();
       updatedHashOfPassword = getHash(password, salt);
     }
@@ -92,7 +97,7 @@ export const TodoEditorScreen = () => {
       updateTodo({
         previousTodoName: previousTodoName.current,
         currentTodoName: title.trim(),
-        content: contentToSave,
+        tasks: tasksToSave,
         passwordProtected: hasPassword,
         passwordHash: updatedHashOfPassword,
         salt,
@@ -103,7 +108,7 @@ export const TodoEditorScreen = () => {
       todos: todos,
       previousTodoName: previousTodoName.current,
       currentTodoName: title.trim(),
-      content: contentToSave,
+      tasks: tasksToSave,
       passwordProtected: hasPassword,
       passwordHash: updatedHashOfPassword,
       salt,
@@ -115,14 +120,15 @@ export const TodoEditorScreen = () => {
 
   const checkAndSaveTodo = ({ password, hasPassword }) => {
     if (checkIfTitleExists()) {
-      return;
+      return false;
     } else {
       saveTodo({ hasPassword, password });
+      return true;
     }
   };
 
   const getActionBarProps = () => {
-    if (!title?.trim() || contentIsSaved)
+    if (!title?.trim() || TasksAreSaved)
       return {
         rightIconLink: () => {},
         rightIconSource: require("../../assets/icons/saveInactiveButtonIcon.png"),
@@ -136,16 +142,16 @@ export const TodoEditorScreen = () => {
   };
 
   const changeTitle = (newTitle) => {
-    setContentIsSaved(false);
+    setTasksAreSaved(false);
     setTitle(newTitle);
   };
 
-  const changeContent = (index, newContent) => {
-    setContentIsSaved(false);
-    setContent((prevContent) =>
-      prevContent.map((eachTodo) => {
+  const changeTasks = (index, newTasks) => {
+    setTasksAreSaved(false);
+    setTasks((prevTasks) =>
+      prevTasks.map((eachTodo) => {
         if (eachTodo.index === index) {
-          eachTodo.value = newContent;
+          eachTodo.value = newTasks;
         }
         return eachTodo;
       })
@@ -162,7 +168,7 @@ export const TodoEditorScreen = () => {
   };
 
   const goBack = () => {
-    if (contentIsSaved) {
+    if (TasksAreSaved) {
       navigation.goBack();
       return;
     }
@@ -175,8 +181,8 @@ export const TodoEditorScreen = () => {
   };
 
   const addNewTodo = () => {
-    setContent((prevContent) => [
-      ...prevContent,
+    setTasks((prevTasks) => [
+      ...prevTasks,
       {
         index: index.current,
         value: "",
@@ -188,7 +194,7 @@ export const TodoEditorScreen = () => {
   };
 
   const backAction = () => {
-    if (contentIsSaved) {
+    if (TasksAreSaved) {
       return false;
     }
     dispatch(
@@ -207,7 +213,7 @@ export const TodoEditorScreen = () => {
     );
 
     return () => backHandler.remove();
-  }, [contentIsSaved]);
+  }, [TasksAreSaved]);
 
   return (
     <Pressable style={styles.container}>
@@ -262,15 +268,15 @@ export const TodoEditorScreen = () => {
             )}
           </View>
         </TouchableWithoutFeedback>
-        {content.map((eachTodo) => {
+        {tasks.map((eachTodo) => {
           return (
             <TextInput
               key={eachTodo.dueDate.toString()}
               placeholder="Add todo here"
-              style={styles.content}
+              style={styles.tasks}
               multiline
               value={eachTodo.value}
-              onChangeText={(text) => changeContent(eachTodo.index, text)}
+              onChangeText={(text) => changeTasks(eachTodo.index, text)}
             />
           );
         })}
@@ -292,7 +298,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginHorizontal: 5,
   },
-  content: {
+  tasks: {
     paddingTop: 10,
     paddingLeft: 15,
     marginVertical: 10,
