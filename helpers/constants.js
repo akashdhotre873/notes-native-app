@@ -32,3 +32,10 @@ export const todoStatus = {
   COMPLETED: "COMPLETED",
   UNSURE: "UNSURE",
 };
+
+export const taskStatus = {
+  CREATED: "CREATED",
+  IN_PROGRESS: "IN_PROGRESS",
+  COMPLETED: "COMPLETED",
+  UNSURE: "UNSURE",
+};
