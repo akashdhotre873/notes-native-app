@@ -6,6 +6,7 @@ import { showPrompt } from "../../dux/prompt";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export const NoteListCard = ({
   note,
@@ -65,7 +66,14 @@ export const NoteListCard = ({
         onLongPress={() => setSelectedNoteName(toggleName)}
         style={styles.innerContainer}
       >
-        <Text style={styles.name}>{name}</Text>
+        <View style={styles.noteTitleContainer}>
+          {passwordProtected ? (
+            <FontAwesome5 name="lock" size={22} color="#fe9a03" />
+          ) : (
+            <FontAwesome5 name="lock-open" size={22} color="#01eb00" />
+          )}
+          <Text style={styles.name}>{name}</Text>
+        </View>
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -98,9 +106,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 15,
   },
+  noteTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "65%",
+  },
   name: {
     fontSize: 24,
-    width: "70%",
+    paddingLeft: 15,
+    marginRight: 10,
   },
   timeContainer: {},
   dateModifiedText: {
@@ -113,4 +127,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     opacity: 0.9,
   },
+  lockIcon: {},
 });
