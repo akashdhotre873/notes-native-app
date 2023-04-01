@@ -50,7 +50,7 @@ export const TodoEditorScreen = () => {
   const originalTasks = JSON.parse(originalTasksStringified);
   const [title, setTitle] = useState(header);
   const [tasks, setTasks] = useState(originalTasks);
-  const index = useRef(tasks.length);
+  const id = useRef(tasks.length);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [TasksAreSaved, setTasksAreSaved] = useState(true);
   const [error, setError] = useState({});
@@ -146,11 +146,11 @@ export const TodoEditorScreen = () => {
     setTitle(newTitle);
   };
 
-  const changeTasks = (index, newTasks) => {
+  const changeTasks = (id, newTasks) => {
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
       prevTasks.map((eachTodo) => {
-        if (eachTodo.index === index) {
+        if (eachTodo.id === id) {
           eachTodo.value = newTasks;
         }
         return eachTodo;
@@ -184,13 +184,13 @@ export const TodoEditorScreen = () => {
     setTasks((prevTasks) => [
       ...prevTasks,
       {
-        index: index.current,
+        id: id.current,
         value: "",
         status: todoStatus.CREATED,
         dueDate: new Date(),
       },
     ]);
-    index.current = index.current + 1;
+    id.current = id.current + 1;
   };
 
   const backAction = () => {
@@ -276,7 +276,7 @@ export const TodoEditorScreen = () => {
               style={styles.tasks}
               multiline
               value={eachTodo.value}
-              onChangeText={(text) => changeTasks(eachTodo.index, text)}
+              onChangeText={(text) => changeTasks(eachTodo.id, text)}
             />
           );
         })}
