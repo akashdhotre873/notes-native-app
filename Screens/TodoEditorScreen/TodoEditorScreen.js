@@ -24,6 +24,7 @@ import {
   getHash,
   getUUID,
 } from "../../helpers/cryptographyHelper";
+import { TaskEntity } from "../../components/TaskEntity";
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 
@@ -50,7 +51,7 @@ export const TodoEditorScreen = () => {
   const originalTasks = JSON.parse(originalTasksStringified);
   const [title, setTitle] = useState(header);
   const [tasks, setTasks] = useState(originalTasks);
-  const id = useRef(tasks.length);
+  const [id, setId] = useState(tasks.length);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [TasksAreSaved, setTasksAreSaved] = useState(true);
   const [error, setError] = useState({});
@@ -146,18 +147,6 @@ export const TodoEditorScreen = () => {
     setTitle(newTitle);
   };
 
-  const changeTasks = (id, newTasks) => {
-    setTasksAreSaved(false);
-    setTasks((prevTasks) =>
-      prevTasks.map((eachTodo) => {
-        if (eachTodo.id === id) {
-          eachTodo.value = newTasks;
-        }
-        return eachTodo;
-      })
-    );
-  };
-
   const onDelete = () => {
     dispatch(
       showPrompt({
@@ -181,16 +170,17 @@ export const TodoEditorScreen = () => {
   };
 
   const addNewTodo = () => {
+    setTasksAreSaved(false);
     setTasks((prevTasks) => [
       ...prevTasks,
       {
-        id: id.current,
+        id: id,
         value: "",
         status: todoStatus.CREATED,
         dueDate: new Date(),
       },
     ]);
-    id.current = id.current + 1;
+    setId((id) => id + 1);
   };
 
   const backAction = () => {
@@ -268,16 +258,18 @@ export const TodoEditorScreen = () => {
             )}
           </View>
         </TouchableWithoutFeedback>
-        {tasks.map((eachTodo) => {
+        {tasks.map((task) => {
           return (
-            <TextInput
-              key={eachTodo.dueDate.toString()}
-              placeholder="Add todo here"
-              style={styles.tasks}
-              multiline
-              value={eachTodo.value}
-              onChangeText={(text) => changeTasks(eachTodo.id, text)}
-            />
+            <View
+              key={task.dueDate.toString() + task.id}
+              style={styles.taskContainer}
+            >
+              <TaskEntity
+                setTasksAreSaved={setTasksAreSaved}
+                task={task}
+                setTasks={setTasks}
+              />
+            </View>
           );
         })}
 
@@ -298,14 +290,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginHorizontal: 5,
   },
-  tasks: {
-    paddingTop: 10,
-    paddingLeft: 15,
-    marginVertical: 10,
-    paddingRight: 10,
-    fontSize: 20,
-    marginHorizontal: 5,
-  },
+
   marginBottom: {
     paddingVertical: 10,
   },
@@ -339,5 +324,9 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     fontSize: 20,
     marginHorizontal: 5,
+  },
+  taskContainer: {
+    flexDirection: "row",
+    marginBottom: 10,
   },
 });
