@@ -113,11 +113,11 @@ export const TodoEditorScreen = () => {
     previousTodoName.current = title;
   };
 
-  const saveIconClick = () => {
+  const checkAndSaveTodo = ({ password, hasPassword }) => {
     if (checkIfTitleExists()) {
       return;
     } else {
-      saveTodo({ hasPassword: passwordProtected, password });
+      saveTodo({ hasPassword, password });
     }
   };
 
@@ -129,7 +129,8 @@ export const TodoEditorScreen = () => {
       };
 
     return {
-      rightIconLink: saveIconClick,
+      rightIconLink: () =>
+        checkAndSaveTodo({ hasPassword: passwordProtected, password }),
       rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
     };
   };
@@ -226,7 +227,7 @@ export const TodoEditorScreen = () => {
               </View>
             )}
             <AddPasswordArea
-              onSave={saveTodo}
+              onSave={checkAndSaveTodo}
               isDisabled={!title?.trim()}
               passwordProtected={passwordProtected}
               setPasswordProtected={setPasswordProtected}
