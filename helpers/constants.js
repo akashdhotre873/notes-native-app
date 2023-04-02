@@ -5,6 +5,8 @@ export const promptCategoryType = {
   EXIT_WITHOUT_SAVING_PROMPT: "exit without saving",
   DELETE_NOTE_PROMPT: "delete note",
   DELETE_TODO_PROMPT: "delete todo",
+  UPDATE_TASK_STATUS_PROMPT: "update task status",
+  UPDATE_TODO_STATUS_PROMPT: "update todo status",
 };
 
 export const errorMessages = {

@@ -1,16 +1,23 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import { colors, taskStatus } from "../../helpers/constants";
+import {
+  colors,
+  promptCategoryType,
+  taskStatus,
+} from "../../helpers/constants";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { showPrompt } from "../../dux/prompt";
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;
 
 export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
+  const dispatch = useDispatch();
+
   const { status, id, value } = task;
 
   const updateTasks = (id, newTasks) => {
-    console.log(id);
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
@@ -34,6 +41,19 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
     );
   };
 
+  const deleteTask = () => {
+    console.log("delte task");
+  };
+
+  const modifyTaskStatus = () => {
+    dispatch(
+      showPrompt({
+        category: promptCategoryType.UPDATE_TASK_STATUS_PROMPT,
+        data: { updateTask, deleteTask, task },
+      })
+    );
+  };
+
   const getTaskStatusIcon = () => {
     if (status === CREATED) {
       return (
@@ -43,6 +63,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
           color="black"
           style={styles.statusIcon}
           onPress={() => updateTask({ newStatus: IN_PROGRESS })}
+          onLongPress={modifyTaskStatus}
         />
       );
     }
@@ -54,6 +75,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
           color={colors.primaryColor}
           style={styles.statusIcon}
           onPress={() => updateTask({ newStatus: COMPLETED })}
+          onLongPress={modifyTaskStatus}
         />
       );
     }
@@ -66,6 +88,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
           style={styles.statusIcon}
           color="black"
           onPress={() => updateTask({ newStatus: CREATED })}
+          onLongPress={modifyTaskStatus}
         />
       );
     }
@@ -77,6 +100,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
           size={26}
           color="black"
           onPress={() => updateTask({ newStatus: CREATED })}
+          onLongPress={modifyTaskStatus}
         />
       );
     }
