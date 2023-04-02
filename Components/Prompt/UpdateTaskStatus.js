@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { hidePrompt } from "../../dux/prompt";
+import { colors } from "../../helpers/constants";
 
 export const UpdateTaskStatus = ({ task, updateTask, deleteTask }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,15 @@ export const UpdateTaskStatus = ({ task, updateTask, deleteTask }) => {
         </Text>
 
         <View style={styles.buttonsContainer}>
+          <Pressable
+            style={[styles.buttonContainer, styles.completedButtonContainer]}
+            onPress={closeHandler}
+          >
+            <Text style={[styles.button, styles.completedButton]}>
+              Completed
+            </Text>
+          </Pressable>
+
           <Pressable
             style={[styles.buttonContainer, styles.unsureButtonContainer]}
             android_ripple={{ color: "#fcf" }}
@@ -59,15 +69,6 @@ export const UpdateTaskStatus = ({ task, updateTask, deleteTask }) => {
           </Pressable>
 
           <Pressable
-            style={[styles.buttonContainer, styles.completedButtonContainer]}
-            onPress={closeHandler}
-          >
-            <Text style={[styles.button, styles.completedButton]}>
-              Completed
-            </Text>
-          </Pressable>
-
-          <Pressable
             style={[styles.buttonContainer, styles.deleteButtonContainer]}
             onPress={closeHandler}
           >
@@ -91,7 +92,7 @@ export const UpdateTaskStatus = ({ task, updateTask, deleteTask }) => {
 const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#ffffff",
-    top: "-10%",
+    top: "-5%",
     width: "80%",
     alignSelf: "center",
     elevation: 10,
@@ -129,8 +130,38 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginVertical: 5,
     width: "100%",
-    backgroundColor: "red",
     borderRadius: 5,
   },
-  createdButtonContainer: {},
+  unsureButtonContainer: {
+    backgroundColor: "orange",
+  },
+  unsureButton: {
+    color: "white",
+  },
+  createdButtonContainer: {
+    backgroundColor: "yellow",
+  },
+  createdButton: {
+    color: "black",
+  },
+  inProgressButtonContainer: {
+    backgroundColor: "green",
+  },
+  inProgressButton: {
+    color: "white",
+  },
+  completedButtonContainer: {
+    backgroundColor: colors.primaryColor,
+  },
+  completedButton: {
+    color: "white",
+  },
+  deleteButtonContainer: {
+    backgroundColor: "red",
+  },
+  deleteButton: {
+    color: "#ffffff",
+  },
+  cancelButtonContainer: {},
+  cancelButton: {},
 });
