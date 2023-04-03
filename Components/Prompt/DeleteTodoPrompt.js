@@ -7,6 +7,7 @@ import { hidePrompt, showPrompt } from "../../dux/prompt";
 import { deleteTodo, getTodoByName, getTodos } from "../../dux/todos";
 import { errorMessages, promptCategoryType } from "../../helpers/constants";
 import { deleteTodoInAsyncStorage } from "../../helpers/todosHelper";
+import { getHash } from "../../helpers/cryptographyHelper";
 
 export const DeleteTodoPrompt = ({
   data: { todoName, shouldGoBack = true },

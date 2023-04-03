@@ -51,7 +51,6 @@ export const TodoEditorScreen = () => {
   const originalTasks = JSON.parse(originalTasksStringified);
   const [title, setTitle] = useState(header);
   const [tasks, setTasks] = useState(originalTasks);
-  const [id, setId] = useState(tasks.length);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
   const [TasksAreSaved, setTasksAreSaved] = useState(true);
   const [error, setError] = useState({});
@@ -174,13 +173,12 @@ export const TodoEditorScreen = () => {
     setTasks((prevTasks) => [
       ...prevTasks,
       {
-        id: id,
+        id: getUUID(),
         value: "",
         status: todoStatus.CREATED,
         dueDate: new Date(),
       },
     ]);
-    setId((id) => id + 1);
   };
 
   const backAction = () => {

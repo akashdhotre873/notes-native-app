@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { showPrompt } from "../../dux/prompt";
+import PropTypes from "prop-types";
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;
 
@@ -42,14 +43,15 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
   };
 
   const deleteTask = () => {
-    console.log("delte task");
+    setTasksAreSaved(false);
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
   const modifyTaskStatus = () => {
     dispatch(
       showPrompt({
         category: promptCategoryType.UPDATE_TASK_STATUS_PROMPT,
-        data: { updateTask, deleteTask, task },
+        data: { updateTask, deleteTask },
       })
     );
   };
@@ -85,7 +87,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
         <Ionicons
           name="md-checkbox"
           size={24}
-          style={styles.statusIcon}
+          style={[styles.statusIcon, styles.completedStatusIcon]}
           color="black"
           onPress={() => updateTask({ newStatus: CREATED })}
           onLongPress={modifyTaskStatus}
@@ -97,7 +99,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
         <EvilIcons
           style={styles.statusIcon}
           name="question"
-          size={26}
+          size={24}
           color="black"
           onPress={() => updateTask({ newStatus: CREATED })}
           onLongPress={modifyTaskStatus}
@@ -111,6 +113,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
     const styles = {
       COMPLETED: {
         textDecorationLine: "line-through",
+        opacity: 0.6,
       },
     };
     return styles[status] || {};
@@ -130,15 +133,21 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
   );
 };
 
+TaskEntity.propTypes = {
+  task: PropTypes.object.isRequired,
+  setTasksAreSaved: PropTypes.func.isRequired,
+  setTasks: PropTypes.func.isRequired,
+};
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     width: "100%",
   },
   tasks: {
-    paddingTop: 10,
-    paddingLeft: 15,
-    marginVertical: 10,
+    paddingTop: 5,
+    paddingLeft: 5,
+    marginVertical: 5,
     marginRight: 10,
     fontSize: 20,
     marginHorizontal: 5,
@@ -147,7 +156,11 @@ const styles = StyleSheet.create({
   },
   statusIcon: {
     alignSelf: "center",
-    paddingLeft: 10,
-    paddingTop: 12,
+    paddingLeft: 13,
+    paddingRight: 5,
+    paddingTop: 9,
+  },
+  completedStatusIcon: {
+    opacity: 0.6,
   },
 });
