@@ -89,14 +89,12 @@ const styles = StyleSheet.create({
   colorIndicatorLocked: {
     backgroundColor: colors.lockedColor,
     width: 7,
-    // height: "100%",
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
   },
   colorIndicatorNotLocked: {
     backgroundColor: colors.unlockedColor,
     width: 7,
-    // height: "100%",
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
   },
@@ -107,8 +105,6 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
     flexGrow: 1,
   },
   todoTitleContainer: {
@@ -119,11 +115,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     paddingLeft: 15,
-    marginRight: 10,
+    width: "67%",
+    alignSelf: "center",
   },
   timeContainer: {
     paddingRight: 15,
-    paddingLeft: 5,
+    paddingLeft: 3,
   },
   dateModifiedText: {
     marginLeft: "auto",

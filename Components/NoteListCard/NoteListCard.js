@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { promptCategoryType } from "../../helpers/constants";
+import { colors, promptCategoryType } from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
@@ -55,25 +55,30 @@ export const NoteListCard = ({
   };
 
   return (
-    <View
+    <Pressable
       style={[
         styles.container,
         selectedNoteName === name ? styles.selectedToDelete : {},
       ]}
+      onPress={onPress}
+      onLongPress={() => setSelectedNoteName(toggleName)}
     >
-      <Pressable
-        onPress={onPress}
-        onLongPress={() => setSelectedNoteName(toggleName)}
-        style={styles.innerContainer}
-      >
-        <View style={styles.noteTitleContainer}>
+      <View
+        style={
+          passwordProtected
+            ? styles.colorIndicatorLocked
+            : styles.colorIndicatorNotLocked
+        }
+      />
+      <Pressable style={styles.innerContainer}>
+        {/* <View style={styles.noteTitleContainer}>
           {passwordProtected ? (
             <FontAwesome5 name="lock" size={22} color="#fe9a03" />
           ) : (
             <FontAwesome5 name="lock-open" size={22} color="#01eb00" />
           )}
-          <Text style={styles.name}>{name}</Text>
-        </View>
+        </View> */}
+        <Text style={styles.name}>{name}</Text>
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -85,26 +90,27 @@ export const NoteListCard = ({
           </Text>
         </View>
       </Pressable>
-    </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 7,
     marginHorizontal: 10,
     marginVertical: 4,
     backgroundColor: "white",
     borderRadius: 7,
     elevation: 5,
+    flexDirection: "row",
   },
   selectedToDelete: {
     backgroundColor: "#f0ad4e",
   },
   innerContainer: {
+    paddingVertical: 7,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
+    flexGrow: 1,
   },
   noteTitleContainer: {
     flexDirection: "row",
@@ -115,8 +121,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     paddingLeft: 15,
     marginRight: 10,
+    width: "67%",
+    alignSelf: "center",
   },
-  timeContainer: {},
+  timeContainer: {
+    paddingRight: 15,
+    paddingLeft: 3,
+  },
   dateModifiedText: {
     marginLeft: "auto",
     opacity: 0.5,
@@ -128,4 +139,16 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   lockIcon: {},
+  colorIndicatorLocked: {
+    backgroundColor: colors.lockedColor,
+    width: 7,
+    borderBottomLeftRadius: 7,
+    borderTopLeftRadius: 7,
+  },
+  colorIndicatorNotLocked: {
+    backgroundColor: colors.unlockedColor,
+    width: 7,
+    borderBottomLeftRadius: 7,
+    borderTopLeftRadius: 7,
+  },
 });
