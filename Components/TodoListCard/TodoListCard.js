@@ -6,19 +6,15 @@ import { getPlainText } from "../../helpers/cryptographyHelper";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { showPrompt } from "../../dux/prompt";
-import { FontAwesome5 } from "@expo/vector-icons";
 
-export const TodoListCard = ({
-  todo,
-  selectedTodoName,
-  setSelectedTodoName,
-}) => {
+export const TodoListCard = ({ todo }) => {
   const {
     name,
     tasks,
     passwordProtected,
     passwordHash,
     salt,
+    status,
     dateUpdated: dateUpdatedString,
   } = todo;
   const dateUpdated = new Date(dateUpdatedString);
@@ -50,6 +46,16 @@ export const TodoListCard = ({
     }
   };
 
+  const getStyleForTodo = () => {
+    const styles = {
+      COMPLETED: {
+        textDecorationLine: "line-through",
+        opacity: 0.6,
+      },
+    };
+    return styles[status] || {};
+  };
+
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <View
@@ -61,7 +67,7 @@ export const TodoListCard = ({
       />
 
       <View style={styles.innerContainer}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     paddingLeft: 15,
-    width: "67%",
+    width: "60%",
     alignSelf: "center",
   },
   timeContainer: {
@@ -131,5 +137,15 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     fontSize: 12,
     opacity: 0.9,
+  },
+  statusIcon: {
+    paddingLeft: 5,
+  },
+  completedStatusIcon: {
+    opacity: 0.6,
+  },
+  nameContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

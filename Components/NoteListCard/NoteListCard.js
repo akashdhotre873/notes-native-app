@@ -70,14 +70,7 @@ export const NoteListCard = ({
             : styles.colorIndicatorNotLocked
         }
       />
-      <Pressable style={styles.innerContainer}>
-        {/* <View style={styles.noteTitleContainer}>
-          {passwordProtected ? (
-            <FontAwesome5 name="lock" size={22} color="#fe9a03" />
-          ) : (
-            <FontAwesome5 name="lock-open" size={22} color="#01eb00" />
-          )}
-        </View> */}
+      <View style={styles.innerContainer}>
         <Text style={styles.name}>{name}</Text>
 
         <View style={styles.timeContainer}>
@@ -89,7 +82,7 @@ export const NoteListCard = ({
             {getDateString(dateUpdated)}
           </Text>
         </View>
-      </Pressable>
+      </View>
     </Pressable>
   );
 };
