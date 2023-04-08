@@ -15,6 +15,8 @@ export const errorMessages = {
 
 export const colors = {
   primaryColor: "#006efe",
+  lockedColor: "#fe9a03",
+  unlockedColor: "#01eb00",
 };
 
 export const tabs = [

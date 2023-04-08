@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import { useDispatch } from "react-redux";
-import { promptCategoryType } from "../../helpers/constants";
+import { colors, promptCategoryType } from "../../helpers/constants";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
@@ -50,30 +50,18 @@ export const TodoListCard = ({
     }
   };
 
-  const toggleName = (previousName) => {
-    return previousName === name ? "" : name;
-  };
-
   return (
-    <View
-      style={[
-        styles.container,
-        selectedTodoName === name ? styles.selectedToDelete : {},
-      ]}
-    >
-      <Pressable
-        onPress={onPress}
-        onLongPress={() => setSelectedTodoName(toggleName)}
-        style={styles.innerContainer}
-      >
-        <View style={styles.todoTitleContainer}>
-          {passwordProtected ? (
-            <FontAwesome5 name="lock" size={22} color="#fe9a03" />
-          ) : (
-            <FontAwesome5 name="lock-open" size={22} color="#01eb00" />
-          )}
-          <Text style={styles.name}>{name}</Text>
-        </View>
+    <Pressable onPress={onPress} style={styles.container}>
+      <View
+        style={
+          passwordProtected
+            ? styles.colorIndicatorLocked
+            : styles.colorIndicatorNotLocked
+        }
+      />
+
+      <View style={styles.innerContainer}>
+        <Text style={styles.name}>{name}</Text>
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -84,27 +72,44 @@ export const TodoListCard = ({
             {getDateString(dateUpdated)}
           </Text>
         </View>
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 7,
     marginHorizontal: 10,
     marginVertical: 4,
     backgroundColor: "white",
     borderRadius: 7,
     elevation: 5,
+    flexDirection: "row",
+  },
+  colorIndicatorLocked: {
+    backgroundColor: colors.lockedColor,
+    width: 7,
+    // height: "100%",
+    borderBottomLeftRadius: 7,
+    borderTopLeftRadius: 7,
+  },
+  colorIndicatorNotLocked: {
+    backgroundColor: colors.unlockedColor,
+    width: 7,
+    // height: "100%",
+    borderBottomLeftRadius: 7,
+    borderTopLeftRadius: 7,
   },
   selectedToDelete: {
     backgroundColor: "#f0ad4e",
   },
   innerContainer: {
+    paddingVertical: 7,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
+    alignItems: "center",
+    flexWrap: "wrap",
+    flexGrow: 1,
   },
   todoTitleContainer: {
     flexDirection: "row",
@@ -116,7 +121,10 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     marginRight: 10,
   },
-  timeContainer: {},
+  timeContainer: {
+    paddingRight: 15,
+    paddingLeft: 5,
+  },
   dateModifiedText: {
     marginLeft: "auto",
     opacity: 0.5,
