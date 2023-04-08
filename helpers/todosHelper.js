@@ -5,6 +5,7 @@ export const updateTodoHelper = ({
   previousTodoName,
   currentTodoName,
   tasks,
+  status,
   passwordProtected,
   passwordHash,
   salt,
@@ -15,6 +16,7 @@ export const updateTodoHelper = ({
   newTodos[currentTodoName] = {};
   newTodos[currentTodoName].name = currentTodoName;
   newTodos[currentTodoName].tasks = tasks;
+  newTodos[currentTodoName].status = status;
   newTodos[currentTodoName].passwordProtected = passwordProtected;
   newTodos[currentTodoName].passwordHash = passwordHash;
   newTodos[currentTodoName].salt = salt;
@@ -27,6 +29,7 @@ export const updateTodoInAsyncStorage = ({
   previousTodoName,
   currentTodoName,
   tasks,
+  status,
   passwordProtected,
   passwordHash,
   salt,
@@ -36,6 +39,7 @@ export const updateTodoInAsyncStorage = ({
     todos,
     previousTodoName,
     tasks,
+    status,
     currentTodoName,
     passwordProtected,
     passwordHash,

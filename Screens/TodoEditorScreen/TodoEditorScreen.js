@@ -16,7 +16,11 @@ import { ActionBar } from "../../components/ActionBar";
 import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
 import { showPrompt } from "../../dux/prompt";
 import { getTodos, updateTodo } from "../../dux/todos";
-import { promptCategoryType, todoStatus } from "../../helpers/constants";
+import {
+  promptCategoryType,
+  taskStatus,
+  todoStatus,
+} from "../../helpers/constants";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
 import {
@@ -27,6 +31,16 @@ import {
 import { TaskEntity } from "../../components/TaskEntity";
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
+const {
+  CREATED: TASK_CREATED,
+  IN_PROGRESS: TASK_IN_PROGRESS,
+  COMPLETED: TASK_COMPLETED,
+} = taskStatus;
+const {
+  CREATED: TODO_CREATED,
+  COMPLETED: TODO_COMPLETED,
+  IN_PROGRESS: TODO_IN_PROGRESS,
+} = todoStatus;
 
 export const TodoEditorScreen = () => {
   const route = useRoute();
@@ -78,6 +92,23 @@ export const TodoEditorScreen = () => {
     return sameTitleExists;
   };
 
+  const getStatusOfTodo = () => {
+    let isTodoComplete = true;
+    tasks.forEach((task) => {
+      if (task.status === TASK_IN_PROGRESS) {
+        return TODO_IN_PROGRESS;
+      }
+      if (task.status !== TASK_COMPLETED) {
+        isTodoComplete = false;
+      }
+    });
+
+    if (isTodoComplete) {
+      return TODO_COMPLETED;
+    }
+    return TODO_CREATED;
+  };
+
   const saveTodo = ({ hasPassword, password }) => {
     setTasksAreSaved(true);
     setNewTodo(false);
@@ -90,6 +121,7 @@ export const TodoEditorScreen = () => {
       updatedHashOfPassword = getHash(password, salt);
     }
 
+    const status = getStatusOfTodo();
     const dateUpdatedLocal = new Date();
     setDateUpdated(dateUpdatedLocal);
 
@@ -98,6 +130,7 @@ export const TodoEditorScreen = () => {
         previousTodoName: previousTodoName.current,
         currentTodoName: title.trim(),
         tasks: tasksToSave,
+        status,
         passwordProtected: hasPassword,
         passwordHash: updatedHashOfPassword,
         salt,
@@ -109,6 +142,7 @@ export const TodoEditorScreen = () => {
       previousTodoName: previousTodoName.current,
       currentTodoName: title.trim(),
       tasks: tasksToSave,
+      status,
       passwordProtected: hasPassword,
       passwordHash: updatedHashOfPassword,
       salt,
