@@ -287,8 +287,11 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 30,
     marginHorizontal: 5,
+    width: "60%",
   },
-
+  addTodoTextContainer: {
+    alignSelf: "center",
+  },
   marginBottom: {
     paddingVertical: 10,
   },
@@ -315,9 +318,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  addTodoTextContainer: {
-    alignSelf: "center",
-  },
+
   addTodoText: {
     paddingRight: 15,
     fontSize: 20,
