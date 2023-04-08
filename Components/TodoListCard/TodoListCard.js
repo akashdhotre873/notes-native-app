@@ -7,7 +7,11 @@ import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { showPrompt } from "../../dux/prompt";
 
-export const TodoListCard = ({ todo }) => {
+export const TodoListCard = ({
+  todo,
+  selectedTodoName,
+  setSelectedTodoName,
+}) => {
   const {
     name,
     tasks,
@@ -56,8 +60,19 @@ export const TodoListCard = ({ todo }) => {
     return styles[status] || {};
   };
 
+  const toggleName = (previousName) => {
+    return previousName === name ? "" : name;
+  };
+
   return (
-    <Pressable onPress={onPress} style={styles.container}>
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.container,
+        selectedTodoName === name ? styles.selectedToDelete : {},
+      ]}
+      onLongPress={() => setSelectedTodoName(toggleName)}
+    >
       <View
         style={
           passwordProtected
