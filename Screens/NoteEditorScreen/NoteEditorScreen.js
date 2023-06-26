@@ -6,11 +6,10 @@ import {
   TouchableWithoutFeedback,
   View,
   BackHandler,
-  Alert,
+  TextInput,
 } from "react-native";
 import { ActionBar } from "../../components/ActionBar";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes, updateNote } from "../../dux/notes";
@@ -37,9 +36,9 @@ export const NoteEditorScreen = () => {
     name: header = "",
     content: originalContent = "",
     passwordProtected: hasPassword,
-    passwordHash,
-    password,
-    salt,
+    passwordHash: passwordHashOld,
+    password: passWordOld,
+    salt: saltOld,
     dateUpdated: dateUpdatedString,
     newNote: isNewNote = false,
   } = route?.params || {};
@@ -51,6 +50,9 @@ export const NoteEditorScreen = () => {
   const [title, setTitle] = useState(header);
   const [content, setContent] = useState(originalContent);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
+  const [password, setPassword] = useState(passWordOld);
+  const [passwordHash, setPasswordHash] = useState(passwordHashOld);
+  const [salt, setSalt] = useState(saltOld);
   const [contentIsSaved, setContentIsSaved] = useState(true);
   const [error, setError] = useState({});
   const [newNote, setNewNote] = useState(isNewNote);
@@ -81,6 +83,7 @@ export const NoteEditorScreen = () => {
   const saveNote = ({ hasPassword, password }) => {
     setContentIsSaved(true);
     setNewNote(false);
+    setPassword(password);
     let contentToSave = content;
     let salt;
     let updatedHashOfPassword;
@@ -88,6 +91,8 @@ export const NoteEditorScreen = () => {
       contentToSave = getCipherText(content, password);
       salt = getUUID();
       updatedHashOfPassword = getHash(password, salt);
+      setSalt(salt);
+      setPasswordHash(updatedHashOfPassword);
     }
 
     const dateUpdatedLocal = new Date();
