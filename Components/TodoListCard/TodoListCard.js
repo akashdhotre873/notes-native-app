@@ -1,11 +1,23 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Pressable, Text } from "react-native";
-import { useDispatch } from "react-redux";
-import { colors, promptCategoryType } from "../../helpers/constants";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  colors,
+  promptCategoryType,
+  taskStatus,
+  todoStatus,
+} from "../../helpers/constants";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { showPrompt } from "../../dux/prompt";
+import { getTodos, updateTodo } from "../../dux/todos";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
+
+const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
 export const TodoListCard = ({
   todo,
@@ -14,20 +26,31 @@ export const TodoListCard = ({
 }) => {
   const {
     name,
-    tasks,
+    tasks: stringifiedTasks = "[]",
     passwordProtected,
     passwordHash,
     salt,
-    status,
+    status: originalTodoStatus,
     dateUpdated: dateUpdatedString,
   } = todo;
-  const dateUpdated = new Date(dateUpdatedString);
+  // console.log(todo);
+
+  const getUpdatedDate = (dateString) => {
+    return Boolean(dateString) ? new Date(dateString) : new Date();
+  };
+
+  const [tasks, setTasks] = useState(JSON.parse(stringifiedTasks));
+  const [status, setStatus] = useState(originalTodoStatus);
+  const [dateUpdated, setDateUpdated] = useState(
+    getUpdatedDate(dateUpdatedString)
+  );
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const todos = useSelector(getTodos);
 
   const openNote = (password) => {
-    const plainText = getPlainText(tasks, password);
+    const plainText = getPlainText(JSON.stringify(tasks), password);
     const newTodo = { ...todo };
     newTodo.tasks = plainText;
     navigation.navigate(TODO_EDITOR_SCREEN_PATH, {
@@ -60,6 +83,124 @@ export const TodoListCard = ({
     return styles[status] || {};
   };
 
+  const saveTodo = ({ newTodoStatus, tasks }) => {
+    let tasksToSave = JSON.stringify(tasks);
+    const status = newTodoStatus;
+    const dateUpdatedLocal = new Date();
+    setDateUpdated(dateUpdatedLocal);
+
+    dispatch(
+      updateTodo({
+        previousTodoName: name,
+        currentTodoName: name,
+        tasks: tasksToSave,
+        status,
+        passwordProtected,
+        passwordHash,
+        salt,
+        dateUpdated: dateUpdatedLocal,
+      })
+    );
+    updateTodoInAsyncStorage({
+      todos: todos,
+      previousTodoName: name,
+      currentTodoName: name,
+      tasks: tasksToSave,
+      status,
+      passwordProtected,
+      passwordHash,
+      salt,
+      dateUpdated: dateUpdatedLocal,
+    });
+  };
+
+  const getUpdatedTasks = ({ newTaskStatus }) => {
+    console.log(tasks, newTaskStatus);
+    const updatedTasks = tasks.map((task) => ({
+      ...task,
+      status: newTaskStatus ? newTaskStatus : task.status,
+    }));
+    console.log(updatedTasks);
+    setTasks(updatedTasks);
+    return updatedTasks;
+  };
+
+  const updateTodoStatus = ({ newTodoStatus }) => {
+    if (passwordProtected) {
+      return;
+    }
+    if (newTodoStatus === CREATED) {
+      setStatus(IN_PROGRESS);
+      saveTodo({
+        newTodoStatus: IN_PROGRESS,
+        tasks: getUpdatedTasks({ newTaskStatus: undefined }),
+      });
+      return;
+    }
+    if (newTodoStatus === IN_PROGRESS) {
+      setStatus(COMPLETED);
+      saveTodo({
+        newTodoStatus: COMPLETED,
+        tasks: getUpdatedTasks({ newTaskStatus: taskStatus.COMPLETED }),
+      });
+      return;
+    }
+    if (newTodoStatus === COMPLETED) {
+      setStatus(CREATED);
+      saveTodo({
+        newTodoStatus: CREATED,
+        tasks: getUpdatedTasks({ newTaskStatus: taskStatus.CREATED }),
+      });
+      return;
+    }
+  };
+
+  const getIconForTodo = () => {
+    if (status === CREATED) {
+      return (
+        <MaterialCommunityIcons
+          name="checkbox-blank-outline"
+          size={24}
+          color="black"
+          style={styles.statusIcon}
+          onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
+        />
+      );
+    }
+    if (status === IN_PROGRESS) {
+      return (
+        <MaterialCommunityIcons
+          name="checkbox-intermediate"
+          size={24}
+          color={colors.primaryColor}
+          style={styles.statusIcon}
+          onPress={() => updateTodoStatus({ newTodoStatus: COMPLETED })}
+        />
+      );
+    }
+    if (status === COMPLETED) {
+      return (
+        <Ionicons
+          name="md-checkbox"
+          size={24}
+          style={[styles.statusIcon, styles.completedStatusIcon]}
+          color="black"
+          onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
+        />
+      );
+    }
+
+    return (
+      <MaterialCommunityIcons
+        name="checkbox-blank-outline"
+        size={24}
+        color="black"
+        style={styles.statusIcon}
+        onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
+      />
+    );
+  };
+
   const toggleName = (previousName) => {
     return previousName === name ? "" : name;
   };
@@ -82,6 +223,7 @@ export const TodoListCard = ({
       />
 
       <View style={styles.innerContainer}>
+        {getIconForTodo()}
         <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
 
         <View style={styles.timeContainer}>
@@ -154,7 +296,8 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   statusIcon: {
-    paddingLeft: 5,
+    paddingLeft: 10,
+    alignSelf: "center",
   },
   completedStatusIcon: {
     opacity: 0.6,

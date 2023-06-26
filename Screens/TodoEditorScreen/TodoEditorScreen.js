@@ -94,6 +94,7 @@ export const TodoEditorScreen = () => {
 
   const getStatusOfTodo = () => {
     let isTodoComplete = true;
+    if (tasks.length === 0) return TODO_CREATED;
     for (const task of tasks) {
       if (task.status === TASK_IN_PROGRESS) {
         return TODO_IN_PROGRESS;
