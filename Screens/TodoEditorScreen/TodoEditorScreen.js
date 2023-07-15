@@ -35,6 +35,7 @@ const {
   CREATED: TASK_CREATED,
   IN_PROGRESS: TASK_IN_PROGRESS,
   COMPLETED: TASK_COMPLETED,
+  UNSURE,
 } = taskStatus;
 const {
   CREATED: TODO_CREATED,
@@ -97,6 +98,7 @@ export const TodoEditorScreen = () => {
 
   const getStatusOfTodo = () => {
     let isTodoComplete = true;
+    let isTodoInProgress = false;
     if (tasks.length === 0) return TODO_CREATED;
     for (const task of tasks) {
       if (task.status === TASK_IN_PROGRESS) {
@@ -105,10 +107,16 @@ export const TodoEditorScreen = () => {
       if (task.status !== TASK_COMPLETED) {
         isTodoComplete = false;
       }
+      if (task.status !== TASK_CREATED && task.status !== UNSURE) {
+        isTodoInProgress = true;
+      }
     }
 
     if (isTodoComplete) {
       return TODO_COMPLETED;
+    }
+    if (isTodoInProgress) {
+      return TODO_IN_PROGRESS;
     }
     return TODO_CREATED;
   };

@@ -30,17 +30,15 @@ export const TodoListCard = ({
     passwordProtected,
     passwordHash,
     salt,
-    status: originalTodoStatus,
+    status,
     dateUpdated: dateUpdatedString,
   } = todo;
-  // console.log(todo);
 
   const getUpdatedDate = (dateString) => {
     return Boolean(dateString) ? new Date(dateString) : new Date();
   };
 
-  const [tasks, setTasks] = useState(JSON.parse(stringifiedTasks));
-  const [status, setStatus] = useState(originalTodoStatus);
+  const tasks = JSON.parse(stringifiedTasks);
   const [dateUpdated, setDateUpdated] = useState(
     getUpdatedDate(dateUpdatedString)
   );
@@ -83,7 +81,7 @@ export const TodoListCard = ({
     return styles[status] || {};
   };
 
-  const saveTodo = ({ newTodoStatus, tasks }) => {
+  const saveTodo = ({ newTodoStatus }) => {
     let tasksToSave = JSON.stringify(tasks);
     const status = newTodoStatus;
     const dateUpdatedLocal = new Date();
@@ -114,45 +112,13 @@ export const TodoListCard = ({
     });
   };
 
-  const getUpdatedTasks = ({ newTaskStatus }) => {
-    console.log(tasks, newTaskStatus);
-    const updatedTasks = tasks.map((task) => ({
-      ...task,
-      status: newTaskStatus ? newTaskStatus : task.status,
-    }));
-    console.log(updatedTasks);
-    setTasks(updatedTasks);
-    return updatedTasks;
-  };
-
   const updateTodoStatus = ({ newTodoStatus }) => {
     if (passwordProtected) {
       return;
     }
-    if (newTodoStatus === CREATED) {
-      setStatus(IN_PROGRESS);
-      saveTodo({
-        newTodoStatus: IN_PROGRESS,
-        tasks: getUpdatedTasks({ newTaskStatus: undefined }),
-      });
-      return;
-    }
-    if (newTodoStatus === IN_PROGRESS) {
-      setStatus(COMPLETED);
-      saveTodo({
-        newTodoStatus: COMPLETED,
-        tasks: getUpdatedTasks({ newTaskStatus: taskStatus.COMPLETED }),
-      });
-      return;
-    }
-    if (newTodoStatus === COMPLETED) {
-      setStatus(CREATED);
-      saveTodo({
-        newTodoStatus: CREATED,
-        tasks: getUpdatedTasks({ newTaskStatus: taskStatus.CREATED }),
-      });
-      return;
-    }
+    saveTodo({
+      newTodoStatus,
+    });
   };
 
   const getIconForTodo = () => {
