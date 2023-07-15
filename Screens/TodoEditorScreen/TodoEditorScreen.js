@@ -52,11 +52,11 @@ export const TodoEditorScreen = () => {
     name: header = "",
     tasks: originalTasksStringified = "[]",
     passwordProtected: hasPassword,
-    passwordHash,
-    password,
-    salt,
+    passwordHash: passwordHashOld,
+    password: passwordOld,
+    salt: saltOld,
     dateUpdated: dateUpdatedString,
-    newTodo: isNewTodo,
+    newTodo: isNewTodo = false,
   } = route?.params || {};
 
   const getUpdatedDate = (dateString) => {
@@ -66,6 +66,9 @@ export const TodoEditorScreen = () => {
   const [title, setTitle] = useState(header);
   const [tasks, setTasks] = useState(originalTasks);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
+  const [password, setPassword] = useState(passwordOld);
+  const [passwordHash, setPasswordHash] = useState(passwordHashOld);
+  const [salt, setSalt] = useState(saltOld);
   const [TasksAreSaved, setTasksAreSaved] = useState(true);
   const [error, setError] = useState({});
   const [newTodo, setNewTodo] = useState(isNewTodo);
@@ -113,6 +116,7 @@ export const TodoEditorScreen = () => {
   const saveTodo = ({ hasPassword, password }) => {
     setTasksAreSaved(true);
     setNewTodo(false);
+    setPassword(password);
     let tasksToSave = JSON.stringify(tasks);
     let salt;
     let updatedHashOfPassword;
@@ -120,6 +124,8 @@ export const TodoEditorScreen = () => {
       tasksToSave = getCipherText(tasksToSave, password);
       salt = getUUID();
       updatedHashOfPassword = getHash(password, salt);
+      setSalt(salt);
+      setPasswordHash(updatedHashOfPassword);
     }
 
     const status = getStatusOfTodo();
