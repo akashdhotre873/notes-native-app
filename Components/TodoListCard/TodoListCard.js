@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   colors,
   promptCategoryType,
-  taskStatus,
   todoStatus,
 } from "../../helpers/constants";
 import { getPlainText } from "../../helpers/cryptographyHelper";
@@ -17,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
 
-const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
+const { CREATED, IN_PROGRESS, COMPLETED } = todoStatus;
 
 export const TodoListCard = ({
   todo,
@@ -26,7 +25,7 @@ export const TodoListCard = ({
 }) => {
   const {
     name,
-    tasks: stringifiedTasks = "[]",
+    tasks,
     passwordProtected,
     passwordHash,
     salt,
@@ -38,7 +37,6 @@ export const TodoListCard = ({
     return Boolean(dateString) ? new Date(dateString) : new Date();
   };
 
-  const tasks = JSON.parse(stringifiedTasks);
   const [dateUpdated, setDateUpdated] = useState(
     getUpdatedDate(dateUpdatedString)
   );
@@ -48,7 +46,7 @@ export const TodoListCard = ({
   const todos = useSelector(getTodos);
 
   const openNote = (password) => {
-    const plainText = getPlainText(JSON.stringify(tasks), password);
+    const plainText = getPlainText(tasks, password);
     const newTodo = { ...todo };
     newTodo.tasks = plainText;
     navigation.navigate(TODO_EDITOR_SCREEN_PATH, {
@@ -82,7 +80,6 @@ export const TodoListCard = ({
   };
 
   const saveTodo = ({ newTodoStatus }) => {
-    let tasksToSave = JSON.stringify(tasks);
     const status = newTodoStatus;
     const dateUpdatedLocal = new Date();
     setDateUpdated(dateUpdatedLocal);
@@ -91,7 +88,7 @@ export const TodoListCard = ({
       updateTodo({
         previousTodoName: name,
         currentTodoName: name,
-        tasks: tasksToSave,
+        tasks,
         status,
         passwordProtected,
         passwordHash,
@@ -103,7 +100,7 @@ export const TodoListCard = ({
       todos: todos,
       previousTodoName: name,
       currentTodoName: name,
-      tasks: tasksToSave,
+      tasks,
       status,
       passwordProtected,
       passwordHash,
