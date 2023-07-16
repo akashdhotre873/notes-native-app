@@ -10,13 +10,14 @@ import { getPlainText } from "../../helpers/cryptographyHelper";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { showPrompt } from "../../dux/prompt";
-import { getTodos, updateTodo } from "../../dux/todos";
+import { deleteTodo, getTodos, updateTodo } from "../../dux/todos";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
 
-const { CREATED, IN_PROGRESS, COMPLETED } = todoStatus;
+const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
 export const TodoListCard = ({
   todo,
@@ -109,6 +110,16 @@ export const TodoListCard = ({
     });
   };
 
+  const onDelete = () => {
+    dispatch(
+      showPrompt({
+        category: promptCategoryType.DELETE_TODO_PROMPT,
+        data: { todoName: name, shouldGoBack: false },
+      })
+    );
+    setSelectedTodoName("");
+  };
+
   const updateTodoStatus = ({ newTodoStatus }) => {
     if (passwordProtected) {
       return;
@@ -116,6 +127,21 @@ export const TodoListCard = ({
     saveTodo({
       newTodoStatus,
     });
+  };
+
+  const openUpdateTodoStatusPrompt = () => {
+    if (passwordProtected) {
+      return;
+    }
+    dispatch(
+      showPrompt({
+        category: promptCategoryType.UPDATE_TODO_STATUS_PROMPT,
+        data: {
+          updateTodo: ({ newTodoStatus }) => saveTodo({ newTodoStatus }),
+          deleteTodo: onDelete,
+        },
+      })
+    );
   };
 
   const getIconForTodo = () => {
@@ -127,6 +153,7 @@ export const TodoListCard = ({
           color="black"
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
+          onLongPress={openUpdateTodoStatusPrompt}
         />
       );
     }
@@ -138,6 +165,7 @@ export const TodoListCard = ({
           color={colors.primaryColor}
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: COMPLETED })}
+          onLongPress={openUpdateTodoStatusPrompt}
         />
       );
     }
@@ -149,6 +177,19 @@ export const TodoListCard = ({
           style={[styles.statusIcon, styles.completedStatusIcon]}
           color="black"
           onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
+          onLongPress={openUpdateTodoStatusPrompt}
+        />
+      );
+    }
+    if (status === UNSURE) {
+      return (
+        <EvilIcons
+          style={styles.statusIcon}
+          name="question"
+          size={24}
+          color="black"
+          onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
+          onLongPress={openUpdateTodoStatusPrompt}
         />
       );
     }
@@ -160,6 +201,7 @@ export const TodoListCard = ({
         color="black"
         style={styles.statusIcon}
         onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
+        onLongPress={openUpdateTodoStatusPrompt}
       />
     );
   };

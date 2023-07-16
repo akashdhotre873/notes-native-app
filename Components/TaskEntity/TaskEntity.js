@@ -34,7 +34,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
-        if (task.id === id && task.value) {
+        if (task.id === id) {
           task.status = newStatus;
         }
         return task;
