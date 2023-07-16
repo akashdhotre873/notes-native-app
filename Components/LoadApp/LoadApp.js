@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setNotes } from "../../dux/notes";
+import { setTodos } from "../../dux/todos";
 import {
   clearAsyncStorage,
   getItemFromAsyncStorage,
@@ -11,12 +12,19 @@ export const LoadApp = () => {
 
   useEffect(() => {
     // clearAsyncStorage();
-    const getStorageData = async () => {
+    const loadNotes = async () => {
       const value = await getItemFromAsyncStorage("notes");
       const notes = value || {};
       dispatch(setNotes({ notes }));
     };
-    getStorageData();
+
+    const loadTodos = async () => {
+      const value = await getItemFromAsyncStorage("todos");
+      const todos = value || {};
+      dispatch(setTodos({ todos }));
+    };
+    loadNotes();
+    loadTodos();
   }, []);
 
   return <></>;
