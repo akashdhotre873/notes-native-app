@@ -54,7 +54,7 @@ export const DeleteTodoPrompt = ({
       <View>
         <Text style={styles.header}>Delete Todo ?</Text>
         <Text style={styles.content}>
-          Are you sure you want to delte this todo ({" "}
+          Are you sure you want to delete this todo ({" "}
           <Text style={styles.todoNameText}>{todoName}</Text> ) ?
         </Text>
         {passwordProtected && (

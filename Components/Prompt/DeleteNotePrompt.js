@@ -55,7 +55,7 @@ export const DeleteNotePrompt = ({
       <View>
         <Text style={styles.header}>Delete Note ?</Text>
         <Text style={styles.content}>
-          Are you sure you want to delte this note ({" "}
+          Are you sure you want to delete this note ({" "}
           <Text style={styles.noteNameText}>{noteName}</Text> ) ?
         </Text>
         {passwordProtected && (
