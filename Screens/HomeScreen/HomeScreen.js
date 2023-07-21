@@ -1,24 +1,26 @@
-import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
-import { Tabs } from "../../components/Tabs";
-import { getSelectedTab } from "../../dux/tabs";
 import { NotesHomeScreen } from "../NotesHomeScreen";
 import { TodosHomeScreen } from "../TodosHomeScreen";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { colors } from "../../helpers/constants";
+import { TabBar } from "../../components/TabBar";
+
+const Tab = createMaterialTopTabNavigator();
 
 export const HomeScreen = () => {
-  const selectedTab = useSelector(getSelectedTab);
-
   return (
-    <View style={styles.container}>
-      <Tabs />
-      {selectedTab === "notes" && <NotesHomeScreen />}
-      {selectedTab === "todos" && <TodosHomeScreen />}
-    </View>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: colors.primaryColor,
+        },
+        tabBarLabelStyle: { fontSize: 16 },
+
+        tabBarIndicatorStyle: { backgroundColor: "yellow" },
+      }}
+      tabBar={(props) => <TabBar {...props} />}
+    >
+      <Tab.Screen name="Notes" component={NotesHomeScreen} />
+      <Tab.Screen name="Todos" component={TodosHomeScreen} />
+    </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
