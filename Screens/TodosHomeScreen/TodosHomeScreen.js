@@ -42,7 +42,7 @@ export const TodosHomeScreen = () => {
   }, [isFocused]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <ActionBar
         leftIconSource={require("../../assets/icons/plusButtonIcon.png")}
         leftIconLink={() =>
@@ -68,8 +68,10 @@ export const TodosHomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   cardsContainer: {
     backgroundColor: "#f8f8f3",
     marginTop: 5,
+    flex: 1,
   },
 });
