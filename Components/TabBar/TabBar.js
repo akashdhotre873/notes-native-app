@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-// import Animated from "react-native-reanimated";
+import { Text, View, Pressable } from "react-native";
 import { StyleSheet } from "react-native";
+import { colors } from "../../helpers/constants";
 
 export const TabBar = ({ state, descriptors, navigation, position }) => {
   return (
-    <View style={{ flexDirection: "row", paddingTop: 20 }}>
+    <View style={{ flexDirection: "row" }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -38,31 +36,52 @@ export const TabBar = ({ state, descriptors, navigation, position }) => {
             target: route.key,
           });
         };
-        // modify inputRange for custom behavior
-        // const inputRange = state.routes.map((_, i) => i);
-        // const opacity = Animated.interpolate(position, {
-        //   inputRange,
-        //   outputRange: inputRange.map((i) => (i === index ? 1 : 0)),
-        // });
 
         return (
-          <TouchableOpacity
+          <Pressable
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1 }}
+            style={[
+              styles.labelContainer,
+              isFocused ? styles.selectedLabelContainer : {},
+            ]}
             key={route.key}
           >
-            {/* <Animated.Text style={{}}>{label}</Animated.Text> */}
-            <Text>{label}</Text>
-          </TouchableOpacity>
+            <Text
+              style={[
+                styles.label,
+                isFocused ? styles.selectedLabel : styles.unselectedLabel,
+              ]}
+            >
+              {label}
+            </Text>
+          </Pressable>
         );
       })}
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  labelContainer: {
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: colors.primaryColor,
+  },
+  selectedLabelContainer: {
+    borderBottomWidth: 2,
+  },
+  label: {
+    alignSelf: "center",
+    fontSize: 16,
+  },
+  selectedLabel: {},
+  unselectedLabel: {
+    opacity: 0.5,
+  },
+});
