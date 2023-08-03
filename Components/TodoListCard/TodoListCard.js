@@ -149,7 +149,7 @@ export const TodoListCard = ({
       return (
         <MaterialCommunityIcons
           name="checkbox-blank-outline"
-          size={24}
+          size={22}
           color="black"
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
@@ -161,7 +161,7 @@ export const TodoListCard = ({
       return (
         <MaterialCommunityIcons
           name="checkbox-intermediate"
-          size={24}
+          size={22}
           color={colors.primaryColor}
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: COMPLETED })}
@@ -173,7 +173,7 @@ export const TodoListCard = ({
       return (
         <Ionicons
           name="md-checkbox"
-          size={24}
+          size={22}
           style={[styles.statusIcon, styles.completedStatusIcon]}
           color="black"
           onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
@@ -186,7 +186,7 @@ export const TodoListCard = ({
         <EvilIcons
           style={styles.statusIcon}
           name="question"
-          size={24}
+          size={22}
           color="black"
           onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
           onLongPress={openUpdateTodoStatusPrompt}
@@ -197,7 +197,7 @@ export const TodoListCard = ({
     return (
       <MaterialCommunityIcons
         name="checkbox-blank-outline"
-        size={24}
+        size={22}
         color="black"
         style={styles.statusIcon}
         onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
@@ -228,9 +228,10 @@ export const TodoListCard = ({
       />
 
       <View style={styles.innerContainer}>
-        {getIconForTodo()}
-        <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
-
+        <View style={styles.nameContainer}>
+          {getIconForTodo()}
+          <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
+        </View>
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
           <Text style={styles.dateModifiedText}>
@@ -280,11 +281,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "65%",
   },
+  nameContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    maxWidth: "60%",
+  },
   name: {
-    fontSize: 24,
+    fontSize: 22,
     paddingLeft: 15,
-    width: "60%",
-    alignSelf: "center",
   },
   timeContainer: {
     paddingRight: 15,
@@ -293,12 +297,12 @@ const styles = StyleSheet.create({
   dateModifiedText: {
     marginLeft: "auto",
     opacity: 0.5,
-    fontSize: 12,
+    fontSize: 10,
   },
   lastModifiedText: {
     marginLeft: "auto",
-    fontSize: 12,
     opacity: 0.9,
+    fontSize: 10,
   },
   statusIcon: {
     paddingLeft: 10,
@@ -306,9 +310,5 @@ const styles = StyleSheet.create({
   },
   completedStatusIcon: {
     opacity: 0.6,
-  },
-  nameContainer: {
-    flexDirection: "row",
-    alignItems: "center",
   },
 });

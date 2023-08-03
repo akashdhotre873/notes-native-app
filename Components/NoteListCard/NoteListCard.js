@@ -105,16 +105,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexGrow: 1,
   },
-  noteTitleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "65%",
-  },
   name: {
-    fontSize: 24,
+    fontSize: 22,
     paddingLeft: 15,
     marginRight: 10,
-    width: "67%",
+    maxWidth: "60%",
     alignSelf: "center",
   },
   timeContainer: {
@@ -124,11 +119,11 @@ const styles = StyleSheet.create({
   dateModifiedText: {
     marginLeft: "auto",
     opacity: 0.5,
-    fontSize: 12,
+    fontSize: 10,
   },
   lastModifiedText: {
     marginLeft: "auto",
-    fontSize: 12,
+    fontSize: 10,
     opacity: 0.9,
   },
   lockIcon: {},
