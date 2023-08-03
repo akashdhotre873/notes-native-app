@@ -34,13 +34,7 @@ export const TodoListCard = ({
     dateUpdated: dateUpdatedString,
   } = todo;
 
-  const getUpdatedDate = (dateString) => {
-    return Boolean(dateString) ? new Date(dateString) : new Date();
-  };
-
-  const [dateUpdated, setDateUpdated] = useState(
-    getUpdatedDate(dateUpdatedString)
-  );
+  const [dateUpdated, setDateUpdated] = useState(new Date(dateUpdatedString));
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -288,7 +282,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 22,
-    paddingLeft: 15,
+    paddingLeft: 10,
   },
   timeContainer: {
     paddingRight: 15,

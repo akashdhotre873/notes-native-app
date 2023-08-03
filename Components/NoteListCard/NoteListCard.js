@@ -6,7 +6,6 @@ import { showPrompt } from "../../dux/prompt";
 import { getPlainText } from "../../helpers/cryptographyHelper";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 export const NoteListCard = ({
   note,

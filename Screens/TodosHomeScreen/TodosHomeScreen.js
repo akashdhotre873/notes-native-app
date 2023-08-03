@@ -9,6 +9,7 @@ import { getTodos } from "../../dux/todos";
 import { promptCategoryType } from "../../helpers/constants";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { useEffect } from "react";
+import { getUUID } from "../../helpers/cryptographyHelper";
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
@@ -57,7 +58,7 @@ export const TodosHomeScreen = () => {
           .map((todo) => (
             <TodoListCard
               todo={todo}
-              key={todo.name}
+              key={todo.name + getUUID()}
               selectedTodoName={selectedTodoName}
               setSelectedTodoName={setSelectedTodoName}
             />
