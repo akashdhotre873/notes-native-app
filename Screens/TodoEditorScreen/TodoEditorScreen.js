@@ -77,6 +77,7 @@ export const TodoEditorScreen = () => {
     getUpdatedDate(dateUpdatedString)
   );
   const previousTodoName = useRef(header);
+  const autoFocusTaskId = useRef("");
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(todos).some(
@@ -219,15 +220,17 @@ export const TodoEditorScreen = () => {
 
   const addNewTodo = () => {
     setTasksAreSaved(false);
+    const newTaskId = getUUID();
     setTasks((prevTasks) => [
       ...prevTasks,
       {
-        id: getUUID(),
+        id: newTaskId,
         value: "",
         status: todoStatus.CREATED,
         dueDate: new Date(),
       },
     ]);
+    autoFocusTaskId.current = newTaskId;
   };
 
   const backAction = () => {
@@ -315,6 +318,7 @@ export const TodoEditorScreen = () => {
                 setTasksAreSaved={setTasksAreSaved}
                 task={task}
                 setTasks={setTasks}
+                autoFocusTaskId={autoFocusTaskId.current}
               />
             </View>
           );

@@ -13,7 +13,12 @@ import PropTypes from "prop-types";
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;
 
-export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
+export const TaskEntity = ({
+  task,
+  setTasksAreSaved,
+  setTasks,
+  autoFocusTaskId,
+}) => {
   const dispatch = useDispatch();
 
   const { status, id, value } = task;
@@ -123,6 +128,7 @@ export const TaskEntity = ({ task, setTasksAreSaved, setTasks }) => {
     <View style={styles.container}>
       {getTaskStatusIcon()}
       <TextInput
+        autoFocus={id === autoFocusTaskId}
         placeholder="Add todo here"
         style={[styles.tasks, getStyleForTask()]}
         multiline
