@@ -49,3 +49,8 @@ export const deleteNoteInAsyncStorage = ({ notes, noteName }) => {
   delete notes[noteName];
   setItemToAsyncStorage("notes", JSON.stringify(notes));
 };
+
+export const formatNoteToShare = (note) => {
+  const { name, content: noteContent } = note;
+  return name + "\n\n" + noteContent;
+};

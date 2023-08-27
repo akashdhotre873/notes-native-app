@@ -19,6 +19,11 @@ export const colors = {
   unlockedColor: "#01eb00",
 };
 
+export const dataType = {
+  NOTE: "NOTE",
+  TODO: "TODO",
+};
+
 export const tabs = [
   {
     name: "Notes",

@@ -17,6 +17,7 @@ import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordAre
 import { showPrompt } from "../../dux/prompt";
 import { getTodos, updateTodo } from "../../dux/todos";
 import {
+  dataType,
   promptCategoryType,
   taskStatus,
   todoStatus,
@@ -58,6 +59,7 @@ export const TodoEditorScreen = () => {
     salt: saltOld,
     dateUpdated: dateUpdatedString,
     newTodo: isNewTodo = false,
+    status = todoStatus.CREATED,
   } = route?.params || {};
 
   const getUpdatedDate = (dateString) => {
@@ -78,6 +80,12 @@ export const TodoEditorScreen = () => {
   );
   const previousTodoName = useRef(header);
   const autoFocusTaskId = useRef("");
+  const contentToShare = {
+    dataType: dataType.TODO,
+    name: title,
+    content: tasks,
+    status,
+  };
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(todos).some(
@@ -266,6 +274,7 @@ export const TodoEditorScreen = () => {
               leftIconLink={goBack}
               {...getActionBarProps()}
               onDelete={!newTodo && onDelete}
+              contentToShare={!newTodo && contentToShare} // can't share a todo till it's saved
             />
             {error.hasError && (
               <View style={styles.errorMessageContainer}>

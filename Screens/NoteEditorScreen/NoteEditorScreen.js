@@ -21,7 +21,7 @@ import {
 } from "../../helpers/cryptographyHelper";
 import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
 import { showPrompt } from "../../dux/prompt";
-import { promptCategoryType } from "../../helpers/constants";
+import { dataType, promptCategoryType } from "../../helpers/constants";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
@@ -61,6 +61,7 @@ export const NoteEditorScreen = () => {
   );
   const contentRef = useRef();
   const previousNoteName = useRef(header);
+  const contentToShare = { dataType: dataType.NOTE, name: title, content };
 
   const checkIfTitleExists = () => {
     const sameTitleExists = Object.keys(notes).some(
@@ -215,6 +216,7 @@ export const NoteEditorScreen = () => {
               leftIconLink={goBack}
               {...getActionBarProps()}
               onDelete={!newNote && onDelete}
+              contentToShare={!newNote && contentToShare} // can't share a note till it's saved
             />
             {error.hasError && (
               <View style={styles.errorMessageContainer}>

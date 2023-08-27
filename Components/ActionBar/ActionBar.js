@@ -1,5 +1,10 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { colors } from "../../helpers/constants";
+import { Divider, Menu, Button } from "react-native-paper";
+import { colors, dataType } from "../../helpers/constants";
+import { ShareContentComponent } from "../ShareContentComponent";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Entypo } from "@expo/vector-icons";
 
 export const ActionBar = ({
   title,
@@ -8,7 +13,24 @@ export const ActionBar = ({
   rightIconLink,
   rightIconSource,
   onDelete,
+  contentToShare,
 }) => {
+  const [menuVisible, setMenuVisible] = useState(false);
+  const displayMenu = onDelete; // if there are more options, and one of them is present, then show menu
+
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
+
+  const openMenu = () => {
+    setMenuVisible(true);
+  };
+
+  const onDeleteIconClick = () => {
+    closeMenu();
+    onDelete();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -20,18 +42,46 @@ export const ActionBar = ({
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.rightSideIcons}>
-        {onDelete && (
-          <Pressable onPress={onDelete} style={styles.deleteButton}>
-            <Image
-              source={require("../../assets/icons/delete-black-icon.png")}
-              style={styles.rightButtonImage}
+        {contentToShare && (
+          <ShareContentComponent
+            dataType={contentToShare.dataType}
+            content={contentToShare}
+          >
+            <Ionicons
+              name="share-outline"
+              size={30}
+              color="black"
+              style={styles.shareIcon}
             />
-          </Pressable>
+          </ShareContentComponent>
         )}
         {rightIconLink && (
           <Pressable onPress={rightIconLink} style={styles.rightButtonLink}>
             <Image source={rightIconSource} style={styles.rightButtonImage} />
           </Pressable>
+        )}
+        {displayMenu && (
+          <Menu
+            visible={menuVisible}
+            onDismiss={closeMenu}
+            anchor={
+              <Entypo
+                name="dots-three-vertical"
+                size={24}
+                color="black"
+                style={styles.kebabMenu}
+                onPress={openMenu}
+              />
+            }
+          >
+            {onDelete && (
+              <Menu.Item
+                onPress={onDeleteIconClick}
+                title="Delete"
+                leadingIcon="delete"
+              />
+            )}
+          </Menu>
         )}
       </View>
     </View>
@@ -77,5 +127,13 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     marginRight: 20,
+  },
+  shareIcon: {
+    marginRight: 15,
+  },
+  kebabMenu: {
+    paddingRight: 15,
+    paddingTop: 2,
+    paddingLeft: 2,
   },
 });

@@ -16,6 +16,7 @@ import { Promtps } from "./components/shared/Prompts";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { colors } from "./helpers/constants";
 import { TodoEditorScreen } from "./screens/TodoEditorScreen";
+import { Provider as PaperProvider } from "react-native-paper";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,26 +33,28 @@ const OtherComponents = () => {
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <StatusBar
-            backgroundColor={colors.primaryColor}
-            barStyle="dark-content"
-          />
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name={HOME_SCREEN_PATH} component={HomeScreen} />
-            <Stack.Screen
-              name={NOTE_EDITOR_SCREEN_PATH}
-              component={NoteEditorScreen}
+      <PaperProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <StatusBar
+              backgroundColor={colors.primaryColor}
+              barStyle="dark-content"
             />
-            <Stack.Screen
-              name={TODO_EDITOR_SCREEN_PATH}
-              component={TodoEditorScreen}
-            />
-          </Stack.Navigator>
-          <OtherComponents />
-        </NavigationContainer>
-      </SafeAreaProvider>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name={HOME_SCREEN_PATH} component={HomeScreen} />
+              <Stack.Screen
+                name={NOTE_EDITOR_SCREEN_PATH}
+                component={NoteEditorScreen}
+              />
+              <Stack.Screen
+                name={TODO_EDITOR_SCREEN_PATH}
+                component={TodoEditorScreen}
+              />
+            </Stack.Navigator>
+            <OtherComponents />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </PaperProvider>
     </Provider>
   );
 }

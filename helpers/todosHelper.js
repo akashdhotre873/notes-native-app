@@ -1,4 +1,5 @@
 import { setItemToAsyncStorage } from "./asyncStorageHelper";
+import { taskStatus } from "./constants";
 
 export const updateTodoHelper = ({
   todos,
@@ -52,4 +53,40 @@ export const updateTodoInAsyncStorage = ({
 export const deleteTodoInAsyncStorage = ({ todos, todoName }) => {
   delete todos[todoName];
   setItemToAsyncStorage("todos", JSON.stringify(todos));
+};
+
+const getSignForStatus = (status) => {
+  switch (status) {
+    case taskStatus.COMPLETED:
+      return " x ";
+
+    case taskStatus.IN_PROGRESS:
+      return " - ";
+
+    case taskStatus.UNSURE:
+      return " ? ";
+
+    default:
+      return "   ";
+  }
+};
+
+export const formatTodoToShare = (todo) => {
+  const { name, content, status } = todo;
+  let formattedText = `TODO\n`;
+  formattedText += `name: ${name}\n`;
+  formattedText += `Status: ${status}\n\n`;
+
+  formattedText += "Tasks: ";
+
+  if (content.length > 0) {
+    formattedText += "\n";
+    content.forEach((task) => {
+      formattedText += `- [${getSignForStatus(task.status)}] ${task.value}\n`;
+    });
+  } else {
+    formattedText += "No tasks present\n";
+  }
+
+  return formattedText;
 };
