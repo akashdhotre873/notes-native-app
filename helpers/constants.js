@@ -24,6 +24,11 @@ export const dataType = {
   TODO: "TODO",
 };
 
+export const shareMethod = {
+  CLIPBOARD: "CLIPBOARD",
+  EXTERANL_DIALOG: "EXTERNAL_DIALOG",
+};
+
 export const tabs = [
   {
     name: "Notes",

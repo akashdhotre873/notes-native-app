@@ -1,6 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { Divider, Menu, Button } from "react-native-paper";
-import { colors, dataType } from "../../helpers/constants";
+import { Divider, Menu } from "react-native-paper";
+import { colors, shareMethod } from "../../helpers/constants";
 import { ShareContentComponent } from "../ShareContentComponent";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -14,9 +14,10 @@ export const ActionBar = ({
   rightIconSource,
   onDelete,
   contentToShare,
+  allowCopyToClicpBoard,
 }) => {
   const [menuVisible, setMenuVisible] = useState(false);
-  const displayMenu = onDelete; // if there are more options, and one of them is present, then show menu
+  const shouldDisplayMenu = onDelete || allowCopyToClicpBoard; // if there are more options, and one of them is present, then show menu
 
   const closeMenu = () => {
     setMenuVisible(false);
@@ -29,6 +30,10 @@ export const ActionBar = ({
   const onDeleteIconClick = () => {
     closeMenu();
     onDelete();
+  };
+
+  const onCopyToClipBoardClick = () => {
+    closeMenu();
   };
 
   return (
@@ -44,8 +49,9 @@ export const ActionBar = ({
       <View style={styles.rightSideIcons}>
         {contentToShare && (
           <ShareContentComponent
-            dataType={contentToShare.dataType}
             content={contentToShare}
+            dataType={contentToShare.dataType}
+            shareType={shareMethod.EXTERANL_DIALOG}
           >
             <Ionicons
               name="share-outline"
@@ -60,7 +66,7 @@ export const ActionBar = ({
             <Image source={rightIconSource} style={styles.rightButtonImage} />
           </Pressable>
         )}
-        {displayMenu && (
+        {shouldDisplayMenu && (
           <Menu
             visible={menuVisible}
             onDismiss={closeMenu}
@@ -74,6 +80,17 @@ export const ActionBar = ({
               />
             }
           >
+            {allowCopyToClicpBoard && (
+              <ShareContentComponent
+                content={contentToShare}
+                dataType={contentToShare.dataType}
+                shareType={shareMethod.CLIPBOARD}
+                callBack={onCopyToClipBoardClick}
+              >
+                <Menu.Item title="Copy" leadingIcon="content-copy" />
+                <Divider />
+              </ShareContentComponent>
+            )}
             {onDelete && (
               <Menu.Item
                 onPress={onDeleteIconClick}

@@ -274,6 +274,7 @@ export const TodoEditorScreen = () => {
             {...getActionBarProps()}
             onDelete={!newTodo && onDelete}
             contentToShare={!newTodo && contentToShare} // can't share a todo till it's saved
+            allowCopyToClicpBoard={true}
           />
           {error.hasError && (
             <View style={styles.errorMessageContainer}>

@@ -216,6 +216,7 @@ export const NoteEditorScreen = () => {
             {...getActionBarProps()}
             onDelete={!newNote && onDelete}
             contentToShare={!newNote && contentToShare} // can't share a note till it's saved
+            allowCopyToClicpBoard={true}
           />
           {error.hasError && (
             <View style={styles.errorMessageContainer}>
