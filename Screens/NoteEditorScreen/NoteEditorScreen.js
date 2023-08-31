@@ -207,50 +207,50 @@ export const NoteEditorScreen = () => {
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
-        <TouchableWithoutFeedback>
-          <View>
-            <ActionBar
-              title={newNote ? "Creating note" : "Editing note"}
-              leftIconSource={require("../../assets/icons/backButtonIcon.png")}
-              leftIconLink={goBack}
-              {...getActionBarProps()}
-              onDelete={!newNote && onDelete}
-              contentToShare={!newNote && contentToShare} // can't share a note till it's saved
-            />
-            {error.hasError && (
-              <View style={styles.errorMessageContainer}>
-                <Text style={styles.errorMessage}>({error.errorMessage})</Text>
-              </View>
-            )}
-            <AddPasswordArea
-              onSave={checkAndSaveNote}
-              isDisabled={!title?.trim()}
-              passwordProtected={passwordProtected}
-              setPasswordProtected={setPasswordProtected}
-              passwordHash={passwordHash}
-              salt={salt}
-            />
+      <TouchableWithoutFeedback>
+        <View>
+          <ActionBar
+            title={newNote ? "Creating note" : "Editing note"}
+            leftIconSource={require("../../assets/icons/backButtonIcon.png")}
+            leftIconLink={goBack}
+            {...getActionBarProps()}
+            onDelete={!newNote && onDelete}
+            contentToShare={!newNote && contentToShare} // can't share a note till it's saved
+          />
+          {error.hasError && (
+            <View style={styles.errorMessageContainer}>
+              <Text style={styles.errorMessage}>({error.errorMessage})</Text>
+            </View>
+          )}
+          <AddPasswordArea
+            onSave={checkAndSaveNote}
+            isDisabled={!title?.trim()}
+            passwordProtected={passwordProtected}
+            setPasswordProtected={setPasswordProtected}
+            passwordHash={passwordHash}
+            salt={salt}
+          />
 
-            <TextInput
-              placeholder="Title"
-              style={styles.title}
-              value={title}
-              onChangeText={changeTitle}
-              autoFocus={!title}
-            />
-            {dateUpdated && (
-              <View style={styles.timeContainer}>
-                <Text style={styles.dateModifiedText}>
-                  {getTimeString(dateUpdated)}
-                </Text>
-                <Text style={styles.dateModifiedText}>
-                  {getDateString(dateUpdated)}
-                </Text>
-              </View>
-            )}
-          </View>
-        </TouchableWithoutFeedback>
+          <TextInput
+            placeholder="Title"
+            style={styles.title}
+            value={title}
+            onChangeText={changeTitle}
+            autoFocus={!title}
+          />
+          {dateUpdated && (
+            <View style={styles.timeContainer}>
+              <Text style={styles.dateModifiedText}>
+                {getTimeString(dateUpdated)}
+              </Text>
+              <Text style={styles.dateModifiedText}>
+                {getDateString(dateUpdated)}
+              </Text>
+            </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         <TextInput
           placeholder="Add note here"
           style={styles.content}

@@ -265,58 +265,55 @@ export const TodoEditorScreen = () => {
 
   return (
     <Pressable style={styles.container}>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
-        <TouchableWithoutFeedback>
-          <View>
-            <ActionBar
-              title={newTodo ? "Creating Todo" : "Editing Todo"}
-              leftIconSource={require("../../assets/icons/backButtonIcon.png")}
-              leftIconLink={goBack}
-              {...getActionBarProps()}
-              onDelete={!newTodo && onDelete}
-              contentToShare={!newTodo && contentToShare} // can't share a todo till it's saved
-            />
-            {error.hasError && (
-              <View style={styles.errorMessageContainer}>
-                <Text style={styles.errorMessage}>({error.errorMessage})</Text>
-              </View>
-            )}
-            <AddPasswordArea
-              onSave={checkAndSaveTodo}
-              isDisabled={!title?.trim()}
-              passwordProtected={passwordProtected}
-              setPasswordProtected={setPasswordProtected}
-              passwordHash={passwordHash}
-              salt={salt}
-            />
-
-            <View style={styles.titleContainer}>
-              <TextInput
-                placeholder="Title"
-                style={styles.title}
-                value={title}
-                onChangeText={changeTitle}
-                autoFocus={!title}
-              />
-              <Pressable
-                onPress={addNewTodo}
-                style={styles.addTodoTextContainer}
-              >
-                <Text style={styles.addTodoText}>+ Add Todo</Text>
-              </Pressable>
+      <TouchableWithoutFeedback>
+        <View>
+          <ActionBar
+            title={newTodo ? "Creating Todo" : "Editing Todo"}
+            leftIconSource={require("../../assets/icons/backButtonIcon.png")}
+            leftIconLink={goBack}
+            {...getActionBarProps()}
+            onDelete={!newTodo && onDelete}
+            contentToShare={!newTodo && contentToShare} // can't share a todo till it's saved
+          />
+          {error.hasError && (
+            <View style={styles.errorMessageContainer}>
+              <Text style={styles.errorMessage}>({error.errorMessage})</Text>
             </View>
-            {dateUpdated && (
-              <View style={styles.timeContainer}>
-                <Text style={styles.dateModifiedText}>
-                  {getTimeString(dateUpdated)}
-                </Text>
-                <Text style={styles.dateModifiedText}>
-                  {getDateString(dateUpdated)}
-                </Text>
-              </View>
-            )}
+          )}
+          <AddPasswordArea
+            onSave={checkAndSaveTodo}
+            isDisabled={!title?.trim()}
+            passwordProtected={passwordProtected}
+            setPasswordProtected={setPasswordProtected}
+            passwordHash={passwordHash}
+            salt={salt}
+          />
+
+          <View style={styles.titleContainer}>
+            <TextInput
+              placeholder="Title"
+              style={styles.title}
+              value={title}
+              onChangeText={changeTitle}
+              autoFocus={!title}
+            />
+            <Pressable onPress={addNewTodo} style={styles.addTodoTextContainer}>
+              <Text style={styles.addTodoText}>+ Add Todo</Text>
+            </Pressable>
           </View>
-        </TouchableWithoutFeedback>
+          {dateUpdated && (
+            <View style={styles.timeContainer}>
+              <Text style={styles.dateModifiedText}>
+                {getTimeString(dateUpdated)}
+              </Text>
+              <Text style={styles.dateModifiedText}>
+                {getDateString(dateUpdated)}
+              </Text>
+            </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         {tasks.map((task) => {
           return (
             <View
