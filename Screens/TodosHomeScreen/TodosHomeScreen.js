@@ -1,6 +1,6 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, BackHandler } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionBar } from "../../components/ActionBar";
 import { TodoListCard } from "../../components/TodoListCard";
@@ -41,6 +41,25 @@ export const TodosHomeScreen = () => {
   useEffect(() => {
     return () => setSelectedTodoName("");
   }, [isFocused]);
+
+  const backAction = () => {
+    if (!selectedTodoName) {
+      const canExit = false;
+      return canExit;
+    }
+    setSelectedTodoName("");
+    const canNotExit = true;
+    return canNotExit;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [selectedTodoName]);
 
   return (
     <View style={styles.container}>

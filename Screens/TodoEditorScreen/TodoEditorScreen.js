@@ -243,7 +243,8 @@ export const TodoEditorScreen = () => {
 
   const backAction = () => {
     if (TasksAreSaved) {
-      return false;
+      const canExit = false;
+      return canExit;
     }
     dispatch(
       showPrompt({
@@ -251,7 +252,8 @@ export const TodoEditorScreen = () => {
         data: { onAccept: () => navigation.goBack() },
       })
     );
-    return true;
+    const canNotExit = true;
+    return canNotExit;
   };
 
   useEffect(() => {

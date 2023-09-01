@@ -1,7 +1,7 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { BackHandler, ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionBar } from "../../components/ActionBar";
 import { NoteListCard } from "../../components/NoteListCard";
@@ -40,6 +40,25 @@ export const NotesHomeScreen = () => {
   useEffect(() => {
     return () => setSelectedNoteName("");
   }, [isFocused]);
+
+  const backAction = () => {
+    if (!selectedNoteName) {
+      const canExit = false;
+      return canExit;
+    }
+    setSelectedNoteName("");
+    const canNotExit = true;
+    return canNotExit;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [selectedNoteName]);
 
   return (
     <View style={styles.container}>
