@@ -9,6 +9,7 @@ import { DeleteNotePrompt } from "../../Prompt/DeleteNotePrompt";
 import { DeleteTodoPrompt } from "../../Prompt/DeleteTodoPrompt";
 import { UpdateTaskStatus } from "../../Prompt/UpdateTaskStatus";
 import { UpdateTodoStatus } from "../../Prompt/UpdateTodoStatus";
+import { FirstAppLoadWarning } from "../../Prompt/FirstAppLoadWarning";
 
 export const Promtps = () => {
   const { category, data } = useSelector(getPromptData);
@@ -22,6 +23,7 @@ export const Promtps = () => {
     DELETE_TODO_PROMPT,
     UPDATE_TASK_STATUS_PROMPT,
     UPDATE_TODO_STATUS_PROMPT,
+    FIRST_APP_LOAD_WARNING_PROMPT,
   } = promptCategoryType;
 
   return (
@@ -39,6 +41,9 @@ export const Promtps = () => {
       )}
       {category === UPDATE_TODO_STATUS_PROMPT && (
         <UpdateTodoStatus data={data} />
+      )}
+      {category === FIRST_APP_LOAD_WARNING_PROMPT && (
+        <FirstAppLoadWarning data={data} />
       )}
     </>
   );

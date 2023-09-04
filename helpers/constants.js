@@ -7,6 +7,7 @@ export const promptCategoryType = {
   DELETE_TODO_PROMPT: "delete todo",
   UPDATE_TASK_STATUS_PROMPT: "update task status",
   UPDATE_TODO_STATUS_PROMPT: "update todo status",
+  FIRST_APP_LOAD_WARNING_PROMPT: "first app load warning",
 };
 
 export const errorMessages = {
@@ -52,4 +53,8 @@ export const taskStatus = {
   IN_PROGRESS: "IN_PROGRESS",
   COMPLETED: "COMPLETED",
   UNSURE: "UNSURE",
+};
+
+export const warnings = {
+  FIRST_APP_LOAD_WARNING: "FIRST_APP_LOAD_WARNING",
 };
