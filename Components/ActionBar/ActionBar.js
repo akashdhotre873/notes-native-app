@@ -1,10 +1,8 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { Divider, Menu } from "react-native-paper";
 import { colors, shareMethod } from "../../helpers/constants";
 import { ShareContentComponent } from "../ShareContentComponent";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
+import { ActionBarMainMenu } from "../ActionBarMainMenu";
 
 export const ActionBar = ({
   title,
@@ -16,26 +14,6 @@ export const ActionBar = ({
   contentToShare,
   allowCopyToClicpBoard,
 }) => {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const shouldDisplayMenu = onDelete || allowCopyToClicpBoard; // if there are more options, and one of them is present, then show menu
-
-  const closeMenu = () => {
-    setMenuVisible(false);
-  };
-
-  const openMenu = () => {
-    setMenuVisible(true);
-  };
-
-  const onDeleteIconClick = () => {
-    closeMenu();
-    onDelete();
-  };
-
-  const onCopyToClipBoardClick = () => {
-    closeMenu();
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -66,40 +44,13 @@ export const ActionBar = ({
             <Image source={rightIconSource} style={styles.rightButtonImage} />
           </Pressable>
         )}
-        {shouldDisplayMenu && (
-          <Menu
-            visible={menuVisible}
-            onDismiss={closeMenu}
-            anchor={
-              <Entypo
-                name="dots-three-vertical"
-                size={24}
-                color="black"
-                style={styles.kebabMenu}
-                onPress={openMenu}
-              />
-            }
-          >
-            {allowCopyToClicpBoard && (
-              <ShareContentComponent
-                content={contentToShare}
-                dataType={contentToShare.dataType}
-                shareType={shareMethod.CLIPBOARD}
-                callBack={onCopyToClipBoardClick}
-              >
-                <Menu.Item title="Copy" leadingIcon="content-copy" />
-                <Divider />
-              </ShareContentComponent>
-            )}
-            {onDelete && (
-              <Menu.Item
-                onPress={onDeleteIconClick}
-                title="Delete"
-                leadingIcon="delete"
-              />
-            )}
-          </Menu>
-        )}
+
+        {/* shows menu icon which contains copy to clipboard and delete function */}
+        <ActionBarMainMenu
+          onDelete={onDelete}
+          allowCopyToClicpBoard={allowCopyToClicpBoard}
+          contentToShare={contentToShare}
+        />
       </View>
     </View>
   );
@@ -147,10 +98,5 @@ const styles = StyleSheet.create({
   },
   shareIcon: {
     marginRight: 15,
-  },
-  kebabMenu: {
-    paddingRight: 15,
-    paddingTop: 2,
-    paddingLeft: 2,
   },
 });
