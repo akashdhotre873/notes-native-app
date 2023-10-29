@@ -11,6 +11,7 @@ export const updateTodoHelper = ({
   passwordHash,
   salt,
   dateUpdated,
+  dateCreated,
 }) => {
   const newTodos = { ...todos };
   delete newTodos[previousTodoName];
@@ -22,6 +23,7 @@ export const updateTodoHelper = ({
   newTodos[currentTodoName].passwordHash = passwordHash;
   newTodos[currentTodoName].salt = salt;
   newTodos[currentTodoName].dateUpdated = dateUpdated.toString();
+  newTodos[currentTodoName].dateCreated = dateCreated.toString();
   return newTodos;
 };
 
@@ -35,6 +37,7 @@ export const updateTodoInAsyncStorage = ({
   passwordHash,
   salt,
   dateUpdated,
+  dateCreated,
 }) => {
   const newTodos = updateTodoHelper({
     todos,
@@ -46,6 +49,7 @@ export const updateTodoInAsyncStorage = ({
     passwordHash,
     salt,
     dateUpdated,
+    dateCreated,
   });
   setItemToAsyncStorage("todos", JSON.stringify(newTodos));
 };

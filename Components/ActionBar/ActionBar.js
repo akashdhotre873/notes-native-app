@@ -3,6 +3,7 @@ import { colors, shareMethod } from "../../helpers/constants";
 import { ShareContentComponent } from "../ShareContentComponent";
 import { Ionicons } from "@expo/vector-icons";
 import { ActionBarMainMenu } from "../ActionBarMainMenu";
+import { ActionBarSortOrderMenu } from "../ActionBarSortOrderMenu/ActionBarSortOrderMenu";
 
 export const ActionBar = ({
   title,
@@ -13,6 +14,7 @@ export const ActionBar = ({
   onDelete,
   contentToShare,
   allowCopyToClicpBoard,
+  sortItem,
 }) => {
   return (
     <View style={styles.container}>
@@ -51,6 +53,9 @@ export const ActionBar = ({
           allowCopyToClicpBoard={allowCopyToClicpBoard}
           contentToShare={contentToShare}
         />
+
+        {/* sort notes/todos menu */}
+        <ActionBarSortOrderMenu sortItem={sortItem} />
       </View>
     </View>
   );

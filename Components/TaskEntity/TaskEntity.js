@@ -23,12 +23,13 @@ export const TaskEntity = ({
 
   const { status, id, value } = task;
 
-  const updateTasks = (id, newTasks) => {
+  const updateTasks = (id, newTaskValue) => {
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
         if (task.id === id) {
-          task.value = newTasks;
+          task.value = newTaskValue;
+          task.dateUpdated = new Date();
         }
         return task;
       })

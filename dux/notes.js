@@ -22,6 +22,7 @@ export const updateNote = ({
   passwordHash,
   salt,
   dateUpdated,
+  dateCreated,
 }) => ({
   type: UPDATE_NOTE,
   payload: {
@@ -32,6 +33,7 @@ export const updateNote = ({
     passwordHash,
     salt,
     dateUpdated,
+    dateCreated,
   },
 });
 

@@ -40,6 +40,7 @@ export const NoteEditorScreen = () => {
     password: passWordOld,
     salt: saltOld,
     dateUpdated: dateUpdatedString,
+    dateCreated = new Date(),
     newNote: isNewNote = false,
   } = route?.params || {};
 
@@ -108,8 +109,10 @@ export const NoteEditorScreen = () => {
         passwordHash: updatedHashOfPassword,
         salt,
         dateUpdated: dateUpdatedLocal,
+        dateCreated,
       })
     );
+
     updateNoteInAsyncStorage({
       notes: notes,
       previousNoteName: previousNoteName.current,
@@ -119,6 +122,7 @@ export const NoteEditorScreen = () => {
       passwordHash: updatedHashOfPassword,
       salt,
       dateUpdated: dateUpdatedLocal,
+      dateCreated,
     });
 
     previousNoteName.current = title;

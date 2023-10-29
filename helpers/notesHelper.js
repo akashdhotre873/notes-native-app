@@ -9,6 +9,7 @@ export const updateNoteHelper = ({
   passwordHash,
   salt,
   dateUpdated,
+  dateCreated,
 }) => {
   const newNotes = { ...notes };
   delete newNotes[previousNoteName];
@@ -19,6 +20,7 @@ export const updateNoteHelper = ({
   newNotes[currentNoteName].passwordHash = passwordHash;
   newNotes[currentNoteName].salt = salt;
   newNotes[currentNoteName].dateUpdated = dateUpdated.toString();
+  newNotes[currentNoteName].dateCreated = dateCreated.toString();
   return newNotes;
 };
 
@@ -31,6 +33,7 @@ export const updateNoteInAsyncStorage = ({
   passwordHash,
   salt,
   dateUpdated,
+  dateCreated,
 }) => {
   const newNotes = updateNoteHelper({
     notes,
@@ -41,6 +44,7 @@ export const updateNoteInAsyncStorage = ({
     passwordHash,
     salt,
     dateUpdated,
+    dateCreated,
   });
   setItemToAsyncStorage("notes", JSON.stringify(newNotes));
 };

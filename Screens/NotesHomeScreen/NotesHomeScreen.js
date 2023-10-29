@@ -7,24 +7,29 @@ import { ActionBar } from "../../components/ActionBar";
 import { NoteListCard } from "../../components/NoteListCard";
 import { getNotes } from "../../dux/notes";
 import { showPrompt } from "../../dux/prompt";
-import { promptCategoryType } from "../../helpers/constants";
+import { dataType, promptCategoryType } from "../../helpers/constants";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
+import { sortNotes } from "../../helpers/sortHelper";
+import { getSortInfo } from "../../dux/sort";
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const notes = useSelector(getNotes);
+  const { selectedSortParameter, selectedSortOrder } = useSelector(
+    getSortInfo(dataType.NOTE)
+  );
 
   const [selectedNoteName, setSelectedNoteName] = useState("");
 
   const sortAlgo = (noteFirst, noteSecond) => {
-    if (noteFirst.name > noteSecond.name) {
-      return 1;
-    } else if (noteFirst.name < noteSecond.name) {
-      return -1;
-    }
-    return 0;
+    return sortNotes(
+      noteFirst,
+      noteSecond,
+      selectedSortParameter,
+      selectedSortOrder
+    );
   };
 
   const onDelete = () => {
@@ -69,6 +74,7 @@ export const NotesHomeScreen = () => {
         }
         title="All Notes"
         onDelete={selectedNoteName ? onDelete : null}
+        sortItem={dataType.NOTE}
       />
       <ScrollView style={styles.cardsContainer}>
         {Object.values(notes)

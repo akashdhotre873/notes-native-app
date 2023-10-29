@@ -4,6 +4,7 @@ import promptReducer from "../dux/prompt";
 import tabsReducer from "../dux/tabs";
 import todosReducer from "../dux/todos";
 import warningsReducer from "../dux/warnings";
+import sortReducer from "../dux/sort";
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     prompt: promptReducer,
     tabs: tabsReducer,
     warnings: warningsReducer,
+    sorting: sortReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

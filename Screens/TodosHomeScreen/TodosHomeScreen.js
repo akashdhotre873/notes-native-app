@@ -6,26 +6,31 @@ import { ActionBar } from "../../components/ActionBar";
 import { TodoListCard } from "../../components/TodoListCard";
 import { showPrompt } from "../../dux/prompt";
 import { getTodos } from "../../dux/todos";
-import { promptCategoryType } from "../../helpers/constants";
+import { dataType, promptCategoryType } from "../../helpers/constants";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { useEffect } from "react";
 import { getUUID } from "../../helpers/cryptographyHelper";
+import { getSortInfo } from "../../dux/sort";
+import { sortTodos } from "../../helpers/sortHelper";
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const todos = useSelector(getTodos);
+  const { selectedSortParameter, selectedSortOrder } = useSelector(
+    getSortInfo(dataType.TODO)
+  );
 
   const [selectedTodoName, setSelectedTodoName] = useState("");
 
   const sortAlgo = (todoFirst, todoSecond) => {
-    if (todoFirst.name > todoSecond.name) {
-      return 1;
-    } else if (todoFirst.name < todoSecond.name) {
-      return -1;
-    }
-    return 0;
+    return sortTodos(
+      todoFirst,
+      todoSecond,
+      selectedSortParameter,
+      selectedSortOrder
+    );
   };
 
   const onDelete = () => {
@@ -70,6 +75,7 @@ export const TodosHomeScreen = () => {
         }
         title="All Todos"
         onDelete={selectedTodoName ? onDelete : null}
+        sortItem={dataType.TODO}
       />
       <ScrollView style={styles.cardsContainer}>
         {Object.values(todos)

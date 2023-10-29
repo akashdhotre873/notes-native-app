@@ -58,3 +58,14 @@ export const taskStatus = {
 export const warnings = {
   FIRST_APP_LOAD_WARNING: "FIRST_APP_LOAD_WARNING",
 };
+
+export const sortOrder = {
+  ASCENDING: "ASCENDING",
+  DESCENDING: "DESCENDING",
+};
+
+export const sortParameter = {
+  NAME: "name",
+  DATE_CREATED: "DATE_CREATED",
+  LAST_MODIFIED: "LAST_MODIFIED",
+};

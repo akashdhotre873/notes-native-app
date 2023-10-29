@@ -23,6 +23,7 @@ export const updateTodo = ({
   passwordHash,
   salt,
   dateUpdated,
+  dateCreated,
 }) => ({
   type: UPDATE_TODO,
   payload: {
@@ -34,6 +35,7 @@ export const updateTodo = ({
     passwordHash,
     salt,
     dateUpdated,
+    dateCreated,
   },
 });
 

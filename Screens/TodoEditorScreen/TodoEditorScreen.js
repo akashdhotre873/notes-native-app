@@ -58,6 +58,7 @@ export const TodoEditorScreen = () => {
     password: passwordOld,
     salt: saltOld,
     dateUpdated: dateUpdatedString,
+    dateCreated = new Date(),
     newTodo: isNewTodo = false,
     status = todoStatus.CREATED,
   } = route?.params || {};
@@ -159,6 +160,7 @@ export const TodoEditorScreen = () => {
         passwordHash: updatedHashOfPassword,
         salt,
         dateUpdated: dateUpdatedLocal,
+        dateCreated,
       })
     );
     updateTodoInAsyncStorage({
@@ -171,6 +173,7 @@ export const TodoEditorScreen = () => {
       passwordHash: updatedHashOfPassword,
       salt,
       dateUpdated: dateUpdatedLocal,
+      dateCreated,
     });
 
     previousTodoName.current = title;
@@ -235,6 +238,7 @@ export const TodoEditorScreen = () => {
         id: newTaskId,
         value: "",
         status: todoStatus.CREATED,
+        dateCreated: new Date(),
         dueDate: new Date(),
       },
     ]);
