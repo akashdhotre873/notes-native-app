@@ -1,3 +1,4 @@
+import { setItemToAsyncStorage } from "./asyncStorageHelper";
 import { sortParameter, sortOrder } from "./constants";
 
 const sortStrings = (param1, param2, order) => {
@@ -38,4 +39,17 @@ export const sortNotes = (note1, note2, sortParam, order) => {
 
 export const sortTodos = (todo1, todo2, sortParam, order) => {
   return sortItems(todo1, todo2, sortParam, order);
+};
+
+export const updateSortingInfoInAsync = ({
+  allSortingInfo,
+  sortItem,
+  sortOrder,
+  sortParameter,
+}) => {
+  allSortingInfo[sortItem] = {
+    selectedSortOrder: sortOrder,
+    selectedSortParameter: sortParameter,
+  };
+  setItemToAsyncStorage("sortingInfo", JSON.stringify(allSortingInfo));
 };

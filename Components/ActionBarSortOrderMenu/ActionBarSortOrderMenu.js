@@ -7,15 +7,17 @@ import {
   sortParameter,
 } from "../../helpers/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { getSortInfo, updateSortInfo } from "../../dux/sort";
+import { getAllSortInfo, getSortInfoFor, updateSortInfo } from "../../dux/sort";
+import { updateSortingInfoInAsync } from "../../helpers/sortHelper";
 
 const { ASCENDING, DESCENDING } = sortOrderConstant;
 
 export const ActionBarSortOrderMenu = ({ sortItem }) => {
   const dispatch = useDispatch();
   const { selectedSortParameter, selectedSortOrder } = useSelector(
-    getSortInfo(sortItem)
+    getSortInfoFor(sortItem)
   );
+  const allSortingInfo = useSelector(getAllSortInfo);
 
   const [menuVisible, setMenuVisible] = useState(false);
   const shouldDisplayMenu = !!sortItem;
@@ -49,6 +51,12 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
         sortParameter: newSortParameter,
       })
     );
+    updateSortingInfoInAsync({
+      allSortingInfo,
+      sortItem,
+      sortOrder: newSortOrder,
+      sortParameter: newSortParameter,
+    });
   };
 
   if (!shouldDisplayMenu) {

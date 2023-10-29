@@ -6,9 +6,14 @@ import {
   clearAsyncStorage,
   getItemFromAsyncStorage,
 } from "../../helpers/asyncStorageHelper";
-import { promptCategoryType, warnings } from "../../helpers/constants";
+import {
+  defaultSortingInfo,
+  promptCategoryType,
+  warnings,
+} from "../../helpers/constants";
 import { showPrompt } from "../../dux/prompt";
 import { setWarningsList } from "../../dux/warnings";
+import { loadInitialSortInfo } from "../../dux/sort";
 
 export const LoadApp = () => {
   const dispatch = useDispatch();
@@ -41,6 +46,14 @@ export const LoadApp = () => {
       setFirstAppLoadWarned(warned);
     };
 
+    const loadSortingInfo = async () => {
+      const value = await getItemFromAsyncStorage("sortingInfo");
+
+      const sortingInfo = value || defaultSortingInfo;
+      dispatch(loadInitialSortInfo(sortingInfo));
+    };
+
+    loadSortingInfo();
     loadNotes();
     loadTodos();
     loadWarnings();

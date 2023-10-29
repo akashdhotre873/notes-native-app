@@ -10,7 +10,7 @@ import { dataType, promptCategoryType } from "../../helpers/constants";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { useEffect } from "react";
 import { getUUID } from "../../helpers/cryptographyHelper";
-import { getSortInfo } from "../../dux/sort";
+import { getSortInfoFor } from "../../dux/sort";
 import { sortTodos } from "../../helpers/sortHelper";
 
 export const TodosHomeScreen = () => {
@@ -19,7 +19,7 @@ export const TodosHomeScreen = () => {
   const dispatch = useDispatch();
   const todos = useSelector(getTodos);
   const { selectedSortParameter, selectedSortOrder } = useSelector(
-    getSortInfo(dataType.TODO)
+    getSortInfoFor(dataType.TODO)
   );
 
   const [selectedTodoName, setSelectedTodoName] = useState("");

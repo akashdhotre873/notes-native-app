@@ -10,7 +10,7 @@ import { showPrompt } from "../../dux/prompt";
 import { dataType, promptCategoryType } from "../../helpers/constants";
 import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { sortNotes } from "../../helpers/sortHelper";
-import { getSortInfo } from "../../dux/sort";
+import { getSortInfoFor } from "../../dux/sort";
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
@@ -18,7 +18,7 @@ export const NotesHomeScreen = () => {
   const dispatch = useDispatch();
   const notes = useSelector(getNotes);
   const { selectedSortParameter, selectedSortOrder } = useSelector(
-    getSortInfo(dataType.NOTE)
+    getSortInfoFor(dataType.NOTE)
   );
 
   const [selectedNoteName, setSelectedNoteName] = useState("");

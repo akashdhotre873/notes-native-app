@@ -1,22 +1,19 @@
-import { dataType, sortOrder, sortParameter } from "../helpers/constants";
+import { defaultSortingInfo } from "../helpers/constants";
 
 const UPDATE_SORT_INFO = `[sort] update sort info`;
+const LOAD_INITIAL_SORT_INFO = `[sort] load initial sort info`;
 
 export const updateSortInfo = ({ sortParameter, sortOrder, sortItem }) => ({
   type: UPDATE_SORT_INFO,
   payload: { sortParameter, sortOrder, sortItem },
 });
 
-const initialState = {
-  [dataType.NOTE]: {
-    selectedSortParameter: sortParameter.NAME,
-    selectedSortOrder: sortOrder.ASCENDING,
-  },
-  [dataType.TODO]: {
-    selectedSortParameter: sortParameter.NAME,
-    selectedSortOrder: sortOrder.ASCENDING,
-  },
-};
+export const loadInitialSortInfo = (sortingInfo) => ({
+  type: LOAD_INITIAL_SORT_INFO,
+  payload: sortingInfo,
+});
+
+const initialState = defaultSortingInfo;
 
 const sortReducer = (state = initialState, action) => {
   if (action.type === UPDATE_SORT_INFO) {
@@ -30,13 +27,19 @@ const sortReducer = (state = initialState, action) => {
     };
   }
 
+  if (action.type === LOAD_INITIAL_SORT_INFO) {
+    return action.payload;
+  }
+
   return state;
 };
 
 export default sortReducer;
 
 // selectors
-export const getSortInfo =
+export const getAllSortInfo = ({ sorting }) => sorting;
+
+export const getSortInfoFor =
   (sortItem) =>
   ({ sorting }) =>
     sorting[sortItem] || {};

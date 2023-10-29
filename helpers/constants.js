@@ -69,3 +69,14 @@ export const sortParameter = {
   DATE_CREATED: "DATE_CREATED",
   LAST_MODIFIED: "LAST_MODIFIED",
 };
+
+export const defaultSortingInfo = {
+  [dataType.NOTE]: {
+    selectedSortParameter: sortParameter.NAME,
+    selectedSortOrder: sortOrder.ASCENDING,
+  },
+  [dataType.TODO]: {
+    selectedSortParameter: sortParameter.NAME,
+    selectedSortOrder: sortOrder.ASCENDING,
+  },
+};
