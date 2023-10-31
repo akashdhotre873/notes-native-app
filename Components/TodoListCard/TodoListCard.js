@@ -90,7 +90,7 @@ export const TodoListCard = ({
         passwordHash,
         salt,
         dateUpdated: dateUpdatedLocal,
-        dateCreated,
+        dateCreated: new Date(dateCreated),
       })
     );
     updateTodoInAsyncStorage({
@@ -103,7 +103,7 @@ export const TodoListCard = ({
       passwordHash,
       salt,
       dateUpdated: dateUpdatedLocal,
-      dateCreated,
+      dateCreated: new Date(dateCreated),
     });
   };
 
