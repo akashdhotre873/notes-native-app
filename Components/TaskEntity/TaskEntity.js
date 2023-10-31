@@ -23,7 +23,7 @@ export const TaskEntity = ({
 
   const { status, id, value } = task;
 
-  const updateTasks = (id, newTaskValue) => {
+  const updateTasks = (newTaskValue) => {
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
@@ -42,6 +42,7 @@ export const TaskEntity = ({
       prevTasks.map((task) => {
         if (task.id === id) {
           task.status = newStatus;
+          task.dateUpdated = new Date();
         }
         return task;
       })
@@ -134,7 +135,7 @@ export const TaskEntity = ({
         style={[styles.tasks, getStyleForTask()]}
         multiline
         value={value}
-        onChangeText={(text) => updateTasks(id, text)}
+        onChangeText={(text) => updateTasks(text)}
       />
     </View>
   );

@@ -66,7 +66,10 @@ export const TodoEditorScreen = () => {
   const getUpdatedDate = (dateString) => {
     return Boolean(dateString) ? new Date(dateString) : new Date();
   };
-  const originalTasks = JSON.parse(originalTasksStringified);
+  const originalTasks = JSON.parse(originalTasksStringified).map((task) => {
+    task.dateCreated = getUpdatedDate(task.dateCreated);
+    return task;
+  });
   const [title, setTitle] = useState(header);
   const [tasks, setTasks] = useState(originalTasks);
   const [passwordProtected, setPasswordProtected] = useState(hasPassword);
@@ -135,7 +138,11 @@ export const TodoEditorScreen = () => {
     setTasksAreSaved(true);
     setNewTodo(false);
     setPassword(password);
-    let tasksToSave = JSON.stringify(tasks);
+    const tasksToStringify = tasks.map((task) => {
+      task.dateCreated = task.dateCreated.toString();
+      return task;
+    });
+    let tasksToSave = JSON.stringify(tasksToStringify);
     let salt;
     let updatedHashOfPassword;
     if (hasPassword) {

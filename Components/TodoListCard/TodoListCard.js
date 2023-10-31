@@ -32,6 +32,7 @@ export const TodoListCard = ({
     salt,
     status,
     dateUpdated: dateUpdatedString,
+    dateCreated,
   } = todo;
 
   const [dateUpdated, setDateUpdated] = useState(new Date(dateUpdatedString));
@@ -89,6 +90,7 @@ export const TodoListCard = ({
         passwordHash,
         salt,
         dateUpdated: dateUpdatedLocal,
+        dateCreated,
       })
     );
     updateTodoInAsyncStorage({
@@ -101,6 +103,7 @@ export const TodoListCard = ({
       passwordHash,
       salt,
       dateUpdated: dateUpdatedLocal,
+      dateCreated,
     });
   };
 
