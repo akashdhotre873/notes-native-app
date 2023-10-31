@@ -117,13 +117,13 @@ export const TaskEntity = ({
   };
 
   const getStyleForTask = () => {
-    const styles = {
-      COMPLETED: {
+    const taskStyles = {
+      [COMPLETED]: {
         textDecorationLine: "line-through",
         opacity: 0.6,
       },
     };
-    return styles[status] || {};
+    return taskStyles[status] || {};
   };
 
   return (

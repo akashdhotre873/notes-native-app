@@ -69,6 +69,7 @@ export const TodoEditorScreen = () => {
   const originalTasks = JSON.parse(originalTasksStringified).map((task) => {
     task.dateCreated = getUpdatedDate(task.dateCreated);
     task.dateUpdated = getUpdatedDate(task.dateUpdated);
+    task.dueDate = getUpdatedDate(task.dueDate);
     return task;
   });
   const [title, setTitle] = useState(header);
@@ -142,6 +143,7 @@ export const TodoEditorScreen = () => {
     const tasksToStringify = tasks.map((task) => {
       task.dateCreated = task.dateCreated.toString();
       task.dateUpdated = task.dateUpdated.toString();
+      task.dueDate = task.dueDate.toString();
       return task;
     });
     let tasksToSave = JSON.stringify(tasksToStringify);
@@ -247,6 +249,7 @@ export const TodoEditorScreen = () => {
         id: newTaskId,
         value: "",
         status: todoStatus.CREATED,
+        dateUpdated: new Date(),
         dateCreated: new Date(),
         dueDate: new Date(),
       },

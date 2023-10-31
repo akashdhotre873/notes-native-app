@@ -10,7 +10,7 @@ import { getPlainText } from "../../helpers/cryptographyHelper";
 import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
 import { getDateString, getTimeString } from "../../helpers/timeHelper";
 import { showPrompt } from "../../dux/prompt";
-import { deleteTodo, getTodos, updateTodo } from "../../dux/todos";
+import { getTodos, updateTodo } from "../../dux/todos";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
