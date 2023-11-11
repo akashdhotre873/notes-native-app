@@ -47,15 +47,15 @@ export const ActionBar = ({
           </Pressable>
         )}
 
+        {/* sort notes/todos menu */}
+        <ActionBarSortOrderMenu sortItem={sortItem} />
+
         {/* shows menu icon which contains copy to clipboard and delete function */}
         <ActionBarMainMenu
           onDelete={onDelete}
           allowCopyToClicpBoard={allowCopyToClicpBoard}
           contentToShare={contentToShare}
         />
-
-        {/* sort notes/todos menu */}
-        <ActionBarSortOrderMenu sortItem={sortItem} />
       </View>
     </View>
   );
