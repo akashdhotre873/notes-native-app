@@ -1,6 +1,6 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, useRef } from "react";
-import { useState } from "react";
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import {
   BackHandler,
   Pressable,
@@ -10,26 +10,26 @@ import {
   TouchableWithoutFeedback,
   View,
   TextInput,
-} from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { ActionBar } from "../../components/ActionBar";
-import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
-import { showPrompt } from "../../dux/prompt";
-import { getTodos, updateTodo } from "../../dux/todos";
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ActionBar } from '../../components/ActionBar';
+import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
+import { showPrompt } from '../../dux/prompt';
+import { getTodos, updateTodo } from '../../dux/todos';
 import {
   dataType,
   promptCategoryType,
   taskStatus,
   todoStatus,
-} from "../../helpers/constants";
-import { getDateString, getTimeString } from "../../helpers/timeHelper";
-import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
+} from '../../helpers/constants';
+import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import {
   getCipherText,
   getHash,
   getUUID,
-} from "../../helpers/cryptographyHelper";
-import { TaskEntity } from "../../components/TaskEntity";
+} from '../../helpers/cryptographyHelper';
+import { TaskEntity } from '../../components/TaskEntity';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -51,8 +51,8 @@ export const TodoEditorScreen = () => {
   const todos = useSelector(getTodos);
 
   const {
-    name: header = "",
-    tasks: originalTasksStringified = "[]",
+    name: header = '',
+    tasks: originalTasksStringified = '[]',
     passwordProtected: hasPassword,
     passwordHash: passwordHashOld,
     password: passwordOld,
@@ -84,8 +84,9 @@ export const TodoEditorScreen = () => {
   const [dateUpdated, setDateUpdated] = useState(
     getUpdatedDate(dateUpdatedString)
   );
+  const [selection, setSelection] = useState({ start: 0 });
   const previousTodoName = useRef(header);
-  const autoFocusTaskId = useRef("");
+  const autoFocusTaskId = useRef('');
   const contentToShare = {
     dataType: dataType.TODO,
     name: title,
@@ -102,7 +103,7 @@ export const TodoEditorScreen = () => {
     if (sameTitleExists) {
       setError({
         hasError: true,
-        errorMessage: "Another todo with same name exists",
+        errorMessage: 'Another todo with same name exists',
       });
     } else {
       setError({});
@@ -203,13 +204,13 @@ export const TodoEditorScreen = () => {
     if (!title?.trim() || TasksAreSaved)
       return {
         rightIconLink: () => {},
-        rightIconSource: require("../../assets/icons/saveInactiveButtonIcon.png"),
+        rightIconSource: require('../../assets/icons/saveInactiveButtonIcon.png'),
       };
 
     return {
       rightIconLink: () =>
         checkAndSaveTodo({ hasPassword: passwordProtected, password }),
-      rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
+      rightIconSource: require('../../assets/icons/saveActiveButtonIcon.png'),
     };
   };
 
@@ -247,7 +248,7 @@ export const TodoEditorScreen = () => {
       ...prevTasks,
       {
         id: newTaskId,
-        value: "",
+        value: '',
         status: todoStatus.CREATED,
         dateUpdated: new Date(),
         dateCreated: new Date(),
@@ -274,7 +275,7 @@ export const TodoEditorScreen = () => {
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       backAction
     );
 
@@ -286,8 +287,8 @@ export const TodoEditorScreen = () => {
       <TouchableWithoutFeedback>
         <View>
           <ActionBar
-            title={newTodo ? "Creating Todo" : "Editing Todo"}
-            leftIconSource={require("../../assets/icons/backButtonIcon.png")}
+            title={newTodo ? 'Creating Todo' : 'Editing Todo'}
+            leftIconSource={require('../../assets/icons/backButtonIcon.png')}
             leftIconLink={goBack}
             {...getActionBarProps()}
             onDelete={!newTodo && onDelete}
@@ -315,6 +316,8 @@ export const TodoEditorScreen = () => {
               value={title}
               onChangeText={changeTitle}
               autoFocus={!title}
+              selection={selection}
+              onFocus={() => setSelection(null)}
             />
             <Pressable onPress={addNewTodo} style={styles.addTodoTextContainer}>
               <Text style={styles.addTodoText}>+ Add Todo</Text>
@@ -365,19 +368,19 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 30,
     marginHorizontal: 5,
-    width: "60%",
+    width: '60%',
   },
   addTodoTextContainer: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   marginBottom: {
     paddingVertical: 10,
   },
   errorMessageContainer: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   errorMessage: {
-    color: "red",
+    color: 'red',
     paddingTop: 2,
     fontSize: 12,
   },
@@ -390,11 +393,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   timeContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   addTodoText: {
@@ -403,7 +406,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   taskContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 10,
   },
 });

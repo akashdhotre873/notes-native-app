@@ -7,22 +7,22 @@ import {
   View,
   BackHandler,
   TextInput,
-} from "react-native";
-import { ActionBar } from "../../components/ActionBar";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getNotes, updateNote } from "../../dux/notes";
-import { updateNoteInAsyncStorage } from "../../helpers/notesHelper";
+} from 'react-native';
+import { ActionBar } from '../../components/ActionBar';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNotes, updateNote } from '../../dux/notes';
+import { updateNoteInAsyncStorage } from '../../helpers/notesHelper';
 import {
   getCipherText,
   getHash,
   getUUID,
-} from "../../helpers/cryptographyHelper";
-import { AddPasswordArea } from "../../components/AddPasswordArea/AddPasswordArea";
-import { showPrompt } from "../../dux/prompt";
-import { dataType, promptCategoryType } from "../../helpers/constants";
-import { getDateString, getTimeString } from "../../helpers/timeHelper";
+} from '../../helpers/cryptographyHelper';
+import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
+import { showPrompt } from '../../dux/prompt';
+import { dataType, promptCategoryType } from '../../helpers/constants';
+import { getDateString, getTimeString } from '../../helpers/timeHelper';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
 
@@ -33,8 +33,8 @@ export const NoteEditorScreen = () => {
   const notes = useSelector(getNotes);
 
   const {
-    name: header = "",
-    content: originalContent = "",
+    name: header = '',
+    content: originalContent = '',
     passwordProtected: hasPassword,
     passwordHash: passwordHashOld,
     password: passWordOld,
@@ -60,6 +60,7 @@ export const NoteEditorScreen = () => {
   const [dateUpdated, setDateUpdated] = useState(
     getUpdatedDate(dateUpdatedString)
   );
+  const [selection, setSelection] = useState({ start: 0 });
   const contentRef = useRef();
   const previousNoteName = useRef(header);
   const contentToShare = { dataType: dataType.NOTE, name: title, content };
@@ -73,7 +74,7 @@ export const NoteEditorScreen = () => {
     if (sameTitleExists) {
       setError({
         hasError: true,
-        errorMessage: "Another note with same name exists",
+        errorMessage: 'Another note with same name exists',
       });
     } else {
       setError({});
@@ -141,13 +142,13 @@ export const NoteEditorScreen = () => {
     if (!title?.trim() || contentIsSaved)
       return {
         rightIconLink: () => {},
-        rightIconSource: require("../../assets/icons/saveInactiveButtonIcon.png"),
+        rightIconSource: require('../../assets/icons/saveInactiveButtonIcon.png'),
       };
 
     return {
       rightIconLink: () =>
         checkAndSaveNote({ hasPassword: passwordProtected, password }),
-      rightIconSource: require("../../assets/icons/saveActiveButtonIcon.png"),
+      rightIconSource: require('../../assets/icons/saveActiveButtonIcon.png'),
     };
   };
 
@@ -204,7 +205,7 @@ export const NoteEditorScreen = () => {
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       backAction
     );
 
@@ -216,8 +217,8 @@ export const NoteEditorScreen = () => {
       <TouchableWithoutFeedback>
         <View>
           <ActionBar
-            title={newNote ? "Creating note" : "Editing note"}
-            leftIconSource={require("../../assets/icons/backButtonIcon.png")}
+            title={newNote ? 'Creating note' : 'Editing note'}
+            leftIconSource={require('../../assets/icons/backButtonIcon.png')}
             leftIconLink={goBack}
             {...getActionBarProps()}
             onDelete={!newNote && onDelete}
@@ -244,6 +245,8 @@ export const NoteEditorScreen = () => {
             value={title}
             onChangeText={changeTitle}
             autoFocus={!title}
+            selection={selection}
+            onFocus={() => setSelection(null)}
           />
           {dateUpdated && (
             <View style={styles.timeContainer}>
@@ -294,10 +297,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   errorMessageContainer: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   errorMessage: {
-    color: "red",
+    color: 'red',
     paddingTop: 2,
     fontSize: 12,
   },
@@ -310,6 +313,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   timeContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 });
