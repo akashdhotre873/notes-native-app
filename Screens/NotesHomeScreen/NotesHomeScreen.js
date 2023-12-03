@@ -1,16 +1,17 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
-import { useState } from "react";
-import { BackHandler, ScrollView, StyleSheet, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { ActionBar } from "../../components/ActionBar";
-import { NoteListCard } from "../../components/NoteListCard";
-import { getNotes } from "../../dux/notes";
-import { showPrompt } from "../../dux/prompt";
-import { dataType, promptCategoryType } from "../../helpers/constants";
-import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
-import { sortNotes } from "../../helpers/sortHelper";
-import { getSortInfoFor } from "../../dux/sort";
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ActionBar } from '../../components/ActionBar';
+import { NoteListCard } from '../../components/NoteListCard';
+import { getNotes } from '../../dux/notes';
+import { showPrompt } from '../../dux/prompt';
+import { dataType, promptCategoryType } from '../../helpers/constants';
+import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
+import { sortNotes } from '../../helpers/sortHelper';
+import { getSortInfoFor } from '../../dux/sort';
+import { NewContent } from '../../components/NewContent';
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ export const NotesHomeScreen = () => {
     getSortInfoFor(dataType.NOTE)
   );
 
-  const [selectedNoteName, setSelectedNoteName] = useState("");
+  const [selectedNoteName, setSelectedNoteName] = useState('');
 
   const sortAlgo = (noteFirst, noteSecond) => {
     return sortNotes(
@@ -39,11 +40,11 @@ export const NotesHomeScreen = () => {
         data: { noteName: selectedNoteName, shouldGoBack: false },
       })
     );
-    setSelectedNoteName("");
+    setSelectedNoteName('');
   };
 
   useEffect(() => {
-    return () => setSelectedNoteName("");
+    return () => setSelectedNoteName('');
   }, [isFocused]);
 
   const backAction = () => {
@@ -51,14 +52,14 @@ export const NotesHomeScreen = () => {
       const canExit = false;
       return canExit;
     }
-    setSelectedNoteName("");
+    setSelectedNoteName('');
     const canNotExit = true;
     return canNotExit;
   };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       backAction
     );
 
@@ -68,7 +69,7 @@ export const NotesHomeScreen = () => {
   return (
     <View style={styles.container}>
       <ActionBar
-        leftIconSource={require("../../assets/icons/plusButtonIcon.png")}
+        leftIconSource={require('../../assets/icons/plusButtonIcon.png')}
         leftIconLink={() =>
           navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { newNote: true })
         }
@@ -88,6 +89,11 @@ export const NotesHomeScreen = () => {
             />
           ))}
       </ScrollView>
+      <NewContent
+        iconOnClick={() =>
+          navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { newNote: true })
+        }
+      />
     </View>
   );
 };
@@ -97,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardsContainer: {
-    backgroundColor: "#f8f8f3",
+    backgroundColor: '#f8f8f3',
     marginTop: 5,
     flex: 1,
   },

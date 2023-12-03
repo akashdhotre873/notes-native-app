@@ -1,0 +1,1 @@
+export { NewContent } from './NewContent';
