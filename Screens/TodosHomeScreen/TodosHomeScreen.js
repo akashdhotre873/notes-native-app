@@ -1,17 +1,18 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { StyleSheet, View, ScrollView, BackHandler } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { ActionBar } from "../../components/ActionBar";
-import { TodoListCard } from "../../components/TodoListCard";
-import { showPrompt } from "../../dux/prompt";
-import { getTodos } from "../../dux/todos";
-import { dataType, promptCategoryType } from "../../helpers/constants";
-import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
-import { useEffect } from "react";
-import { getUUID } from "../../helpers/cryptographyHelper";
-import { getSortInfoFor } from "../../dux/sort";
-import { sortTodos } from "../../helpers/sortHelper";
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { StyleSheet, View, ScrollView, BackHandler } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ActionBar } from '../../components/ActionBar';
+import { TodoListCard } from '../../components/TodoListCard';
+import { showPrompt } from '../../dux/prompt';
+import { getTodos } from '../../dux/todos';
+import { dataType, promptCategoryType } from '../../helpers/constants';
+import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
+import { useEffect } from 'react';
+import { getUUID } from '../../helpers/cryptographyHelper';
+import { getSortInfoFor } from '../../dux/sort';
+import { sortTodos } from '../../helpers/sortHelper';
+import { NewContent } from '../../components/NewContent';
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ export const TodosHomeScreen = () => {
     getSortInfoFor(dataType.TODO)
   );
 
-  const [selectedTodoName, setSelectedTodoName] = useState("");
+  const [selectedTodoName, setSelectedTodoName] = useState('');
 
   const sortAlgo = (todoFirst, todoSecond) => {
     return sortTodos(
@@ -40,11 +41,11 @@ export const TodosHomeScreen = () => {
         data: { todoName: selectedTodoName, shouldGoBack: false },
       })
     );
-    setSelectedTodoName("");
+    setSelectedTodoName('');
   };
 
   useEffect(() => {
-    return () => setSelectedTodoName("");
+    return () => setSelectedTodoName('');
   }, [isFocused]);
 
   const backAction = () => {
@@ -52,14 +53,14 @@ export const TodosHomeScreen = () => {
       const canExit = false;
       return canExit;
     }
-    setSelectedTodoName("");
+    setSelectedTodoName('');
     const canNotExit = true;
     return canNotExit;
   };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       backAction
     );
 
@@ -69,7 +70,7 @@ export const TodosHomeScreen = () => {
   return (
     <View style={styles.container}>
       <ActionBar
-        leftIconSource={require("../../assets/icons/plusButtonIcon.png")}
+        leftIconSource={require('../../assets/icons/plusButtonIcon.png')}
         leftIconLink={() =>
           navigation.navigate(TODO_EDITOR_SCREEN_PATH, { newTodo: true })
         }
@@ -89,6 +90,11 @@ export const TodosHomeScreen = () => {
             />
           ))}
       </ScrollView>
+      <NewContent
+        iconOnClick={() =>
+          navigation.navigate(TODO_EDITOR_SCREEN_PATH, { newTodo: true })
+        }
+      />
     </View>
   );
 };
@@ -96,7 +102,7 @@ export const TodosHomeScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   cardsContainer: {
-    backgroundColor: "#f8f8f3",
+    backgroundColor: '#f8f8f3',
     marginTop: 5,
     flex: 1,
   },
