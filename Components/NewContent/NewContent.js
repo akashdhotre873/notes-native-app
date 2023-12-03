@@ -1,23 +1,52 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import { colors } from '../../helpers/constants';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
+import { useRef } from 'react';
 
 export const NewContent = ({ iconOnClick }) => {
-  const [position, setPosition] = useState({ right: 35, left: undefined });
+  const rightOffset = Dimensions.get('window').width - 80;
+  const animatedValue = useRef(new Animated.Value(rightOffset)).current;
+  const [isIconOnTheRightSide, setIsIconOnTheRightSide] = useState(true);
 
-  const changeLayout = () => {
-    // if right is not undefined, set right to 35, or set right to undefined and left to 35
-    setPosition(({ right }) =>
-      right ? { right: undefined, left: 35 } : { right: 35, left: undefined }
-    );
+  const animationType = Easing.bounce;
+  const duration = 500; // in milli seconds
+
+  const moveToLeft = () => {
+    Animated.timing(animatedValue, {
+      toValue: 35,
+      duration,
+      easing: animationType,
+      useNativeDriver: true,
+    }).start(() => setIsIconOnTheRightSide(false));
+  };
+
+  const moveToRight = () => {
+    Animated.timing(animatedValue, {
+      toValue: rightOffset,
+      duration,
+      easing: animationType,
+      useNativeDriver: true,
+    }).start(() => setIsIconOnTheRightSide(true));
+  };
+
+  const toggleLayout = () => {
+    isIconOnTheRightSide ? moveToLeft() : moveToRight();
   };
 
   return (
-    <View style={[styles.container, position]}>
+    <Animated.View
+      style={[styles.container, { transform: [{ translateX: animatedValue }] }]}
+    >
       <Pressable
         onPress={iconOnClick}
-        onLongPress={changeLayout}
+        onLongPress={toggleLayout}
         style={styles.innerContainer}
         android_ripple={{ color: 'black' }}
       >
@@ -28,7 +57,7 @@ export const NewContent = ({ iconOnClick }) => {
           style={styles.icon}
         />
       </Pressable>
-    </View>
+    </Animated.View>
   );
 };
 
