@@ -12,6 +12,7 @@ import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortNotes } from '../../helpers/sortHelper';
 import { getSortInfoFor } from '../../dux/sort';
 import { NewContent } from '../../components/NewContent';
+import { NoteSearchListCard } from '../../components/NoteSearchListCard/NoteSearchListCard';
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
@@ -21,6 +22,7 @@ export const NotesHomeScreen = () => {
   const { selectedSortParameter, selectedSortOrder } = useSelector(
     getSortInfoFor(dataType.NOTE)
   );
+  const [searchValue, setSearchValue] = useState('');
 
   const [selectedNoteName, setSelectedNoteName] = useState('');
 
@@ -57,6 +59,8 @@ export const NotesHomeScreen = () => {
     return canNotExit;
   };
 
+  const onSearch = () => {};
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -69,26 +73,39 @@ export const NotesHomeScreen = () => {
   return (
     <View style={styles.container}>
       <ActionBar
-        leftIconSource={require('../../assets/icons/plusButtonIcon.png')}
-        leftIconLink={() =>
-          navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { newNote: true })
-        }
         title="All Notes"
         onDelete={selectedNoteName ? onDelete : null}
         sortItem={dataType.NOTE}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
       />
-      <ScrollView style={styles.cardsContainer}>
-        {Object.values(notes)
-          .sort(sortAlgo)
-          .map((note) => (
-            <NoteListCard
-              note={note}
-              key={note.name}
-              setSelectedNoteName={setSelectedNoteName}
-              selectedNoteName={selectedNoteName}
-            />
-          ))}
-      </ScrollView>
+      {searchValue === '' ? (
+        <ScrollView style={styles.cardsContainer}>
+          {Object.values(notes)
+            .sort(sortAlgo)
+            .map((note) => (
+              <NoteListCard
+                note={note}
+                key={note.name}
+                setSelectedNoteName={setSelectedNoteName}
+                selectedNoteName={selectedNoteName}
+              />
+            ))}
+        </ScrollView>
+      ) : (
+        <ScrollView style={styles.cardsContainer}>
+          {Object.values(notes)
+            .sort(sortAlgo)
+            .map((note) => (
+              <NoteSearchListCard
+                note={note}
+                key={note.name}
+                setSelectedNoteName={setSelectedNoteName}
+                selectedNoteName={selectedNoteName}
+              />
+            ))}
+        </ScrollView>
+      )}
       <NewContent
         iconOnClick={() =>
           navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { newNote: true })

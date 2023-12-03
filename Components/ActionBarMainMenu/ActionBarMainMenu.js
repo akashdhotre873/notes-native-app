@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
-import { Divider, Menu } from "react-native-paper";
-import { Entypo } from "@expo/vector-icons";
-import { ShareContentComponent } from "../ShareContentComponent";
-import { useState } from "react";
-import { shareMethod } from "../../helpers/constants";
+import { StyleSheet } from 'react-native';
+import { Divider, Menu } from 'react-native-paper';
+import { Entypo } from '@expo/vector-icons';
+import { ShareContentComponent } from '../ShareContentComponent';
+import { useState } from 'react';
+import { shareMethod } from '../../helpers/constants';
 
 export const ActionBarMainMenu = ({
   onDelete,

@@ -1,9 +1,12 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { colors, shareMethod } from "../../helpers/constants";
-import { ShareContentComponent } from "../ShareContentComponent";
-import { Ionicons } from "@expo/vector-icons";
-import { ActionBarMainMenu } from "../ActionBarMainMenu";
-import { ActionBarSortOrderMenu } from "../ActionBarSortOrderMenu/ActionBarSortOrderMenu";
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { colors, shareMethod } from '../../helpers/constants';
+import { ShareContentComponent } from '../ShareContentComponent';
+import { Ionicons } from '@expo/vector-icons';
+import { ActionBarMainMenu } from '../ActionBarMainMenu';
+import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu/ActionBarSortOrderMenu';
+import { useState } from 'react';
+import { TextInput } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export const ActionBar = ({
   title,
@@ -15,7 +18,16 @@ export const ActionBar = ({
   contentToShare,
   allowCopyToClicpBoard,
   sortItem,
+  searchValue,
+  setSearchValue,
 }) => {
+  const [searching, setSearching] = useState(false);
+  // const [searchValue, setsearchValue] = useState('');
+
+  const onChange = (newValue) => {
+    setSearchValue(newValue);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -24,7 +36,25 @@ export const ActionBar = ({
             <Image source={leftIconSource} style={styles.leftButtonImage} />
           </Pressable>
         )}
-        <Text style={styles.title}>{title}</Text>
+        {searching ? (
+          <TextInput
+            value={searchValue}
+            onChangeText={onChange}
+            style={styles.searchTextArea}
+            autoFocus
+            underlineStyle={{ display: 'none' }}
+            placeholder="search"
+            right={
+              <TextInput.Icon
+                icon="close"
+                onPress={() => setSearchValue('')}
+                style={styles.closeIconForTextInput}
+              />
+            }
+          />
+        ) : (
+          <Text style={styles.title}>{title}</Text>
+        )}
       </View>
       <View style={styles.rightSideIcons}>
         {contentToShare && (
@@ -47,6 +77,28 @@ export const ActionBar = ({
           </Pressable>
         )}
 
+        {Boolean(setSearchValue) && (
+          <View>
+            {searching ? (
+              <MaterialIcons
+                name="search-off"
+                size={32}
+                color="black"
+                style={styles.searchIcon}
+                onPress={() => setSearching(false)}
+              />
+            ) : (
+              <MaterialIcons
+                name="search"
+                size={32}
+                color="black"
+                style={styles.searchIcon}
+                onPress={() => setSearching(true)}
+              />
+            )}
+          </View>
+        )}
+
         {/* sort notes/todos menu */}
         <ActionBarSortOrderMenu sortItem={sortItem} />
 
@@ -63,19 +115,20 @@ export const ActionBar = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 50,
     backgroundColor: colors.primaryColor,
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   innerContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
+    width: '60%',
   },
   leftButtonImage: {
     height: 30,
     width: 30,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   leftButtonLink: {
     paddingLeft: 10,
@@ -86,22 +139,39 @@ const styles = StyleSheet.create({
   rightButtonImage: {
     height: 30,
     width: 30,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   rightSideIcons: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   title: {
     paddingTop: 2,
-    paddingLeft: 15,
-    fontFamily: "Roboto",
+    paddingLeft: 17,
+    fontFamily: 'Roboto',
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: '500',
   },
   deleteButton: {
     marginRight: 20,
   },
   shareIcon: {
     marginRight: 15,
+  },
+  searchIcon: {
+    paddingRight: 10,
+    paddingTop: 2,
+  },
+  searchTextArea: {
+    marginLeft: 12,
+    paddingVertical: 3,
+    borderRadius: 5,
+    fontSize: 18,
+    width: '95%',
+    backgroundColor: '#ffffff',
+    height: 32,
+  },
+  closeIconForTextInput: {
+    paddingTop: 6,
+    marginRight: -5,
   },
 });

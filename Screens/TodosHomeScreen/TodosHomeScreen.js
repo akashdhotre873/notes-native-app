@@ -70,10 +70,6 @@ export const TodosHomeScreen = () => {
   return (
     <View style={styles.container}>
       <ActionBar
-        leftIconSource={require('../../assets/icons/plusButtonIcon.png')}
-        leftIconLink={() =>
-          navigation.navigate(TODO_EDITOR_SCREEN_PATH, { newTodo: true })
-        }
         title="All Todos"
         onDelete={selectedTodoName ? onDelete : null}
         sortItem={dataType.TODO}
