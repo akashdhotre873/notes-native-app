@@ -12,7 +12,6 @@ import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortNotes } from '../../helpers/sortHelper';
 import { getSortInfoFor } from '../../dux/sort';
 import { NewContent } from '../../components/NewContent';
-import { NoteSearchListCard } from '../../components/NoteSearchListCard';
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
@@ -79,34 +78,21 @@ export const NotesHomeScreen = () => {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
-      {searchValue === '' ? (
-        <ScrollView style={styles.cardsContainer}>
-          {Object.values(notes)
-            .sort(sortAlgo)
-            .map((note) => (
-              <NoteListCard
-                key={note.name}
-                note={note}
-                setSelectedNoteName={setSelectedNoteName}
-                selectedNoteName={selectedNoteName}
-              />
-            ))}
-        </ScrollView>
-      ) : (
-        <ScrollView style={styles.cardsContainer}>
-          {Object.values(notes)
-            .sort(sortAlgo)
-            .map((note) => (
-              <NoteSearchListCard
-                key={note.name}
-                note={note}
-                setSelectedNoteName={setSelectedNoteName}
-                selectedNoteName={selectedNoteName}
-                searchValue={searchValue}
-              />
-            ))}
-        </ScrollView>
-      )}
+
+      <ScrollView style={styles.cardsContainer}>
+        {Object.values(notes)
+          .sort(sortAlgo)
+          .map((note) => (
+            <NoteListCard
+              key={note.name}
+              note={note}
+              setSelectedNoteName={setSelectedNoteName}
+              selectedNoteName={selectedNoteName}
+              searchValue={searchValue}
+            />
+          ))}
+      </ScrollView>
+
       <NewContent
         iconOnClick={() =>
           navigation.navigate(NOTE_EDITOR_SCREEN_PATH, { newNote: true })

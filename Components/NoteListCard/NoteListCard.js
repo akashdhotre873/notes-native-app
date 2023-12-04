@@ -1,16 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
-import { colors, promptCategoryType } from "../../helpers/constants";
-import { showPrompt } from "../../dux/prompt";
-import { getPlainText } from "../../helpers/cryptographyHelper";
-import { NOTE_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
-import { getDateString, getTimeString } from "../../helpers/timeHelper";
+import { useNavigation } from '@react-navigation/native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { colors, promptCategoryType } from '../../helpers/constants';
+import { showPrompt } from '../../dux/prompt';
+import { getPlainText } from '../../helpers/cryptographyHelper';
+import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
+import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { runSearchAlgorithm } from '../../helpers/searchHelper';
 
 export const NoteListCard = ({
   note,
   selectedNoteName,
   setSelectedNoteName,
+  searchValue,
 }) => {
   const {
     name,
@@ -50,8 +52,17 @@ export const NoteListCard = ({
   };
 
   const toggleName = (previousName) => {
-    return previousName === name ? "" : name;
+    return previousName === name ? '' : name;
   };
+
+  const { matches: searchValueMatches, matchedIndices } = runSearchAlgorithm({
+    pattern: searchValue,
+    text: name,
+  });
+
+  if (!searchValueMatches) {
+    return null;
+  }
 
   return (
     <Pressable
@@ -70,7 +81,23 @@ export const NoteListCard = ({
         }
       />
       <View style={styles.innerContainer}>
-        <Text style={styles.name}>{name}</Text>
+        {searchValueMatches ? (
+          <Text style={styles.name}>
+            {[...name].map((nameChar, index) => {
+              const shouldHighLight = matchedIndices.includes(index);
+              return (
+                <Text
+                  key={nameChar + index}
+                  style={shouldHighLight ? styles.hightLightChar : {}}
+                >
+                  {nameChar}
+                </Text>
+              );
+            })}
+          </Text>
+        ) : (
+          <Text style={styles.name}>{name}</Text>
+        )}
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -90,38 +117,38 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     marginVertical: 4,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 7,
     elevation: 5,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   selectedToDelete: {
-    backgroundColor: "#f0ad4e",
+    backgroundColor: '#f0ad4e',
   },
   innerContainer: {
     paddingVertical: 7,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     flexGrow: 1,
   },
   name: {
     fontSize: 22,
     paddingLeft: 15,
     marginRight: 10,
-    maxWidth: "60%",
-    alignSelf: "center",
+    maxWidth: '60%',
+    alignSelf: 'center',
   },
   timeContainer: {
     paddingRight: 15,
     paddingLeft: 3,
   },
   dateModifiedText: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     opacity: 0.5,
     fontSize: 10,
   },
   lastModifiedText: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     fontSize: 10,
     opacity: 0.9,
   },
@@ -137,5 +164,9 @@ const styles = StyleSheet.create({
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
+  },
+  hightLightChar: {
+    fontWeight: 'bold',
+    fontSize: 24,
   },
 });
