@@ -67,6 +67,11 @@ export const NotesHomeScreen = () => {
     return () => backHandler.remove();
   }, [selectedNoteName]);
 
+  const onSearchValueChange = (newValue) => {
+    setSearchValue(newValue);
+    setSelectedNoteName('');
+  };
+
   return (
     <View style={styles.container}>
       <ActionBar
@@ -74,7 +79,7 @@ export const NotesHomeScreen = () => {
         onDelete={selectedNoteName ? onDelete : null}
         sortItem={dataType.NOTE}
         searchValue={searchValue}
-        setSearchValue={setSearchValue}
+        onSearchValueChange={onSearchValueChange}
       />
 
       <ScrollView

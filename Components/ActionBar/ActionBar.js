@@ -19,13 +19,9 @@ export const ActionBar = ({
   allowCopyToClicpBoard,
   sortItem,
   searchValue,
-  setSearchValue,
+  onSearchValueChange,
 }) => {
   const [searching, setSearching] = useState(false);
-
-  const onChange = (newValue) => {
-    setSearchValue(newValue);
-  };
 
   return (
     <View style={styles.container}>
@@ -38,7 +34,7 @@ export const ActionBar = ({
         {searching ? (
           <TextInput
             value={searchValue}
-            onChangeText={onChange}
+            onChangeText={onSearchValueChange}
             style={styles.searchTextArea}
             autoFocus
             underlineStyle={{ display: 'none' }}
@@ -46,7 +42,7 @@ export const ActionBar = ({
             right={
               <TextInput.Icon
                 icon="close"
-                onPress={() => setSearchValue('')}
+                onPress={() => onSearchValueChange('')}
                 style={styles.closeIconForTextInput}
               />
             }
@@ -76,7 +72,7 @@ export const ActionBar = ({
           </Pressable>
         )}
 
-        {Boolean(setSearchValue) && (
+        {Boolean(onSearchValueChange) && (
           <View>
             {searching ? (
               <MaterialIcons
@@ -86,7 +82,7 @@ export const ActionBar = ({
                 style={styles.searchIcon}
                 onPress={() => {
                   setSearching(false);
-                  setSearchValue('');
+                  onSearchValueChange('');
                 }}
               />
             ) : (

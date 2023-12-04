@@ -69,6 +69,11 @@ export const TodosHomeScreen = () => {
     return () => backHandler.remove();
   }, [selectedTodoName]);
 
+  const onSearchValueChange = (newValue) => {
+    setSearchValue(newValue);
+    setSelectedTodoName('');
+  };
+
   return (
     <View style={styles.container}>
       <ActionBar
@@ -76,7 +81,7 @@ export const TodosHomeScreen = () => {
         onDelete={selectedTodoName ? onDelete : null}
         sortItem={dataType.TODO}
         searchValue={searchValue}
-        setSearchValue={setSearchValue}
+        onSearchValueChange={onSearchValueChange}
       />
       <ScrollView
         style={styles.cardsContainer}
