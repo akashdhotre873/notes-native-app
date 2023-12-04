@@ -1,7 +1,7 @@
 export const runSearchAlgorithm = ({ pattern, text }) => {
   const matchedIndices = [];
   if (pattern === '') {
-    return true;
+    return { matches: true, matchedIndices: [] };
   }
 
   let currentIndex = 0;
@@ -19,7 +19,7 @@ export const runSearchAlgorithm = ({ pattern, text }) => {
       }
     }
     if (matchFound === false) {
-      return false;
+      return { matches: false, matchedIndices: [] };
     }
   }
 
