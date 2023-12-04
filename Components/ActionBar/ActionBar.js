@@ -22,7 +22,6 @@ export const ActionBar = ({
   setSearchValue,
 }) => {
   const [searching, setSearching] = useState(false);
-  // const [searchValue, setsearchValue] = useState('');
 
   const onChange = (newValue) => {
     setSearchValue(newValue);
@@ -85,7 +84,10 @@ export const ActionBar = ({
                 size={32}
                 color="black"
                 style={styles.searchIcon}
-                onPress={() => setSearching(false)}
+                onPress={() => {
+                  setSearching(false);
+                  setSearchValue('');
+                }}
               />
             ) : (
               <MaterialIcons

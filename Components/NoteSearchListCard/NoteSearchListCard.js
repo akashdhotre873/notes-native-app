@@ -6,6 +6,7 @@ import { showPrompt } from '../../dux/prompt';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { runSearchAlgorithm } from '../../helpers/searchHelper';
 
 export const NoteSearchListCard = ({
   note,
@@ -25,8 +26,6 @@ export const NoteSearchListCard = ({
   const dateUpdated = new Date(dateUpdatedString);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const searchMatchIndices = [];
 
   const openNote = (password) => {
     const plainText = getPlainText(content, password);
@@ -56,39 +55,14 @@ export const NoteSearchListCard = ({
     return previousName === name ? '' : name;
   };
 
-  const doesSearchValueMatch = () => {
-    if (searchValue === '') {
-      return true;
-    }
-
-    let currentIndex = 0;
-    for (const searchChar of searchValue) {
-      let matchFound = false;
-
-      for (let index = currentIndex; index < name.length; index++) {
-        const nameChar = name[index];
-        console.log(nameChar);
-        currentIndex = index + 1;
-        if (nameChar === searchChar) {
-          searchMatchIndices.push(index);
-          matchFound = true;
-          break;
-        }
-      }
-      if (matchFound === false) {
-        return false;
-      }
-    }
-    return searchValue.length === searchMatchIndices.length;
-  };
-
-  const searchValueMatches = doesSearchValueMatch();
+  const { matches: searchValueMatches, matchedIndices } = runSearchAlgorithm({
+    pattern: searchValue,
+    text: name,
+  });
 
   if (!searchValueMatches) {
     return null;
   }
-
-  console.log(searchMatchIndices);
 
   return (
     <Pressable
@@ -109,7 +83,7 @@ export const NoteSearchListCard = ({
       <View style={styles.innerContainer}>
         <Text style={styles.name}>
           {[...name].map((nameChar, index) => {
-            const shouldHighLight = searchMatchIndices.includes(index);
+            const shouldHighLight = matchedIndices.includes(index);
             return (
               <Text
                 key={nameChar + index}
@@ -120,13 +94,6 @@ export const NoteSearchListCard = ({
             );
           })}
         </Text>
-
-        {/* <Text style={styles.name}>{name}</Text>
-        <Text style={styles.name}>
-          <Text style={styles.name}>{name[0]}</Text>
-          <Text style={styles.name}>{name[0]}</Text>
-          <Text style={styles.name}>AA</Text>
-        </Text> */}
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
