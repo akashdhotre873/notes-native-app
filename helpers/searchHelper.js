@@ -12,7 +12,7 @@ export const runSearchAlgorithm = ({ pattern, text }) => {
       const textChar = text[index];
 
       currentIndex = index + 1;
-      if (textChar === patternChar) {
+      if (textChar.toLowerCase() === patternChar.toLowerCase()) {
         matchedIndices.push(index);
         matchFound = true;
         break;
