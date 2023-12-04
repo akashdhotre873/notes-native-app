@@ -58,8 +58,6 @@ export const NotesHomeScreen = () => {
     return canNotExit;
   };
 
-  const onSearch = () => {};
-
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -79,7 +77,10 @@ export const NotesHomeScreen = () => {
         setSearchValue={setSearchValue}
       />
 
-      <ScrollView style={styles.cardsContainer}>
+      <ScrollView
+        style={styles.cardsContainer}
+        keyboardShouldPersistTaps="handled"
+      >
         {Object.values(notes)
           .sort(sortAlgo)
           .map((note) => (

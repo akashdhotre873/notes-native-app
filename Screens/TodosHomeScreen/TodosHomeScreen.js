@@ -78,7 +78,10 @@ export const TodosHomeScreen = () => {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
-      <ScrollView style={styles.cardsContainer}>
+      <ScrollView
+        style={styles.cardsContainer}
+        keyboardShouldPersistTaps="handled"
+      >
         {Object.values(todos)
           .sort(sortAlgo)
           .map((todo) => (
