@@ -238,17 +238,25 @@ export const TodoListCard = ({
       <View style={styles.innerContainer}>
         <View style={styles.nameContainer}>
           {getIconForTodo()}
-          {searchValueMatches ? (
+          {searchValueMatches && searchValue !== '' ? (
             <Text style={[styles.name, getStyleForTodo()]}>
               {[...name].map((nameChar, index) => {
                 const shouldHighLight = matchedIndices.includes(index);
                 return (
-                  <Text
+                  <View
                     key={nameChar + index}
-                    style={shouldHighLight ? styles.hightLightChar : {}}
+                    style={shouldHighLight ? {} : { opacity: 0.8 }}
                   >
-                    {nameChar}
-                  </Text>
+                    <Text
+                      style={[
+                        styles.nameChar,
+                        getStyleForTodo(),
+                        shouldHighLight ? styles.hightLightChar : {},
+                      ]}
+                    >
+                      {nameChar}
+                    </Text>
+                  </View>
                 );
               })}
             </Text>
@@ -335,8 +343,11 @@ const styles = StyleSheet.create({
   completedStatusIcon: {
     opacity: 0.6,
   },
+  nameChar: {
+    fontSize: 22,
+  },
   hightLightChar: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 23,
   },
 });

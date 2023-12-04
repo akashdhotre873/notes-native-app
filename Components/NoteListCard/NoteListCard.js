@@ -81,17 +81,24 @@ export const NoteListCard = ({
         }
       />
       <View style={styles.innerContainer}>
-        {searchValueMatches ? (
+        {searchValueMatches && searchValue !== '' ? (
           <Text style={styles.name}>
             {[...name].map((nameChar, index) => {
               const shouldHighLight = matchedIndices.includes(index);
               return (
-                <Text
+                <View
                   key={nameChar + index}
-                  style={shouldHighLight ? styles.hightLightChar : {}}
+                  style={shouldHighLight ? {} : { opacity: 0.8 }}
                 >
-                  {nameChar}
-                </Text>
+                  <Text
+                    style={[
+                      styles.nameChar,
+                      shouldHighLight ? styles.hightLightChar : {},
+                    ]}
+                  >
+                    {nameChar}
+                  </Text>
+                </View>
               );
             })}
           </Text>
@@ -165,8 +172,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
   },
+  nameChar: {
+    fontSize: 22,
+  },
   hightLightChar: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 23,
   },
 });

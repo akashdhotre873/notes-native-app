@@ -74,6 +74,5 @@ const styles = StyleSheet.create({
   kebabMenu: {
     paddingRight: 15,
     paddingTop: 2,
-    paddingLeft: 2,
   },
 });

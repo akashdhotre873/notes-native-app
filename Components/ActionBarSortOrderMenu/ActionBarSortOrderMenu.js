@@ -1,14 +1,14 @@
-import { StyleSheet } from "react-native";
-import { Divider, Menu } from "react-native-paper";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { StyleSheet } from 'react-native';
+import { Divider, Menu } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState } from 'react';
 import {
   sortOrder as sortOrderConstant,
   sortParameter,
-} from "../../helpers/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllSortInfo, getSortInfoFor, updateSortInfo } from "../../dux/sort";
-import { updateSortingInfoInAsync } from "../../helpers/sortHelper";
+} from '../../helpers/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllSortInfo, getSortInfoFor, updateSortInfo } from '../../dux/sort';
+import { updateSortingInfoInAsync } from '../../helpers/sortHelper';
 
 const { ASCENDING, DESCENDING } = sortOrderConstant;
 
@@ -91,8 +91,8 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
         title="By Name"
         leadingIcon={getIconForSortOrderMenuItem(
           sortParameter.NAME,
-          "sort-alphabetical-ascending",
-          "sort-alphabetical-descending"
+          'sort-alphabetical-ascending',
+          'sort-alphabetical-descending'
         )}
       />
       <Divider />
@@ -101,8 +101,8 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
         title="Last Modified"
         leadingIcon={getIconForSortOrderMenuItem(
           sortParameter.LAST_MODIFIED,
-          "sort-clock-ascending-outline",
-          "sort-clock-descending-outline"
+          'sort-clock-ascending-outline',
+          'sort-clock-descending-outline'
         )}
       />
       <Divider />
@@ -111,8 +111,8 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
         title="Date Created"
         leadingIcon={getIconForSortOrderMenuItem(
           sortParameter.DATE_CREATED,
-          "sort-calendar-ascending",
-          "sort-calendar-descending"
+          'sort-calendar-ascending',
+          'sort-calendar-descending'
         )}
       />
     </Menu>
@@ -121,7 +121,7 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
 
 const styles = StyleSheet.create({
   kebabMenu: {
-    paddingRight: 18,
+    paddingRight: 15,
     paddingTop: 2,
     paddingLeft: 2,
   },
