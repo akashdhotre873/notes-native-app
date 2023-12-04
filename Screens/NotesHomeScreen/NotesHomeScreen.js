@@ -12,7 +12,7 @@ import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortNotes } from '../../helpers/sortHelper';
 import { getSortInfoFor } from '../../dux/sort';
 import { NewContent } from '../../components/NewContent';
-import { NoteSearchListCard } from '../../components/NoteSearchListCard/NoteSearchListCard';
+import { NoteSearchListCard } from '../../components/NoteSearchListCard';
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
@@ -85,8 +85,8 @@ export const NotesHomeScreen = () => {
             .sort(sortAlgo)
             .map((note) => (
               <NoteListCard
-                note={note}
                 key={note.name}
+                note={note}
                 setSelectedNoteName={setSelectedNoteName}
                 selectedNoteName={selectedNoteName}
               />
@@ -98,10 +98,11 @@ export const NotesHomeScreen = () => {
             .sort(sortAlgo)
             .map((note) => (
               <NoteSearchListCard
-                note={note}
                 key={note.name}
+                note={note}
                 setSelectedNoteName={setSelectedNoteName}
                 selectedNoteName={selectedNoteName}
+                searchValue={searchValue}
               />
             ))}
         </ScrollView>

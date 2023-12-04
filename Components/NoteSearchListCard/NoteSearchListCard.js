@@ -11,6 +11,7 @@ export const NoteSearchListCard = ({
   note,
   selectedNoteName,
   setSelectedNoteName,
+  searchValue,
 }) => {
   const {
     name,
@@ -24,6 +25,8 @@ export const NoteSearchListCard = ({
   const dateUpdated = new Date(dateUpdatedString);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const searchMatchIndices = [];
 
   const openNote = (password) => {
     const plainText = getPlainText(content, password);
@@ -53,6 +56,40 @@ export const NoteSearchListCard = ({
     return previousName === name ? '' : name;
   };
 
+  const doesSearchValueMatch = () => {
+    if (searchValue === '') {
+      return true;
+    }
+
+    let currentIndex = 0;
+    for (const searchChar of searchValue) {
+      let matchFound = false;
+
+      for (let index = currentIndex; index < name.length; index++) {
+        const nameChar = name[index];
+        console.log(nameChar);
+        currentIndex = index + 1;
+        if (nameChar === searchChar) {
+          searchMatchIndices.push(index);
+          matchFound = true;
+          break;
+        }
+      }
+      if (matchFound === false) {
+        return false;
+      }
+    }
+    return searchValue.length === searchMatchIndices.length;
+  };
+
+  const searchValueMatches = doesSearchValueMatch();
+
+  if (!searchValueMatches) {
+    return null;
+  }
+
+  console.log(searchMatchIndices);
+
   return (
     <Pressable
       style={[
@@ -70,7 +107,26 @@ export const NoteSearchListCard = ({
         }
       />
       <View style={styles.innerContainer}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>
+          {[...name].map((nameChar, index) => {
+            const shouldHighLight = searchMatchIndices.includes(index);
+            return (
+              <Text
+                key={nameChar + index}
+                style={shouldHighLight ? styles.hightLightChar : {}}
+              >
+                {nameChar}
+              </Text>
+            );
+          })}
+        </Text>
+
+        {/* <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>
+          <Text style={styles.name}>{name[0]}</Text>
+          <Text style={styles.name}>{name[0]}</Text>
+          <Text style={styles.name}>AA</Text>
+        </Text> */}
 
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -137,5 +193,9 @@ const styles = StyleSheet.create({
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
+  },
+  hightLightChar: {
+    fontWeight: 'bold',
+    fontSize: 24,
   },
 });
