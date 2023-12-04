@@ -1,21 +1,22 @@
-import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, Pressable, Text } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Pressable, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   colors,
   promptCategoryType,
   todoStatus,
-} from "../../helpers/constants";
-import { getPlainText } from "../../helpers/cryptographyHelper";
-import { TODO_EDITOR_SCREEN_PATH } from "../../helpers/pagePathHelper";
-import { getDateString, getTimeString } from "../../helpers/timeHelper";
-import { showPrompt } from "../../dux/prompt";
-import { getTodos, updateTodo } from "../../dux/todos";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import { updateTodoInAsyncStorage } from "../../helpers/todosHelper";
+} from '../../helpers/constants';
+import { getPlainText } from '../../helpers/cryptographyHelper';
+import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
+import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { showPrompt } from '../../dux/prompt';
+import { getTodos, updateTodo } from '../../dux/todos';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
+import { useState } from 'react';
+import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
+import { runSearchAlgorithm } from '../../helpers/searchHelper';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
@@ -23,6 +24,7 @@ export const TodoListCard = ({
   todo,
   selectedTodoName,
   setSelectedTodoName,
+  searchValue,
 }) => {
   const {
     name,
@@ -68,7 +70,7 @@ export const TodoListCard = ({
   const getStyleForTodo = () => {
     const styles = {
       COMPLETED: {
-        textDecorationLine: "line-through",
+        textDecorationLine: 'line-through',
         opacity: 0.6,
       },
     };
@@ -114,7 +116,7 @@ export const TodoListCard = ({
         data: { todoName: name, shouldGoBack: false },
       })
     );
-    setSelectedTodoName("");
+    setSelectedTodoName('');
   };
 
   const updateTodoStatus = ({ newTodoStatus }) => {
@@ -204,8 +206,17 @@ export const TodoListCard = ({
   };
 
   const toggleName = (previousName) => {
-    return previousName === name ? "" : name;
+    return previousName === name ? '' : name;
   };
+
+  const { matches: searchValueMatches, matchedIndices } = runSearchAlgorithm({
+    pattern: searchValue,
+    text: name,
+  });
+
+  if (!searchValueMatches) {
+    return null;
+  }
 
   return (
     <Pressable
@@ -227,7 +238,23 @@ export const TodoListCard = ({
       <View style={styles.innerContainer}>
         <View style={styles.nameContainer}>
           {getIconForTodo()}
-          <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
+          {searchValueMatches ? (
+            <Text style={[styles.name, getStyleForTodo()]}>
+              {[...name].map((nameChar, index) => {
+                const shouldHighLight = matchedIndices.includes(index);
+                return (
+                  <Text
+                    key={nameChar + index}
+                    style={shouldHighLight ? styles.hightLightChar : {}}
+                  >
+                    {nameChar}
+                  </Text>
+                );
+              })}
+            </Text>
+          ) : (
+            <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
+          )}
         </View>
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
@@ -247,10 +274,10 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     marginVertical: 4,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 7,
     elevation: 5,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   colorIndicatorLocked: {
     backgroundColor: colors.lockedColor,
@@ -265,23 +292,23 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 7,
   },
   selectedToDelete: {
-    backgroundColor: "#f0ad4e",
+    backgroundColor: '#f0ad4e',
   },
   innerContainer: {
     paddingVertical: 7,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     flexGrow: 1,
   },
   todoTitleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "65%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '65%',
   },
   nameContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    maxWidth: "60%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    maxWidth: '60%',
   },
   name: {
     fontSize: 22,
@@ -292,20 +319,24 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
   },
   dateModifiedText: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     opacity: 0.5,
     fontSize: 10,
   },
   lastModifiedText: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     opacity: 0.9,
     fontSize: 10,
   },
   statusIcon: {
     paddingLeft: 10,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   completedStatusIcon: {
     opacity: 0.6,
+  },
+  hightLightChar: {
+    fontWeight: 'bold',
+    fontSize: 24,
   },
 });

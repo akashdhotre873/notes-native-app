@@ -23,6 +23,8 @@ export const TodosHomeScreen = () => {
     getSortInfoFor(dataType.TODO)
   );
 
+  const [searchValue, setSearchValue] = useState('');
+
   const [selectedTodoName, setSelectedTodoName] = useState('');
 
   const sortAlgo = (todoFirst, todoSecond) => {
@@ -73,6 +75,8 @@ export const TodosHomeScreen = () => {
         title="All Todos"
         onDelete={selectedTodoName ? onDelete : null}
         sortItem={dataType.TODO}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
       />
       <ScrollView style={styles.cardsContainer}>
         {Object.values(todos)
@@ -83,6 +87,7 @@ export const TodosHomeScreen = () => {
               key={todo.name + getUUID()}
               selectedTodoName={selectedTodoName}
               setSelectedTodoName={setSelectedTodoName}
+              searchValue={searchValue}
             />
           ))}
       </ScrollView>
