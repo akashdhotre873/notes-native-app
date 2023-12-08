@@ -1,13 +1,19 @@
-import * as React from "react";
-import { Text, View, Pressable } from "react-native";
-import { StyleSheet } from "react-native";
-import { colors } from "../../helpers/constants";
+import * as React from 'react';
+import { Text, View, Pressable } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { colors } from '../../helpers/constants';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { SETTINGS_SCREEN_PATH } from '../../helpers/pagePathHelper';
 
-export const TabBar = ({ state, descriptors, navigation, position }) => {
+export const TabBar = ({ state, descriptors, navigation }) => {
+  const stackNavigation = useNavigation();
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: 'row' }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
+        const TabBarBadge = options.tabBarBadge;
+        const tabBarBadgeIsPresent = Boolean(options.tabBarBadge);
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
@@ -19,7 +25,7 @@ export const TabBar = ({ state, descriptors, navigation, position }) => {
 
         const onPress = () => {
           const event = navigation.emit({
-            type: "tabPress",
+            type: 'tabPress',
             target: route.key,
             canPreventDefault: true,
           });
@@ -32,7 +38,7 @@ export const TabBar = ({ state, descriptors, navigation, position }) => {
 
         const onLongPress = () => {
           navigation.emit({
-            type: "tabLongPress",
+            type: 'tabLongPress',
             target: route.key,
           });
         };
@@ -51,17 +57,29 @@ export const TabBar = ({ state, descriptors, navigation, position }) => {
             ]}
             key={route.key}
           >
-            <Text
-              style={[
-                styles.label,
-                isFocused ? styles.selectedLabel : styles.unselectedLabel,
-              ]}
-            >
-              {label}
-            </Text>
+            {tabBarBadgeIsPresent ? (
+              <TabBarBadge style={styles.icon} isFocused={isFocused} />
+            ) : (
+              <Text
+                style={[
+                  styles.label,
+                  isFocused ? styles.selectedLabel : styles.unselectedLabel,
+                ]}
+              >
+                {label}
+              </Text>
+            )}
           </Pressable>
         );
       })}
+
+      <Ionicons
+        name="settings"
+        size={21}
+        color="black"
+        style={styles.settingsIcon}
+        onPress={() => stackNavigation.navigate(SETTINGS_SCREEN_PATH)}
+      />
     </View>
   );
 };
@@ -73,15 +91,29 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: colors.primaryColor,
   },
-  selectedLabelContainer: {
-    borderBottomWidth: 2,
+  some: {
+    flex: 0.3,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: colors.primaryColor,
+  },
+  selectedLabelContainer: {},
+  icon: {
+    alignSelf: 'center',
   },
   label: {
-    alignSelf: "center",
+    alignSelf: 'center',
     fontSize: 16,
   },
-  selectedLabel: {},
+  selectedLabel: {
+    fontWeight: 'bold',
+  },
   unselectedLabel: {
     opacity: 0.5,
+  },
+  settingsIcon: {
+    position: 'absolute',
+    right: 15,
+    top: 10,
   },
 });
