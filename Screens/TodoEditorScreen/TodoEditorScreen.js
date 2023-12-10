@@ -30,6 +30,7 @@ import {
   getUUID,
 } from '../../helpers/cryptographyHelper';
 import { TaskEntity } from '../../components/TaskEntity';
+import { TimeDisplayComponent } from '../../components/TimeDisplayComponent/TimeDisplayComponent';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -326,7 +327,7 @@ export const TodoEditorScreen = () => {
           {dateUpdated && (
             <View style={styles.timeContainer}>
               <Text style={styles.dateModifiedText}>
-                {getTimeString(dateUpdated)}
+                <TimeDisplayComponent date={dateUpdated} />
               </Text>
               <Text style={styles.dateModifiedText}>
                 {getDateString(dateUpdated)}

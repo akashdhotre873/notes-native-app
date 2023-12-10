@@ -17,6 +17,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
+import { TimeDisplayComponent } from '../TimeDisplayComponent/TimeDisplayComponent';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
@@ -267,7 +268,7 @@ export const TodoListCard = ({
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
           <Text style={styles.dateModifiedText}>
-            {getTimeString(dateUpdated)}
+            <TimeDisplayComponent date={dateUpdated} />
           </Text>
           <Text style={styles.dateModifiedText}>
             {getDateString(dateUpdated)}

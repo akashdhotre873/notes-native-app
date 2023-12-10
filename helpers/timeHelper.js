@@ -8,9 +8,9 @@ export const getDateString = (dateObj) => {
   return `${day}, ${date} ${month} ${year}`;
 };
 
-export const getTimeString = (dateObj) => {
+export const getTimeString = (dateObj, timeFormat) => {
   const spaceTimeDateObj = spacetime(dateObj);
-  const t = spaceTimeDateObj.format('{hour}:{minute-pad}:{second-pad} {AMPM}');
+  const t = spaceTimeDateObj.format(timeFormat);
   return t.toUpperCase();
 };
 

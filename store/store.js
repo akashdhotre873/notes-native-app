@@ -1,10 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import notesReducer from "../dux/notes";
-import promptReducer from "../dux/prompt";
-import tabsReducer from "../dux/tabs";
-import todosReducer from "../dux/todos";
-import warningsReducer from "../dux/warnings";
-import sortReducer from "../dux/sort";
+import { configureStore } from '@reduxjs/toolkit';
+import notesReducer from '../dux/notes';
+import promptReducer from '../dux/prompt';
+import tabsReducer from '../dux/tabs';
+import todosReducer from '../dux/todos';
+import warningsReducer from '../dux/warnings';
+import sortReducer from '../dux/sort';
+import settingsReducer from '../dux/settings';
 
 export default configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export default configureStore({
     tabs: tabsReducer,
     warnings: warningsReducer,
     sorting: sortReducer,
+    settings: settingsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

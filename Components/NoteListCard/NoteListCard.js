@@ -7,6 +7,7 @@ import { getPlainText } from '../../helpers/cryptographyHelper';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { getDateString, getTimeString } from '../../helpers/timeHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
+import { TimeDisplayComponent } from '../TimeDisplayComponent/TimeDisplayComponent';
 
 export const NoteListCard = ({
   note,
@@ -109,7 +110,7 @@ export const NoteListCard = ({
         <View style={styles.timeContainer}>
           <Text style={styles.lastModifiedText}>Last Modified :</Text>
           <Text style={styles.dateModifiedText}>
-            {getTimeString(dateUpdated)}
+            <TimeDisplayComponent date={dateUpdated} />
           </Text>
           <Text style={styles.dateModifiedText}>
             {getDateString(dateUpdated)}
