@@ -1,0 +1,1 @@
+export { TimeDisplayComponent } from './TimeDisplayComponent';

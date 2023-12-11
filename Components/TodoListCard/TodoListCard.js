@@ -17,7 +17,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
-import { TimeDisplayComponent } from '../TimeDisplayComponent/TimeDisplayComponent';
+import { TimeDisplayComponent } from '../TimeDisplayComponent';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 

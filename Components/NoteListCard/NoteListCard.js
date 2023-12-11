@@ -7,7 +7,7 @@ import { getPlainText } from '../../helpers/cryptographyHelper';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { getDateString, getTimeString } from '../../helpers/timeHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
-import { TimeDisplayComponent } from '../TimeDisplayComponent/TimeDisplayComponent';
+import { TimeDisplayComponent } from '../TimeDisplayComponent';
 
 export const NoteListCard = ({
   note,

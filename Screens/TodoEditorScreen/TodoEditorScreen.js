@@ -30,7 +30,7 @@ import {
   getUUID,
 } from '../../helpers/cryptographyHelper';
 import { TaskEntity } from '../../components/TaskEntity';
-import { TimeDisplayComponent } from '../../components/TimeDisplayComponent/TimeDisplayComponent';
+import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {

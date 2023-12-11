@@ -23,7 +23,7 @@ import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordAre
 import { showPrompt } from '../../dux/prompt';
 import { dataType, promptCategoryType } from '../../helpers/constants';
 import { getDateString, getTimeString } from '../../helpers/timeHelper';
-import { TimeDisplayComponent } from '../../components/TimeDisplayComponent/TimeDisplayComponent';
+import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
 
