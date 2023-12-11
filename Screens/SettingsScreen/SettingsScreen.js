@@ -1,12 +1,17 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, timeFormats } from '../../helpers/constants';
+import { colors, settingTypes, timeFormats } from '../../helpers/constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Divider, Menu } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTimeFormat, updateTimeFormat } from '../../dux/settings';
+import {
+  getSettings,
+  getTimeFormat,
+  updateTimeFormat,
+} from '../../dux/settings';
+import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 
 const DisplayTimeFormatMenuItem = ({ timeFormat }) => {
   const selectedTimeFormat = useSelector(getTimeFormat);
@@ -40,12 +45,18 @@ export const SettingsScreen = () => {
   const selectedTimeFormatDetails = timeFormats.find(
     (currentFormat) => currentFormat.format === selectedTimeFormat
   );
+  const settings = useSelector(getSettings);
 
   const closeTimeFormatMenu = () => {
     setTimeFormatMenuVisible(false);
   };
 
   const onTimeFormatChange = (format) => {
+    updateAndSaveSettingsToAsyncStorage({
+      settings,
+      settingType: settingTypes.TIME_FORMAT,
+      value: format,
+    });
     dispatch(updateTimeFormat(format));
     closeTimeFormatMenu();
   };
