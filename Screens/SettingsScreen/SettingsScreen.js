@@ -61,7 +61,7 @@ export const SettingsScreen = () => {
           onPress={() => navigation.goBack()}
         />
         <Text style={styles.settingsText}>Settings</Text>
-        <View></View>
+        <View style={styles.emptySpace} />
       </View>
 
       <View style={styles.settingsContainer}>
@@ -78,9 +78,13 @@ export const SettingsScreen = () => {
                 style={styles.timeFormatMenuAnchor}
               >
                 <Text style={styles.timeFormatValue}>
-                  {selectedTimeFormatDetails.displayString}
+                  "{selectedTimeFormatDetails.displayString}"
                 </Text>
-                <Ionicons name="chevron-down" size={24} color="black" />
+                <Ionicons
+                  name={timeFormatMenuVisible ? 'chevron-up' : 'chevron-down'}
+                  size={24}
+                  color="black"
+                />
               </Pressable>
             }
           >
@@ -111,9 +115,10 @@ const styles = StyleSheet.create({
   backIcon: {
     paddingLeft: 10,
   },
+  emptySpace: {
+    width: 40,
+  },
   settingsText: {
-    paddingTop: 2,
-    paddingLeft: 17,
     fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: '500',
