@@ -75,7 +75,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
 
       <Ionicons
         name="settings"
-        size={21}
+        size={24}
         color="black"
         style={styles.settingsIcon}
         onPress={() => stackNavigation.navigate(SETTINGS_SCREEN_PATH)}
@@ -115,5 +115,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 15,
     top: 10,
+    paddingLeft: 10,
   },
 });

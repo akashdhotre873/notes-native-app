@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     borderWidth: 1,
     borderRadius: 7,
-    borderColor: 'cyan',
+    borderColor: 'grey',
   },
   timeFormatContainer: {
     marginHorizontal: 15,
