@@ -5,22 +5,31 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
-import { colors } from '../../helpers/constants';
+import { colors, newContentIconPosition } from '../../helpers/constants';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { getNewContentIconPosition } from '../../dux/settings';
 
 export const NewContent = ({ iconOnClick }) => {
+  const iconPosition = useSelector(getNewContentIconPosition);
+  const isIconOnTheRight = iconPosition === newContentIconPosition.RIGHT;
+  const [isIconOnTheRightSide, setIsIconOnTheRightSide] =
+    useState(isIconOnTheRight);
+
+  const leftOffset = 35;
   const rightOffset = Dimensions.get('window').width - 80;
-  const animatedValue = useRef(new Animated.Value(rightOffset)).current;
-  const [isIconOnTheRightSide, setIsIconOnTheRightSide] = useState(true);
+  const offset = isIconOnTheRightSide ? rightOffset : leftOffset;
+
+  const animatedValue = useRef(new Animated.Value(offset)).current;
 
   const animationType = Easing.bounce;
   const duration = 500; // in milli seconds
 
   const moveToLeft = () => {
     Animated.timing(animatedValue, {
-      toValue: 35,
+      toValue: leftOffset,
       duration,
       easing: animationType,
       useNativeDriver: true,

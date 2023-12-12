@@ -2,6 +2,7 @@ import { defaultSettings, settingTypes } from '../helpers/constants';
 
 const LOAD_INITIAL_SETTINGS = `[settings] load initial settings`;
 const UPDATE_TIME_FORMAT = `[settings] update time format`;
+const UPDATE_NEW_CONTENT_ICON_DEFAULT_POSITION = `[settings] update new content icon default position`;
 
 export const loadInitialSettings = (settings) => ({
   type: LOAD_INITIAL_SETTINGS,
@@ -13,18 +14,30 @@ export const updateTimeFormat = (formatString) => ({
   payload: formatString,
 });
 
+export const updateNewContentIconDefaultPosition = (positionString) => ({
+  type: UPDATE_NEW_CONTENT_ICON_DEFAULT_POSITION,
+  payload: positionString,
+});
+
 const initialState = defaultSettings;
 
 const settingsReducer = (state = initialState, action) => {
-  if (action.type === LOAD_INITIAL_SETTINGS) {
-    return action.payload;
-  }
+  switch (action.type) {
+    case LOAD_INITIAL_SETTINGS:
+      return { ...state, ...action.payload };
 
-  if (action.type === UPDATE_TIME_FORMAT) {
-    return { ...state, [settingTypes.TIME_FORMAT]: action.payload };
-  }
+    case UPDATE_TIME_FORMAT:
+      return { ...state, [settingTypes.TIME_FORMAT]: action.payload };
 
-  return state;
+    case UPDATE_NEW_CONTENT_ICON_DEFAULT_POSITION:
+      return {
+        ...state,
+        [settingTypes.NEW_CONTENT_ICON_POSITION]: action.payload,
+      };
+
+    default:
+      return state;
+  }
 };
 
 export default settingsReducer;
@@ -34,3 +47,6 @@ export const getTimeFormat = ({ settings }) =>
   settings[settingTypes.TIME_FORMAT];
 
 export const getSettings = ({ settings }) => settings;
+
+export const getNewContentIconPosition = ({ settings }) =>
+  settings[settingTypes.NEW_CONTENT_ICON_POSITION];

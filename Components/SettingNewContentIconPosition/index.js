@@ -1,0 +1,1 @@
+export { SettingNewContentIconPosition } from './SettingNewContentIconPosition';

@@ -4,6 +4,7 @@ import { colors } from '../../helpers/constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SettingTimeFormat } from '../../components/SettingTimeFormat';
+import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -24,6 +25,7 @@ export const SettingsScreen = () => {
 
       <View style={styles.settingsContainer}>
         <SettingTimeFormat />
+        <SettingNewContentIconPosition />
       </View>
     </View>
   );
