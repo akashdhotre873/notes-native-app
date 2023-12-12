@@ -103,15 +103,12 @@ export const SettingTimeFormat = () => {
           </React.Fragment>
         ))}
       </Menu>
-      <View style={{ flex: 1 }} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {},
   timeFormatContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -138,7 +135,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 7,
     borderColor: 'grey',
-    // elevation: 10,
     backgroundColor: 'white',
   },
   selectedTimeFormat: {
@@ -154,6 +150,5 @@ const styles = StyleSheet.create({
   },
   timeFormatMenuItemContainer: {
     flexDirection: 'row',
-    // flex: 1,
   },
 });

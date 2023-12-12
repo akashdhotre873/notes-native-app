@@ -9,7 +9,7 @@ export const SettingsScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <View style={styles.actionBar}>
         <Ionicons
           name="arrow-back"
@@ -51,38 +51,5 @@ const styles = StyleSheet.create({
   settingsContainer: {
     marginHorizontal: 24,
     marginTop: 40,
-    flex: 1,
   },
-  // timeFormatContainer: {
-  //   marginHorizontal: 15,
-  //   marginVertical: 10,
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  // },
-  // timeFormatText: {
-  //   fontSize: 16,
-  //   fontWeight: '500',
-  // },
-  // timeFormatValue: {
-  //   fontSize: 16,
-  //   fontWeight: '400',
-  // },
-  // timeFormatMenuAnchor: {
-  //   flexDirection: 'row',
-  //   paddingLeft: 10,
-  // },
-  // selectedTimeFormat: {
-  //   fontWeight: '700',
-  // },
-  // timeFormatMenuItem: {
-  //   fontSize: 16,
-  // },
-  // timeFormatExample: {
-  //   fontSize: 12,
-  //   opacity: 0.5,
-  //   marginTop: 4,
-  // },
-  // timeFormatMenuItemContainer: {
-  //   flexDirection: 'row',
-  // },
 });
