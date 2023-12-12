@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { settingTypes, timeFormats } from '../../helpers/constants';
 import React from 'react';
-import { Divider, Menu } from 'react-native-paper';
+import { Divider, List, Menu } from 'react-native-paper';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import {
   getSettings,
@@ -28,7 +28,7 @@ const DisplayTimeFormatMenuItem = ({ timeFormat }) => {
       </Text>
       <View>
         <Text style={styles.timeFormatExample}>
-          {' '}
+          {'   '}
           (Ex: {timeFormat.example})
         </Text>
       </View>
@@ -60,10 +60,11 @@ export const SettingTimeFormat = () => {
   };
 
   return (
-    <View style={styles.timeFormatContainer}>
-      <View>
-        <Text style={styles.timeFormatText}>Time Format : </Text>
+    <View style={styles.container}>
+      <View style={{ paddingLeft: 5, marginBottom: 5 }}>
+        <Text style={styles.timeFormatText}>Time Format</Text>
       </View>
+
       <Menu
         visible={timeFormatMenuVisible}
         onDismiss={closeTimeFormatMenu}
@@ -72,9 +73,17 @@ export const SettingTimeFormat = () => {
             onPress={() => setTimeFormatMenuVisible(true)}
             style={styles.timeFormatMenuAnchor}
           >
-            <Text style={styles.timeFormatValue}>
-              "{selectedTimeFormatDetails.displayString}"
-            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.timeFormatValue}>
+                "{selectedTimeFormatDetails.displayString}"
+              </Text>
+              <View>
+                <Text style={styles.timeFormatDispalyExample}>
+                  {'   '}
+                  (Ex: {selectedTimeFormatDetails.example})
+                </Text>
+              </View>
+            </View>
             <Ionicons
               name={timeFormatMenuVisible ? 'chevron-up' : 'chevron-down'}
               size={24}
@@ -82,6 +91,7 @@ export const SettingTimeFormat = () => {
             />
           </Pressable>
         }
+        style={{ width: '88%' }}
       >
         {timeFormats.map((timeFormat, index) => (
           <React.Fragment key={timeFormat.format}>
@@ -93,28 +103,43 @@ export const SettingTimeFormat = () => {
           </React.Fragment>
         ))}
       </Menu>
+      <View style={{ flex: 1 }} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   timeFormatContainer: {
-    marginHorizontal: 15,
-    marginVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    elevation: 0,
   },
   timeFormatText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '500',
   },
   timeFormatValue: {
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: '500',
+  },
+  timeFormatDispalyExample: {
+    marginTop: 2,
+    fontSize: 14,
+    opacity: 0.7,
   },
   timeFormatMenuAnchor: {
     flexDirection: 'row',
-    paddingLeft: 10,
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    borderWidth: 1,
+    borderRadius: 7,
+    borderColor: 'grey',
+    // elevation: 10,
+    backgroundColor: 'white',
   },
   selectedTimeFormat: {
     fontWeight: '700',
@@ -129,5 +154,6 @@ const styles = StyleSheet.create({
   },
   timeFormatMenuItemContainer: {
     flexDirection: 'row',
+    // flex: 1,
   },
 });

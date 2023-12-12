@@ -9,7 +9,7 @@ export const SettingsScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <View style={styles.actionBar}>
         <Ionicons
           name="arrow-back"
@@ -50,10 +50,8 @@ const styles = StyleSheet.create({
   },
   settingsContainer: {
     marginHorizontal: 24,
-    marginTop: 50,
-    borderWidth: 1,
-    borderRadius: 7,
-    borderColor: 'grey',
+    marginTop: 40,
+    flex: 1,
   },
   // timeFormatContainer: {
   //   marginHorizontal: 15,
