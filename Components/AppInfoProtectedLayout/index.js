@@ -1,1 +1,0 @@
-export { AppInfoProtectedLayout } from './AppInfoProtectedLayout';

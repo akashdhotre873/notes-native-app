@@ -1,0 +1,1 @@
+export { ConfigProtectedLayout } from './ConfigProtectedLayout';
