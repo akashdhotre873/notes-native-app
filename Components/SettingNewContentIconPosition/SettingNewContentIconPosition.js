@@ -1,5 +1,5 @@
-import { StyleSheet, Text, ToastAndroid, View } from 'react-native';
-import { Switch } from 'react-native-paper';
+import { Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native';
+import { IconButton, Switch, Tooltip } from 'react-native-paper';
 import {
   getNewContentIconPosition,
   getSettings,
@@ -12,6 +12,7 @@ import {
   settingTypes,
 } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
+import { Ionicons } from '@expo/vector-icons';
 
 export const SettingNewContentIconPosition = () => {
   const dispatch = useDispatch();
@@ -34,12 +35,28 @@ export const SettingNewContentIconPosition = () => {
     });
   };
 
+  const showInfo = () => {
+    const infoMessage =
+      "You can press and hold on the NewContent icon to toggle it's position temporarily. " +
+      "It will get back to it's default position once the app reloads." +
+      '\n\nThis setting decides its default position when app loads.';
+
+    Alert.alert('NewContent Icon', infoMessage, null, { cancelable: true });
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{ paddingLeft: 5, marginBottom: 5 }}>
+      <View style={styles.settingHeaderContainer}>
         <Text style={styles.settingTypeText}>
           Default New Content Icon position
         </Text>
+        <Ionicons
+          name="information-circle-outline"
+          size={16}
+          color="black"
+          style={styles.infoIcon}
+          onPress={showInfo}
+        />
       </View>
 
       <View style={styles.switchContainer}>
@@ -81,5 +98,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 16,
     fontWeight: '500',
+  },
+  settingHeaderContainer: {
+    paddingLeft: 5,
+    marginBottom: 5,
+    flexDirection: 'row',
+  },
+  infoIcon: {
+    paddingLeft: 5,
+    paddingTop: 5,
+    alignSelf: 'center',
   },
 });
