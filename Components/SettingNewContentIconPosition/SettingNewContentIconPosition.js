@@ -6,7 +6,11 @@ import {
   updateNewContentIconDefaultPosition,
 } from '../../dux/settings';
 import { useDispatch, useSelector } from 'react-redux';
-import { newContentIconPosition, settingTypes } from '../../helpers/constants';
+import {
+  colors,
+  newContentIconPosition,
+  settingTypes,
+} from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 
 export const SettingNewContentIconPosition = () => {
@@ -61,12 +65,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderWidth: 1,
     borderRadius: 7,
-    borderColor: 'grey',
-    backgroundColor: 'white',
+    borderColor: colors.settingBoxBorderColor,
+    backgroundColor: colors.settingBoxBackgroundColor,
     paddingHorizontal: 15,
   },
   positionText: {
     alignSelf: 'center',
     fontSize: 16,
+    fontWeight: '500',
   },
 });

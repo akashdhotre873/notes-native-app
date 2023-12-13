@@ -18,6 +18,8 @@ export const colors = {
   primaryColor: '#006efe',
   lockedColor: '#fe9a03',
   unlockedColor: '#01eb00',
+  settingBoxBorderColor: 'grey',
+  settingBoxBackgroundColor: 'white',
 };
 
 export const dataType = {

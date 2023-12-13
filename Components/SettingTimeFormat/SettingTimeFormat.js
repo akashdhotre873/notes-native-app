@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { settingTypes, timeFormats } from '../../helpers/constants';
+import { colors, settingTypes, timeFormats } from '../../helpers/constants';
 import React from 'react';
 import { Divider, List, Menu } from 'react-native-paper';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
@@ -131,11 +131,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    paddingVertical: 7,
+    paddingVertical: 10,
     borderWidth: 1,
     borderRadius: 7,
-    borderColor: 'grey',
-    backgroundColor: 'white',
+    borderColor: colors.settingBoxBorderColor,
+    backgroundColor: colors.settingBoxBackgroundColor,
   },
   selectedTimeFormat: {
     fontWeight: '700',
