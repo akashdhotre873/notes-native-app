@@ -73,13 +73,17 @@ export const TabBar = ({ state, descriptors, navigation }) => {
         );
       })}
 
-      <Ionicons
-        name="settings"
-        size={24}
-        color="black"
-        style={styles.settingsIcon}
+      <Pressable
         onPress={() => stackNavigation.navigate(SETTINGS_SCREEN_PATH)}
-      />
+        hitSlop={{ top: 20, bottom: 10, right: 10, left: 30 }}
+      >
+        <Ionicons
+          name="settings"
+          size={24}
+          color="black"
+          style={styles.settingsIcon}
+        />
+      </Pressable>
     </View>
   );
 };
