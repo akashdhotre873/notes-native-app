@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyleSheet, Text, ToastAndroid, View } from 'react-native';
 import { Switch } from 'react-native-paper';
 import {
@@ -14,7 +13,6 @@ export const SettingNewContentIconPosition = () => {
   const dispatch = useDispatch();
   const iconPosition = useSelector(getNewContentIconPosition);
   const settings = useSelector(getSettings);
-  console.log(settings);
   const isIconOnTheRightSide = iconPosition === newContentIconPosition.RIGHT;
 
   const onToggleSwitch = () => {
@@ -53,10 +51,6 @@ export const SettingNewContentIconPosition = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 25,
-    // marginHorizontal: 15,
-    // marginVertical: 10,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   settingTypeText: {
     fontSize: 18,
@@ -70,11 +64,9 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     backgroundColor: 'white',
     paddingHorizontal: 15,
-    // paddingVertical: 7,
   },
   positionText: {
     alignSelf: 'center',
     fontSize: 16,
-    // fontWeight: '500',
   },
 });

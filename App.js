@@ -19,6 +19,8 @@ import { colors } from './helpers/constants';
 import { TodoEditorScreen } from './screens/TodoEditorScreen';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { ConfigProtectedLayout } from './components/ConfigProtectedLayout';
+import * as SplashScreen from 'expo-splash-screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,35 +34,39 @@ const OtherComponents = () => {
   );
 };
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
   return (
     <Provider store={store}>
       <PaperProvider>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <StatusBar
-              backgroundColor={colors.primaryColor}
-              barStyle="dark-content"
-            />
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name={HOME_SCREEN_PATH} component={HomeScreen} />
-              <Stack.Screen
-                name={NOTE_EDITOR_SCREEN_PATH}
-                component={NoteEditorScreen}
+        <OtherComponents />
+        <ConfigProtectedLayout>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <StatusBar
+                backgroundColor={colors.primaryColor}
+                barStyle="dark-content"
               />
-              <Stack.Screen
-                name={TODO_EDITOR_SCREEN_PATH}
-                component={TodoEditorScreen}
-              />
-              <Stack.Screen
-                name={SETTINGS_SCREEN_PATH}
-                component={SettingsScreen}
-              />
-            </Stack.Navigator>
-
-            <OtherComponents />
-          </NavigationContainer>
-        </SafeAreaProvider>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name={HOME_SCREEN_PATH} component={HomeScreen} />
+                <Stack.Screen
+                  name={NOTE_EDITOR_SCREEN_PATH}
+                  component={NoteEditorScreen}
+                />
+                <Stack.Screen
+                  name={TODO_EDITOR_SCREEN_PATH}
+                  component={TodoEditorScreen}
+                />
+                <Stack.Screen
+                  name={SETTINGS_SCREEN_PATH}
+                  component={SettingsScreen}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </ConfigProtectedLayout>
       </PaperProvider>
     </Provider>
   );

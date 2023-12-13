@@ -16,6 +16,8 @@ import { showPrompt } from '../../dux/prompt';
 import { setWarningsList } from '../../dux/warnings';
 import { loadInitialSortInfo } from '../../dux/sort';
 import { loadInitialSettings } from '../../dux/settings';
+import { setIsAppLoaded } from '../../dux/appInfo';
+import * as SplashScreen from 'expo-splash-screen';
 
 export const LoadApp = () => {
   const dispatch = useDispatch();
@@ -60,11 +62,20 @@ export const LoadApp = () => {
       dispatch(loadInitialSettings(settings));
     };
 
-    loadSortingInfo();
-    loadSettings();
-    loadNotes();
-    loadTodos();
-    loadWarnings();
+    const loadEverything = async () => {
+      const promises = [
+        loadSortingInfo(),
+        loadSettings(),
+        loadNotes(),
+        loadTodos(),
+        loadWarnings(),
+      ];
+      await Promise.all(promises);
+      dispatch(setIsAppLoaded(true));
+      SplashScreen.hideAsync();
+    };
+
+    loadEverything();
   }, []);
 
   useEffect(() => {
