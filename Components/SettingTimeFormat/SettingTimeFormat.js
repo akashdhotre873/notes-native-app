@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, settingTypes, timeFormats } from '../../helpers/constants';
 import React from 'react';
-import { Divider, List, Menu } from 'react-native-paper';
+import { Divider, Menu } from 'react-native-paper';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import {
   getSettings,

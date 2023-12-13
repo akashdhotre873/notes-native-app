@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native';
-import { IconButton, Switch, Tooltip } from 'react-native-paper';
+import { Switch } from 'react-native-paper';
 import {
   getNewContentIconPosition,
   getSettings,
