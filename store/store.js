@@ -6,6 +6,7 @@ import todosReducer from '../dux/todos';
 import warningsReducer from '../dux/warnings';
 import sortReducer from '../dux/sort';
 import settingsReducer from '../dux/settings';
+import appInfoReducer from '../dux/appInfo';
 
 export default configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export default configureStore({
     warnings: warningsReducer,
     sorting: sortReducer,
     settings: settingsReducer,
+    appInfo: appInfoReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
