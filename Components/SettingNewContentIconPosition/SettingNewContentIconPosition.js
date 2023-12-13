@@ -46,7 +46,15 @@ export const SettingNewContentIconPosition = () => {
         <Text style={styles.positionText}>
           {isIconOnTheRightSide ? 'Right' : 'Left'}
         </Text>
-        <Switch value={isIconOnTheRightSide} onValueChange={onToggleSwitch} />
+        <Switch
+          trackColor={{
+            true: '#7380fa',
+            false: '#91d4f2',
+          }}
+          thumbColor={isIconOnTheRightSide ? '#2438f0' : '#11abf2'}
+          value={isIconOnTheRightSide}
+          onValueChange={onToggleSwitch}
+        />
       </View>
     </View>
   );
