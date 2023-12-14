@@ -26,12 +26,8 @@ const Stack = createNativeStackNavigator();
 
 const OtherComponents = () => {
   const showPrompt = useSelector(shouldShowPrompt);
-  return (
-    <>
-      <LoadApp />
-      {showPrompt && <Promtps />}
-    </>
-  );
+
+  return <>{showPrompt && <Promtps />}</>;
 };
 
 // Keep the splash screen visible while we fetch resources
@@ -41,7 +37,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PaperProvider>
-        <OtherComponents />
+        <LoadApp />
         <ConfigProtectedLayout>
           <SafeAreaProvider>
             <NavigationContainer>
@@ -64,6 +60,7 @@ export default function App() {
                   component={SettingsScreen}
                 />
               </Stack.Navigator>
+              <OtherComponents />
             </NavigationContainer>
           </SafeAreaProvider>
         </ConfigProtectedLayout>
