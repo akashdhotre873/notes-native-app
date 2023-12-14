@@ -1,5 +1,11 @@
-import { Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native';
-import { Switch } from 'react-native-paper';
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+  Switch,
+} from 'react-native';
 import {
   getNewContentIconPosition,
   getSettings,
