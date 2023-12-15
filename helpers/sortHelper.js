@@ -1,14 +1,17 @@
-import { setItemToAsyncStorage } from "./asyncStorageHelper";
-import { sortParameter, sortOrder } from "./constants";
+import { setItemToAsyncStorage } from './asyncStorageHelper';
+import { sortParameter, sortOrder } from './constants';
+
+const stringCompare = (a, b) => {
+  return a
+    .toLowerCase()
+    .localeCompare(b.toLowerCase(), 'en', { sensitivity: 'base' });
+};
 
 const sortStrings = (param1, param2, order) => {
   const sortedInAscendingOrder = order === sortOrder.ASCENDING;
-  if (param1 > param2) {
-    return sortedInAscendingOrder ? 1 : -1;
-  } else if (param1 < param2) {
-    return sortedInAscendingOrder ? -1 : 1;
-  }
-  return 0;
+  return sortedInAscendingOrder
+    ? stringCompare(param1, param2)
+    : stringCompare(param2, param1);
 };
 
 const sortTime = (param1, param2, order) => {
@@ -51,5 +54,5 @@ export const updateSortingInfoInAsync = ({
     selectedSortOrder: sortOrder,
     selectedSortParameter: sortParameter,
   };
-  setItemToAsyncStorage("sortingInfo", JSON.stringify(allSortingInfo));
+  setItemToAsyncStorage('sortingInfo', JSON.stringify(allSortingInfo));
 };
