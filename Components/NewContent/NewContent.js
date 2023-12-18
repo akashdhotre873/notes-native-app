@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { getNewContentIconPosition } from '../../dux/settings';
+import { useKeyBoardVisible } from '../../hooks/useKeyBoardVisible';
 
 export const NewContent = ({ iconOnClick }) => {
   const iconPosition = useSelector(getNewContentIconPosition);
@@ -26,6 +27,8 @@ export const NewContent = ({ iconOnClick }) => {
 
   const animationType = Easing.bounce;
   const duration = 500; // in milli seconds
+
+  const isKeyboardVisible = useKeyBoardVisible();
 
   const moveToLeft = () => {
     Animated.timing(animatedValue, {
@@ -48,6 +51,10 @@ export const NewContent = ({ iconOnClick }) => {
   const toggleLayout = () => {
     isIconOnTheRightSide ? moveToLeft() : moveToRight();
   };
+
+  if (isKeyboardVisible) {
+    return null;
+  }
 
   return (
     <Animated.View
