@@ -7,6 +7,7 @@ import {
   View,
   BackHandler,
   TextInput,
+  Image,
 } from 'react-native';
 import { ActionBar } from '../../components/ActionBar';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -25,6 +26,7 @@ import { dataType, promptCategoryType } from '../../helpers/constants';
 import { getDateString } from '../../helpers/timeHelper';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
 
@@ -143,14 +145,29 @@ export const NoteEditorScreen = () => {
   const getActionBarProps = () => {
     if (!title?.trim() || contentIsSaved)
       return {
-        rightIconLink: () => {},
-        rightIconSource: require('../../assets/icons/saveInactiveButtonIcon.png'),
+        rightIcon: (stylesForIcon) => (
+          <MaterialCommunityIcons
+            name="content-save"
+            size={33}
+            color="black"
+            style={[stylesForIcon, { opacity: 0.5 }]}
+            disabled={true}
+          />
+        ),
       };
 
     return {
-      rightIconLink: () =>
-        checkAndSaveNote({ hasPassword: passwordProtected, password }),
-      rightIconSource: require('../../assets/icons/saveActiveButtonIcon.png'),
+      rightIcon: (stylesForIcon) => (
+        <MaterialCommunityIcons
+          name="content-save-alert"
+          size={33}
+          color="black"
+          style={stylesForIcon}
+          onPress={() =>
+            checkAndSaveNote({ hasPassword: passwordProtected, password })
+          }
+        />
+      ),
     };
   };
 
@@ -325,5 +342,12 @@ const styles = StyleSheet.create({
   },
   timeContainer: {
     flexDirection: 'row',
+  },
+  rightButtonImage: {
+    height: 28,
+    width: 28,
+    resizeMode: 'contain',
+    marginRight: 15,
+    alignSelf: 'center',
   },
 });

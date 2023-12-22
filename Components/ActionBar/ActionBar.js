@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { colors, shareMethod } from '../../helpers/constants';
 import { ShareContentComponent } from '../ShareContentComponent';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,8 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 export const ActionBar = ({
   title,
   leftIcon,
-  rightIconLink,
-  rightIconSource,
+  rightIcon,
   onDelete,
   contentToShare,
   allowCopyToClicpBoard,
@@ -61,11 +60,8 @@ export const ActionBar = ({
             />
           </ShareContentComponent>
         )}
-        {rightIconLink && (
-          <Pressable onPress={rightIconLink} style={styles.rightButtonLink}>
-            <Image source={rightIconSource} style={styles.rightButtonImage} />
-          </Pressable>
-        )}
+
+        {rightIcon && rightIcon(styles.rightButtonLink)}
 
         {Boolean(onSearchValueChange) && (
           <View>
@@ -128,6 +124,7 @@ const styles = StyleSheet.create({
   },
   rightButtonLink: {
     paddingRight: 15,
+    alignSelf: 'center',
   },
   rightButtonImage: {
     height: 30,

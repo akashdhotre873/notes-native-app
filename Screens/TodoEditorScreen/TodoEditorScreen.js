@@ -32,6 +32,7 @@ import {
 import { TaskEntity } from '../../components/TaskEntity';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -205,14 +206,29 @@ export const TodoEditorScreen = () => {
   const getActionBarProps = () => {
     if (!title?.trim() || TasksAreSaved)
       return {
-        rightIconLink: () => {},
-        rightIconSource: require('../../assets/icons/saveInactiveButtonIcon.png'),
+        rightIcon: (stylesForIcon) => (
+          <MaterialCommunityIcons
+            name="content-save"
+            size={33}
+            color="black"
+            style={[stylesForIcon, { opacity: 0.5 }]}
+            disabled={true}
+          />
+        ),
       };
 
     return {
-      rightIconLink: () =>
-        checkAndSaveTodo({ hasPassword: passwordProtected, password }),
-      rightIconSource: require('../../assets/icons/saveActiveButtonIcon.png'),
+      rightIcon: (stylesForIcon) => (
+        <MaterialCommunityIcons
+          name="content-save-alert"
+          size={33}
+          color="black"
+          style={stylesForIcon}
+          onPress={() =>
+            checkAndSaveTodo({ hasPassword: passwordProtected, password })
+          }
+        />
+      ),
     };
   };
 
