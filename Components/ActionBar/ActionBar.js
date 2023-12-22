@@ -114,22 +114,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '60%',
   },
-  leftButtonImage: {
-    height: 30,
-    width: 30,
-    resizeMode: 'contain',
-  },
   leftButtonLink: {
     paddingLeft: 10,
   },
   rightButtonLink: {
     paddingRight: 15,
     alignSelf: 'center',
-  },
-  rightButtonImage: {
-    height: 30,
-    width: 30,
-    resizeMode: 'contain',
   },
   rightSideIcons: {
     flexDirection: 'row',

@@ -7,7 +7,6 @@ import {
   View,
   BackHandler,
   TextInput,
-  Image,
 } from 'react-native';
 import { ActionBar } from '../../components/ActionBar';
 import { useRoute, useNavigation } from '@react-navigation/native';
