@@ -278,8 +278,7 @@ export const TodoEditorScreen = () => {
 
   const backAction = () => {
     if (TasksAreSaved) {
-      const canExit = false;
-      return canExit;
+      return false; // false -> user will go back from the screen
     }
     dispatch(
       showPrompt({
@@ -287,8 +286,8 @@ export const TodoEditorScreen = () => {
         data: { onAccept: () => navigation.goBack() },
       })
     );
-    const canNotExit = true;
-    return canNotExit;
+
+    return true; // true -> user will stay on the same screen
   };
 
   useEffect(() => {

@@ -208,8 +208,7 @@ export const NoteEditorScreen = () => {
 
   const backAction = () => {
     if (contentIsSaved) {
-      const canExit = false;
-      return canExit;
+      return false; // false -> user will go back from the screen
     }
     dispatch(
       showPrompt({
@@ -217,8 +216,8 @@ export const NoteEditorScreen = () => {
         data: { onAccept: () => navigation.goBack() },
       })
     );
-    const canNotExit = true;
-    return canNotExit;
+
+    return true; // true -> user will stay on the same screen
   };
 
   useEffect(() => {
