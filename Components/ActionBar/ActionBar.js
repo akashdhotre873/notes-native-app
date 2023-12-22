@@ -3,7 +3,7 @@ import { colors, shareMethod } from '../../helpers/constants';
 import { ShareContentComponent } from '../ShareContentComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { ActionBarMainMenu } from '../ActionBarMainMenu';
-import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu/ActionBarSortOrderMenu';
+import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
 import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
