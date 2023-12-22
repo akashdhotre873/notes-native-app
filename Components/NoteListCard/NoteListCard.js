@@ -5,9 +5,10 @@ import { colors, promptCategoryType } from '../../helpers/constants';
 import { showPrompt } from '../../dux/prompt';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
-import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { getDateString } from '../../helpers/timeHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
+import { Ionicons } from '@expo/vector-icons';
 
 export const NoteListCard = ({
   note,
@@ -75,12 +76,17 @@ export const NoteListCard = ({
       onLongPress={() => setSelectedNoteName(toggleName)}
     >
       <View
-        style={
-          passwordProtected
-            ? styles.colorIndicatorLocked
-            : styles.colorIndicatorNotLocked
-        }
+        style={passwordProtected ? styles.lockedStyles : styles.notLockedStyles}
       />
+
+      {passwordProtected && (
+        <Ionicons
+          name="lock-closed-sharp"
+          size={10}
+          color={colors.lockedColor}
+          style={styles.lockIcon}
+        />
+      )}
       <View style={styles.innerContainer}>
         {searchValueMatches && searchValue !== '' ? (
           <Text style={styles.name}>
@@ -161,13 +167,14 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   lockIcon: {},
-  colorIndicatorLocked: {
+  lockedStyles: {
     backgroundColor: colors.lockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
+    position: 'relative',
   },
-  colorIndicatorNotLocked: {
+  notLockedStyles: {
     backgroundColor: colors.unlockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
@@ -179,5 +186,10 @@ const styles = StyleSheet.create({
   hightLightChar: {
     fontWeight: 'bold',
     fontSize: 23,
+  },
+  lockIcon: {
+    position: 'absolute',
+    top: 5,
+    left: 10,
   },
 });

@@ -229,12 +229,17 @@ export const TodoListCard = ({
       onLongPress={() => setSelectedTodoName(toggleName)}
     >
       <View
-        style={
-          passwordProtected
-            ? styles.colorIndicatorLocked
-            : styles.colorIndicatorNotLocked
-        }
+        style={passwordProtected ? styles.lockedStyles : styles.notLockedStyles}
       />
+
+      {passwordProtected && (
+        <Ionicons
+          name="lock-closed-sharp"
+          size={10}
+          color={colors.lockedColor}
+          style={styles.lockIcon}
+        />
+      )}
 
       <View style={styles.innerContainer}>
         <View style={styles.nameContainer}>
@@ -288,13 +293,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'row',
   },
-  colorIndicatorLocked: {
+  lockedStyles: {
     backgroundColor: colors.lockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
   },
-  colorIndicatorNotLocked: {
+  notLockedStyles: {
     backgroundColor: colors.unlockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
@@ -350,5 +355,10 @@ const styles = StyleSheet.create({
   hightLightChar: {
     fontWeight: 'bold',
     fontSize: 23,
+  },
+  lockIcon: {
+    position: 'absolute',
+    top: 5,
+    left: 10,
   },
 });
