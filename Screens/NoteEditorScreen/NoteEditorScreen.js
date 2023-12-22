@@ -22,8 +22,9 @@ import {
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
 import { showPrompt } from '../../dux/prompt';
 import { dataType, promptCategoryType } from '../../helpers/constants';
-import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { getDateString } from '../../helpers/timeHelper';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
+import { Ionicons } from '@expo/vector-icons';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
 
@@ -213,14 +214,23 @@ export const NoteEditorScreen = () => {
     return () => backHandler.remove();
   }, [contentIsSaved]);
 
+  const getLeftIcon = (stylesForIcon) => (
+    <Ionicons
+      name="arrow-back"
+      size={26}
+      color="black"
+      style={stylesForIcon}
+      onPress={goBack}
+    />
+  );
+
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <TouchableWithoutFeedback>
         <View>
           <ActionBar
             title={newNote ? 'Creating note' : 'Editing note'}
-            leftIconSource={require('../../assets/icons/backButtonIcon.png')}
-            leftIconLink={goBack}
+            leftIcon={getLeftIcon}
             {...getActionBarProps()}
             onDelete={!newNote && onDelete}
             contentToShare={!newNote && contentToShare} // can't share a note till it's saved

@@ -10,8 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export const ActionBar = ({
   title,
-  leftIconLink,
-  leftIconSource,
+  leftIcon,
   rightIconLink,
   rightIconSource,
   onDelete,
@@ -26,11 +25,7 @@ export const ActionBar = ({
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        {leftIconLink && (
-          <Pressable onPress={leftIconLink} style={styles.leftButtonLink}>
-            <Image source={leftIconSource} style={styles.leftButtonImage} />
-          </Pressable>
-        )}
+        {leftIcon && leftIcon(styles.leftButtonLink)}
         {searching ? (
           <TextInput
             value={searchValue}

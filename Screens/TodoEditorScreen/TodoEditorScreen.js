@@ -22,7 +22,7 @@ import {
   taskStatus,
   todoStatus,
 } from '../../helpers/constants';
-import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { getDateString } from '../../helpers/timeHelper';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import {
   getCipherText,
@@ -31,6 +31,7 @@ import {
 } from '../../helpers/cryptographyHelper';
 import { TaskEntity } from '../../components/TaskEntity';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
+import { Ionicons } from '@expo/vector-icons';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -283,14 +284,23 @@ export const TodoEditorScreen = () => {
     return () => backHandler.remove();
   }, [TasksAreSaved]);
 
+  const getLeftIcon = (stylesForIcon) => (
+    <Ionicons
+      name="arrow-back"
+      size={26}
+      color="black"
+      style={stylesForIcon}
+      onPress={goBack}
+    />
+  );
+
   return (
     <Pressable style={styles.container}>
       <TouchableWithoutFeedback>
         <View>
           <ActionBar
             title={newTodo ? 'Creating Todo' : 'Editing Todo'}
-            leftIconSource={require('../../assets/icons/backButtonIcon.png')}
-            leftIconLink={goBack}
+            leftIcon={getLeftIcon}
             {...getActionBarProps()}
             onDelete={!newTodo && onDelete}
             contentToShare={!newTodo && contentToShare} // can't share a todo till it's saved
