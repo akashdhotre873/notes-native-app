@@ -45,14 +45,14 @@ export const CreatePassword = ({ data: { onAccept } }) => {
               onPress={() => setShowPassword(!showPassword)}
               name="eye-off"
               size={20}
-              color={colors.iconPrimaryColor}
+              color="black"
             />
           ) : (
             <Ionicons
               onPress={() => setShowPassword(!showPassword)}
               name="eye"
               size={20}
-              color={colors.iconPrimaryColor}
+              color="black"
             />
           )}
         </View>

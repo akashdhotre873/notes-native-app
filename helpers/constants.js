@@ -22,6 +22,7 @@ export const colors = {
   settingBoxBackgroundColor: 'white',
   newContentIconColor: '#006efe',
   iconPrimaryColor: 'black',
+  headerTextColor: 'black',
 };
 
 export const dataType = {

@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: '500',
+    color: colors.headerTextColor,
   },
   deleteButton: {
     marginRight: 20,

@@ -60,14 +60,14 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
               onPress={() => setShowPassword(!showPassword)}
               name="eye-off"
               size={20}
-              color={colors.iconPrimaryColor}
+              color="black"
             />
           ) : (
             <Ionicons
               onPress={() => setShowPassword(!showPassword)}
               name="eye"
               size={20}
-              color={colors.iconPrimaryColor}
+              color="black"
             />
           )}
         </View>

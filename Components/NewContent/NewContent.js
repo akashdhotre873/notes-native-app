@@ -69,7 +69,7 @@ export const NewContent = ({ iconOnClick }) => {
         <AntDesign
           name="pluscircle"
           size={65}
-          color={colors.primaryColor}
+          color={colors.newContentIconColor}
           style={styles.icon}
         />
       </Pressable>
