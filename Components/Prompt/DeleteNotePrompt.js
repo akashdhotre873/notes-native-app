@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import { Button, Modal } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-import { errorMessages, promptCategoryType } from "../../helpers/constants";
-import { hidePrompt, showPrompt } from "../../dux/prompt";
-import { getHash } from "../../helpers/cryptographyHelper";
-import { deleteNote, getNoteByName, getNotes } from "../../dux/notes";
-import { useNavigation } from "@react-navigation/native";
-import { deleteNoteInAsyncStorage } from "../../helpers/notesHelper";
-import { Ionicons } from "@expo/vector-icons";
+import { useState } from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, Modal } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  colors,
+  errorMessages,
+  promptCategoryType,
+} from '../../helpers/constants';
+import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { getHash } from '../../helpers/cryptographyHelper';
+import { deleteNote, getNoteByName, getNotes } from '../../dux/notes';
+import { useNavigation } from '@react-navigation/native';
+import { deleteNoteInAsyncStorage } from '../../helpers/notesHelper';
+import { Ionicons } from '@expo/vector-icons';
 
 export const DeleteNotePrompt = ({
   data: { noteName, shouldGoBack = true },
@@ -18,7 +22,7 @@ export const DeleteNotePrompt = ({
   const note = useSelector(getNoteByName(noteName));
   const navigation = useNavigation();
   const { passwordProtected, salt, passwordHash } = note;
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const closeHandler = () => {
@@ -55,7 +59,7 @@ export const DeleteNotePrompt = ({
       <View>
         <Text style={styles.header}>Delete Note ?</Text>
         <Text style={styles.content}>
-          Are you sure you want to delete this note ({" "}
+          Are you sure you want to delete this note ({' '}
           <Text style={styles.noteNameText}>{noteName}</Text> ) ?
         </Text>
         {passwordProtected && (
@@ -78,14 +82,14 @@ export const DeleteNotePrompt = ({
                 onPress={() => setShowPassword(!showPassword)}
                 name="eye-off"
                 size={20}
-                color="black"
+                color={colors.iconPrimaryColor}
               />
             ) : (
               <Ionicons
                 onPress={() => setShowPassword(!showPassword)}
                 name="eye"
                 size={20}
-                color="black"
+                color={colors.iconPrimaryColor}
               />
             )}
           </View>
@@ -106,10 +110,10 @@ export const DeleteNotePrompt = ({
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#ffffff",
-    top: "0%",
-    width: "80%",
-    alignSelf: "center",
+    backgroundColor: '#ffffff',
+    top: '0%',
+    width: '80%',
+    alignSelf: 'center',
     elevation: 10,
     borderRadius: 4,
   },
@@ -117,10 +121,10 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 25,
     fontSize: 18,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     letterSpacing: 0.5,
-    fontWeight: "500",
-    color: "red",
+    fontWeight: '500',
+    color: 'red',
   },
   content: {
     paddingTop: 15,
@@ -128,27 +132,27 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   noteNameText: {
-    color: "red",
+    color: 'red',
   },
   passwordArea: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginBottom: 10,
     marginTop: 10,
     paddingTop: 10,
     fontSize: 20,
   },
   buttonsContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: 'row-reverse',
     marginVertical: 15,
     marginLeft: 20,
   },
   passwordAreaContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginRight: 30,
     marginLeft: 25,
     borderBottomWidth: 2,
-    borderBottomColor: "#006efe",
+    borderBottomColor: '#006efe',
   },
 });

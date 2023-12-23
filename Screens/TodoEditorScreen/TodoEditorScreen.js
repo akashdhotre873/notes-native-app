@@ -17,6 +17,7 @@ import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordAre
 import { showPrompt } from '../../dux/prompt';
 import { getTodos, updateTodo } from '../../dux/todos';
 import {
+  colors,
   dataType,
   promptCategoryType,
   taskStatus,
@@ -210,7 +211,7 @@ export const TodoEditorScreen = () => {
           <MaterialCommunityIcons
             name="content-save"
             size={33}
-            color="black"
+            color={colors.iconPrimaryColor}
             style={[stylesForIcon, { opacity: 0.5 }]}
             disabled={true}
           />
@@ -222,7 +223,7 @@ export const TodoEditorScreen = () => {
         <MaterialCommunityIcons
           name="content-save-alert"
           size={33}
-          color="black"
+          color={colors.iconPrimaryColor}
           style={stylesForIcon}
           onPress={() =>
             checkAndSaveTodo({ hasPassword: passwordProtected, password })
@@ -303,7 +304,7 @@ export const TodoEditorScreen = () => {
     <Ionicons
       name="arrow-back"
       size={26}
-      color="black"
+      color={colors.iconPrimaryColor}
       style={stylesForIcon}
       onPress={goBack}
     />

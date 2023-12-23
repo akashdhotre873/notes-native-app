@@ -3,6 +3,7 @@ import { Divider, Menu } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {
+  colors,
   sortOrder as sortOrderConstant,
   sortParameter,
 } from '../../helpers/constants';
@@ -80,7 +81,7 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
         <MaterialCommunityIcons
           name="sort"
           size={28}
-          color="black"
+          color={colors.iconPrimaryColor}
           onPress={openMenu}
           style={styles.kebabMenu}
         />

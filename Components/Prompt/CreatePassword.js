@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import { Button, Modal } from "react-native-paper";
-import { useDispatch } from "react-redux";
-import { hidePrompt } from "../../dux/prompt";
-import { Ionicons } from "@expo/vector-icons";
+import { useState } from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, Modal } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { hidePrompt } from '../../dux/prompt';
+import { Ionicons } from '@expo/vector-icons';
+import { colors } from '../../helpers/constants';
 
 export const CreatePassword = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const closeHandler = () => {
@@ -44,14 +45,14 @@ export const CreatePassword = ({ data: { onAccept } }) => {
               onPress={() => setShowPassword(!showPassword)}
               name="eye-off"
               size={20}
-              color="black"
+              color={colors.iconPrimaryColor}
             />
           ) : (
             <Ionicons
               onPress={() => setShowPassword(!showPassword)}
               name="eye"
               size={20}
-              color="black"
+              color={colors.iconPrimaryColor}
             />
           )}
         </View>
@@ -75,10 +76,10 @@ export const CreatePassword = ({ data: { onAccept } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#ffffff",
-    top: "-10%",
-    width: "80%",
-    alignSelf: "center",
+    backgroundColor: '#ffffff',
+    top: '-10%',
+    width: '80%',
+    alignSelf: 'center',
     elevation: 10,
     borderRadius: 4,
   },
@@ -86,29 +87,29 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 25,
     fontSize: 18,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     letterSpacing: 0.5,
-    fontWeight: "500",
+    fontWeight: '500',
   },
   passwordArea: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginBottom: 10,
     marginTop: 10,
     paddingTop: 10,
     fontSize: 20,
   },
   buttonsContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: 'row-reverse',
     marginVertical: 15,
     marginLeft: 20,
   },
   passwordAreaContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginRight: 30,
     marginLeft: 25,
     borderBottomWidth: 2,
-    borderBottomColor: "#006efe",
+    borderBottomColor: '#006efe',
   },
 });

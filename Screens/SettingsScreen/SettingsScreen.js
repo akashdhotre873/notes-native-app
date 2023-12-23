@@ -15,7 +15,7 @@ export const SettingsScreen = () => {
         <Ionicons
           name="arrow-back"
           size={26}
-          color="black"
+          color={colors.iconPrimaryColor}
           style={styles.backIcon}
           onPress={() => navigation.goBack()}
         />

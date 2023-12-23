@@ -3,7 +3,7 @@ import { Divider, Menu } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { ShareContentComponent } from '../ShareContentComponent';
 import { useState } from 'react';
-import { shareMethod } from '../../helpers/constants';
+import { colors, shareMethod } from '../../helpers/constants';
 
 export const ActionBarMainMenu = ({
   onDelete,
@@ -42,7 +42,7 @@ export const ActionBarMainMenu = ({
         <Entypo
           name="dots-three-vertical"
           size={24}
-          color="black"
+          color={colors.iconPrimaryColor}
           style={styles.kebabMenu}
           onPress={openMenu}
         />

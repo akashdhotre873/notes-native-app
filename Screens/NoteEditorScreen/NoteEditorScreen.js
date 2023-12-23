@@ -21,7 +21,7 @@ import {
 } from '../../helpers/cryptographyHelper';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
 import { showPrompt } from '../../dux/prompt';
-import { dataType, promptCategoryType } from '../../helpers/constants';
+import { colors, dataType, promptCategoryType } from '../../helpers/constants';
 import { getDateString } from '../../helpers/timeHelper';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
@@ -148,7 +148,7 @@ export const NoteEditorScreen = () => {
           <MaterialCommunityIcons
             name="content-save"
             size={33}
-            color="black"
+            color={colors.iconPrimaryColor}
             style={[stylesForIcon, { opacity: 0.5 }]}
             disabled={true}
           />
@@ -160,7 +160,7 @@ export const NoteEditorScreen = () => {
         <MaterialCommunityIcons
           name="content-save-alert"
           size={33}
-          color="black"
+          color={colors.iconPrimaryColor}
           style={stylesForIcon}
           onPress={() =>
             checkAndSaveNote({ hasPassword: passwordProtected, password })
@@ -233,7 +233,7 @@ export const NoteEditorScreen = () => {
     <Ionicons
       name="arrow-back"
       size={26}
-      color="black"
+      color={colors.iconPrimaryColor}
       style={stylesForIcon}
       onPress={goBack}
     />

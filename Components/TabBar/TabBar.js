@@ -80,7 +80,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
         <Ionicons
           name="settings"
           size={24}
-          color="black"
+          color={colors.iconPrimaryColor}
           style={styles.settingsIcon}
         />
       </Pressable>

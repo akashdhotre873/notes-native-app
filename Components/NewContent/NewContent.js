@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 55,
-    backgroundColor: colors.primaryColor,
+    backgroundColor: colors.newContentIconColor,
   },
   innerContainer: {
     elevation: 20,

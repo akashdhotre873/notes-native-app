@@ -55,7 +55,7 @@ export const ActionBar = ({
             <Ionicons
               name="share-outline"
               size={30}
-              color="black"
+              color={colors.iconPrimaryColor}
               style={styles.shareIcon}
             />
           </ShareContentComponent>
@@ -69,7 +69,7 @@ export const ActionBar = ({
               <MaterialIcons
                 name="search-off"
                 size={32}
-                color="black"
+                color={colors.iconPrimaryColor}
                 style={styles.searchIcon}
                 onPress={() => {
                   setSearching(false);
@@ -80,7 +80,7 @@ export const ActionBar = ({
               <MaterialIcons
                 name="search"
                 size={32}
-                color="black"
+                color={colors.iconPrimaryColor}
                 style={styles.searchIcon}
                 onPress={() => setSearching(true)}
               />
