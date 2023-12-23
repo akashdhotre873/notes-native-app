@@ -50,3 +50,5 @@ export const getSettings = ({ settings }) => settings;
 
 export const getNewContentIconPosition = ({ settings }) =>
   settings[settingTypes.NEW_CONTENT_ICON_POSITION];
+
+export const getColors = ({ settings }) => settings[settingTypes.COLORS];
