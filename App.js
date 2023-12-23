@@ -1,4 +1,3 @@
-import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
@@ -15,11 +14,11 @@ import { NoteEditorScreen } from './screens/NoteEditorScreen';
 import { shouldShowPrompt } from './dux/prompt';
 import { Promtps } from './components/shared/Prompts';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { colors } from './helpers/constants';
 import { TodoEditorScreen } from './screens/TodoEditorScreen';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { ConfigProtectedLayout } from './components/ConfigProtectedLayout';
+import { StatusBarContainer } from './components/StatusBarContainer';
 import * as SplashScreen from 'expo-splash-screen';
 
 const Stack = createNativeStackNavigator();
@@ -41,10 +40,7 @@ export default function App() {
         <ConfigProtectedLayout>
           <SafeAreaProvider>
             <NavigationContainer>
-              <StatusBar
-                backgroundColor={colors.primaryColor}
-                barStyle="dark-content"
-              />
+              <StatusBarContainer />
               <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={HOME_SCREEN_PATH} component={HomeScreen} />
                 <Stack.Screen
