@@ -2,11 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import {
-  colors,
-  errorMessages,
-  promptCategoryType,
-} from '../../helpers/constants';
+import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { hidePrompt, showPrompt } from '../../dux/prompt';
 import { getHash } from '../../helpers/cryptographyHelper';
 import { Ionicons } from '@expo/vector-icons';

@@ -1,9 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, settingTypes, timeFormats } from '../../helpers/constants';
+import { settingTypes, timeFormats } from '../../helpers/constants';
 import React from 'react';
 import { Divider, Menu } from 'react-native-paper';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import {
+  getColors,
   getSettings,
   getTimeFormat,
   updateTimeFormat,
@@ -44,6 +45,8 @@ export const SettingTimeFormat = () => {
     (currentFormat) => currentFormat.format === selectedTimeFormat
   );
   const settings = useSelector(getSettings);
+  const { settingBoxBorderColor, settingBoxBackgroundColor } =
+    useSelector(getColors);
 
   const closeTimeFormatMenu = () => {
     setTimeFormatMenuVisible(false);
@@ -71,7 +74,13 @@ export const SettingTimeFormat = () => {
         anchor={
           <Pressable
             onPress={() => setTimeFormatMenuVisible(true)}
-            style={styles.timeFormatMenuAnchor}
+            style={[
+              styles.timeFormatMenuAnchor,
+              {
+                borderColor: settingBoxBorderColor,
+                backgroundColor: settingBoxBackgroundColor,
+              },
+            ]}
           >
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.timeFormatValue}>
@@ -135,8 +144,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 7,
-    borderColor: colors.settingBoxBorderColor,
-    backgroundColor: colors.settingBoxBackgroundColor,
   },
   selectedTimeFormat: {
     fontWeight: '700',

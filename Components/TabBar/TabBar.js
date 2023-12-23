@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { Text, View, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { colors } from '../../helpers/constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SETTINGS_SCREEN_PATH } from '../../helpers/pagePathHelper';
+import { useSelector } from 'react-redux';
+import { getColors } from '../../dux/settings';
 
 export const TabBar = ({ state, descriptors, navigation }) => {
   const stackNavigation = useNavigation();
+  const { iconPrimaryColor, primaryColor } = useSelector(getColors);
+
   return (
     <View style={{ flexDirection: 'row' }}>
       {state.routes.map((route, index) => {
@@ -51,10 +54,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={[
-              styles.labelContainer,
-              isFocused ? styles.selectedLabelContainer : {},
-            ]}
+            style={[styles.labelContainer, { backgroundColor: primaryColor }]}
             key={route.key}
           >
             {tabBarBadgeIsPresent ? (
@@ -80,7 +80,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
         <Ionicons
           name="settings"
           size={24}
-          color={colors.iconPrimaryColor}
+          color={iconPrimaryColor}
           style={styles.settingsIcon}
         />
       </Pressable>
@@ -93,15 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: colors.primaryColor,
   },
-  some: {
-    flex: 0.3,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: colors.primaryColor,
-  },
-  selectedLabelContainer: {},
   icon: {
     alignSelf: 'center',
   },

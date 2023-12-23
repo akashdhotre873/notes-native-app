@@ -7,16 +7,13 @@ import {
   Switch,
 } from 'react-native';
 import {
+  getColors,
   getNewContentIconPosition,
   getSettings,
   updateNewContentIconDefaultPosition,
 } from '../../dux/settings';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  colors,
-  newContentIconPosition,
-  settingTypes,
-} from '../../helpers/constants';
+import { newContentIconPosition, settingTypes } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -24,6 +21,8 @@ export const SettingNewContentIconPosition = () => {
   const dispatch = useDispatch();
   const iconPosition = useSelector(getNewContentIconPosition);
   const settings = useSelector(getSettings);
+  const { settingBoxBorderColor, settingBoxBackgroundColor } =
+    useSelector(getColors);
   const isIconOnTheRightSide = iconPosition === newContentIconPosition.RIGHT;
 
   const onToggleSwitch = () => {
@@ -65,7 +64,15 @@ export const SettingNewContentIconPosition = () => {
         />
       </View>
 
-      <View style={styles.switchContainer}>
+      <View
+        style={[
+          styles.switchContainer,
+          {
+            borderColor: settingBoxBorderColor,
+            backgroundColor: settingBoxBackgroundColor,
+          },
+        ]}
+      >
         <Text style={styles.positionText}>
           {isIconOnTheRightSide ? 'Right' : 'Left'}
         </Text>
@@ -98,8 +105,6 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     height: 40,
     alignItems: 'center',
-    borderColor: colors.settingBoxBorderColor,
-    backgroundColor: colors.settingBoxBackgroundColor,
     paddingHorizontal: 15,
   },
   positionText: {

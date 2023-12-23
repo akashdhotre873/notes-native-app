@@ -1,11 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  colors,
-  promptCategoryType,
-  todoStatus,
-} from '../../helpers/constants';
+import { promptCategoryType, todoStatus } from '../../helpers/constants';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { getDateString, getTimeString } from '../../helpers/timeHelper';
@@ -18,6 +14,7 @@ import { useState } from 'react';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
+import { getColors } from '../../dux/settings';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
@@ -43,6 +40,7 @@ export const TodoListCard = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const todos = useSelector(getTodos);
+  const { primaryColor, lockedColor, unlockedColor } = useSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(tasks, password);
@@ -162,7 +160,7 @@ export const TodoListCard = ({
         <MaterialCommunityIcons
           name="checkbox-intermediate"
           size={22}
-          color={colors.primaryColor}
+          color={primaryColor}
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: COMPLETED })}
           onLongPress={openUpdateTodoStatusPrompt}
@@ -229,14 +227,18 @@ export const TodoListCard = ({
       onLongPress={() => setSelectedTodoName(toggleName)}
     >
       <View
-        style={passwordProtected ? styles.lockedStyles : styles.notLockedStyles}
+        style={
+          passwordProtected
+            ? [styles.lockedStyles, { backgroundColor: lockedColor }]
+            : [styles.notLockedStyles, { backgroundColor: unlockedColor }]
+        }
       />
 
       {passwordProtected && (
         <Ionicons
           name="lock-closed-sharp"
           size={10}
-          color={colors.lockedColor}
+          color={lockedColor}
           style={styles.lockIcon}
         />
       )}
@@ -294,13 +296,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   lockedStyles: {
-    backgroundColor: colors.lockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
+    position: 'relative',
   },
   notLockedStyles: {
-    backgroundColor: colors.unlockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,

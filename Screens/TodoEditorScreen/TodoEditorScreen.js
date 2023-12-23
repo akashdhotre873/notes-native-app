@@ -17,7 +17,6 @@ import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordAre
 import { showPrompt } from '../../dux/prompt';
 import { getTodos, updateTodo } from '../../dux/todos';
 import {
-  colors,
   dataType,
   promptCategoryType,
   taskStatus,
@@ -34,6 +33,7 @@ import { TaskEntity } from '../../components/TaskEntity';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getColors } from '../../dux/settings';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -53,6 +53,7 @@ export const TodoEditorScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const todos = useSelector(getTodos);
+  const { iconPrimaryColor } = useSelector(getColors);
 
   const {
     name: header = '',
@@ -211,7 +212,7 @@ export const TodoEditorScreen = () => {
           <MaterialCommunityIcons
             name="content-save"
             size={33}
-            color={colors.iconPrimaryColor}
+            color={iconPrimaryColor}
             style={[stylesForIcon, { opacity: 0.5 }]}
             disabled={true}
           />
@@ -223,7 +224,7 @@ export const TodoEditorScreen = () => {
         <MaterialCommunityIcons
           name="content-save-alert"
           size={33}
-          color={colors.iconPrimaryColor}
+          color={iconPrimaryColor}
           style={stylesForIcon}
           onPress={() =>
             checkAndSaveTodo({ hasPassword: passwordProtected, password })
@@ -304,7 +305,7 @@ export const TodoEditorScreen = () => {
     <Ionicons
       name="arrow-back"
       size={26}
-      color={colors.iconPrimaryColor}
+      color={iconPrimaryColor}
       style={stylesForIcon}
       onPress={goBack}
     />

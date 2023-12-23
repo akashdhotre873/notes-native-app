@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors, shareMethod } from '../../helpers/constants';
+import { shareMethod } from '../../helpers/constants';
 import { ShareContentComponent } from '../ShareContentComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { ActionBarMainMenu } from '../ActionBarMainMenu';
@@ -7,6 +7,8 @@ import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
 import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
+import { getColors } from '../../dux/settings';
 
 export const ActionBar = ({
   title,
@@ -20,9 +22,11 @@ export const ActionBar = ({
   onSearchValueChange,
 }) => {
   const [searching, setSearching] = useState(false);
+  const { primaryColor, iconPrimaryColor, headerTextColor } =
+    useSelector(getColors);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: primaryColor }]}>
       <View style={styles.innerContainer}>
         {leftIcon && leftIcon(styles.leftButtonLink)}
         {searching ? (
@@ -42,7 +46,9 @@ export const ActionBar = ({
             }
           />
         ) : (
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { color: headerTextColor }]}>
+            {title}
+          </Text>
         )}
       </View>
       <View style={styles.rightSideIcons}>
@@ -55,7 +61,7 @@ export const ActionBar = ({
             <Ionicons
               name="share-outline"
               size={30}
-              color={colors.iconPrimaryColor}
+              color={iconPrimaryColor}
               style={styles.shareIcon}
             />
           </ShareContentComponent>
@@ -69,7 +75,7 @@ export const ActionBar = ({
               <MaterialIcons
                 name="search-off"
                 size={32}
-                color={colors.iconPrimaryColor}
+                color={iconPrimaryColor}
                 style={styles.searchIcon}
                 onPress={() => {
                   setSearching(false);
@@ -80,7 +86,7 @@ export const ActionBar = ({
               <MaterialIcons
                 name="search"
                 size={32}
-                color={colors.iconPrimaryColor}
+                color={iconPrimaryColor}
                 style={styles.searchIcon}
                 onPress={() => setSearching(true)}
               />
@@ -106,7 +112,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 50,
-    backgroundColor: colors.primaryColor,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -130,7 +135,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: '500',
-    color: colors.headerTextColor,
   },
   deleteButton: {
     marginRight: 20,

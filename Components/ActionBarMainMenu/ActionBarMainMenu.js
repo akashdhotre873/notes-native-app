@@ -3,13 +3,16 @@ import { Divider, Menu } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { ShareContentComponent } from '../ShareContentComponent';
 import { useState } from 'react';
-import { colors, shareMethod } from '../../helpers/constants';
+import { shareMethod } from '../../helpers/constants';
+import { useSelector } from 'react-redux';
+import { getColors } from '../../dux/settings';
 
 export const ActionBarMainMenu = ({
   onDelete,
   allowCopyToClicpBoard,
   contentToShare,
 }) => {
+  const { iconPrimaryColor } = useSelector(getColors);
   const [menuVisible, setMenuVisible] = useState(false);
   const shouldDisplayMenu = onDelete || allowCopyToClicpBoard; // if there are more options, and one of them is present, then show menu
 
@@ -42,7 +45,7 @@ export const ActionBarMainMenu = ({
         <Entypo
           name="dots-three-vertical"
           size={24}
-          color={colors.iconPrimaryColor}
+          color={iconPrimaryColor}
           style={styles.kebabMenu}
           onPress={openMenu}
         />

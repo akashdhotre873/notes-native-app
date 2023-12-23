@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { hidePrompt } from '../../dux/prompt';
-import { colors, taskStatus } from '../../helpers/constants';
+import { taskStatus } from '../../helpers/constants';
 import PropTypes from 'prop-types';
 
 const { IN_PROGRESS, UNSURE } = taskStatus;
@@ -141,9 +141,6 @@ const styles = StyleSheet.create({
   },
   inProgressButton: {
     color: 'white',
-  },
-  completedButtonContainer: {
-    backgroundColor: colors.primaryColor,
   },
   completedButton: {
     color: 'white',

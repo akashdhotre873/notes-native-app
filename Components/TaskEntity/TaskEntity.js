@@ -1,15 +1,12 @@
-import { StyleSheet, TextInput, View } from "react-native";
-import {
-  colors,
-  promptCategoryType,
-  taskStatus,
-} from "../../helpers/constants";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
-import { showPrompt } from "../../dux/prompt";
-import PropTypes from "prop-types";
+import { StyleSheet, TextInput, View } from 'react-native';
+import { promptCategoryType, taskStatus } from '../../helpers/constants';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { showPrompt } from '../../dux/prompt';
+import PropTypes from 'prop-types';
+import { getColors } from '../../dux/settings';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;
 
@@ -20,6 +17,7 @@ export const TaskEntity = ({
   autoFocusTaskId,
 }) => {
   const dispatch = useDispatch();
+  const { primaryColor } = useSelector(getColors);
 
   const { status, id, value } = task;
 
@@ -81,7 +79,7 @@ export const TaskEntity = ({
         <MaterialCommunityIcons
           name="checkbox-intermediate"
           size={24}
-          color={colors.primaryColor}
+          color={primaryColor}
           style={styles.statusIcon}
           onPress={() => updateTask({ newStatus: COMPLETED })}
           onLongPress={modifyTaskStatus}
@@ -119,7 +117,7 @@ export const TaskEntity = ({
   const getStyleForTask = () => {
     const taskStyles = {
       [COMPLETED]: {
-        textDecorationLine: "line-through",
+        textDecorationLine: 'line-through',
         opacity: 0.6,
       },
     };
@@ -149,8 +147,8 @@ TaskEntity.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
   },
   tasks: {
     paddingTop: 5,
@@ -159,11 +157,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 20,
     marginHorizontal: 5,
-    width: "80%",
+    width: '80%',
     lineHeight: 26,
   },
   statusIcon: {
-    alignSelf: "center",
+    alignSelf: 'center',
     paddingLeft: 13,
     paddingRight: 5,
     paddingTop: 9,

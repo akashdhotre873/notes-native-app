@@ -3,13 +3,13 @@ import { Divider, Menu } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {
-  colors,
   sortOrder as sortOrderConstant,
   sortParameter,
 } from '../../helpers/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSortInfo, getSortInfoFor, updateSortInfo } from '../../dux/sort';
 import { updateSortingInfoInAsync } from '../../helpers/sortHelper';
+import { getColors } from '../../dux/settings';
 
 const { ASCENDING, DESCENDING } = sortOrderConstant;
 
@@ -19,6 +19,7 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
     getSortInfoFor(sortItem)
   );
   const allSortingInfo = useSelector(getAllSortInfo);
+  const { iconPrimaryColor } = useSelector(getColors);
 
   const [menuVisible, setMenuVisible] = useState(false);
   const shouldDisplayMenu = !!sortItem;
@@ -81,7 +82,7 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
         <MaterialCommunityIcons
           name="sort"
           size={28}
-          color={colors.iconPrimaryColor}
+          color={iconPrimaryColor}
           onPress={openMenu}
           style={styles.kebabMenu}
         />

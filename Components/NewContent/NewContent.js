@@ -5,15 +5,16 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
-import { colors, newContentIconPosition } from '../../helpers/constants';
+import { newContentIconPosition } from '../../helpers/constants';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { getNewContentIconPosition } from '../../dux/settings';
+import { getColors, getNewContentIconPosition } from '../../dux/settings';
 import { useKeyBoardVisible } from '../../hooks/useKeyBoardVisible';
 
 export const NewContent = ({ iconOnClick }) => {
+  const { newContentIconColor } = useSelector(getColors);
   const iconPosition = useSelector(getNewContentIconPosition);
   const isIconOnTheRight = iconPosition === newContentIconPosition.RIGHT;
   const [isIconOnTheRightSide, setIsIconOnTheRightSide] =
@@ -58,7 +59,11 @@ export const NewContent = ({ iconOnClick }) => {
 
   return (
     <Animated.View
-      style={[styles.container, { transform: [{ translateX: animatedValue }] }]}
+      style={[
+        styles.container,
+        { backgroundColor: newContentIconColor },
+        { transform: [{ translateX: animatedValue }] },
+      ]}
     >
       <Pressable
         onPress={iconOnClick}
@@ -69,7 +74,7 @@ export const NewContent = ({ iconOnClick }) => {
         <AntDesign
           name="pluscircle"
           size={65}
-          color={colors.newContentIconColor}
+          color={newContentIconColor}
           style={styles.icon}
         />
       </Pressable>
@@ -81,7 +86,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 55,
-    backgroundColor: colors.newContentIconColor,
   },
   innerContainer: {
     elevation: 20,

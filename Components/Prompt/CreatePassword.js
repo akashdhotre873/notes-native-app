@@ -4,7 +4,6 @@ import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { hidePrompt } from '../../dux/prompt';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../../helpers/constants';
 
 export const CreatePassword = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();

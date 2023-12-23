@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { colors, promptCategoryType } from '../../helpers/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { promptCategoryType } from '../../helpers/constants';
 import { showPrompt } from '../../dux/prompt';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
@@ -9,6 +9,7 @@ import { getDateString } from '../../helpers/timeHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
+import { getColors } from '../../dux/settings';
 
 export const NoteListCard = ({
   note,
@@ -28,6 +29,8 @@ export const NoteListCard = ({
   const dateUpdated = new Date(dateUpdatedString);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const { lockedColor, unlockedColor } = useSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(content, password);
@@ -76,14 +79,18 @@ export const NoteListCard = ({
       onLongPress={() => setSelectedNoteName(toggleName)}
     >
       <View
-        style={passwordProtected ? styles.lockedStyles : styles.notLockedStyles}
+        style={
+          passwordProtected
+            ? [styles.lockedStyles, { backgroundColor: lockedColor }]
+            : [styles.notLockedStyles, { backgroundColor: unlockedColor }]
+        }
       />
 
       {passwordProtected && (
         <Ionicons
           name="lock-closed-sharp"
           size={10}
-          color={colors.lockedColor}
+          color={lockedColor}
           style={styles.lockIcon}
         />
       )}
@@ -168,14 +175,12 @@ const styles = StyleSheet.create({
   },
   lockIcon: {},
   lockedStyles: {
-    backgroundColor: colors.lockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,
     position: 'relative',
   },
   notLockedStyles: {
-    backgroundColor: colors.unlockedColor,
     width: 7,
     borderBottomLeftRadius: 7,
     borderTopLeftRadius: 7,

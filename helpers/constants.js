@@ -14,7 +14,7 @@ export const errorMessages = {
   WRONG_PASSWORD: 'Please enter right password',
 };
 
-export const colors = {
+const colors = {
   primaryColor: '#006efe',
   lockedColor: '#fe9a03',
   unlockedColor: '#01eb00',

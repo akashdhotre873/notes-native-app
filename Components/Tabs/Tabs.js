@@ -1,18 +1,20 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { getSelectedTab, setSelectedTab } from "../../dux/tabs";
-import { colors, tabs } from "../../helpers/constants";
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSelectedTab, setSelectedTab } from '../../dux/tabs';
+import { tabs } from '../../helpers/constants';
+import { getColors } from '../../dux/settings';
 
 export const Tabs = () => {
   const dispatch = useDispatch();
   const selectedTab = useSelector(getSelectedTab);
+  const { primaryColor } = useSelector(getColors);
 
   const onPress = (tabName) => {
     dispatch(setSelectedTab(tabName));
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: primaryColor }]}>
       <View style={styles.tabsContainer}>
         {tabs.map(({ name: tabName, value: tabValue }) => {
           return (
@@ -35,23 +37,22 @@ export const Tabs = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primaryColor,
     paddingVertical: 5,
   },
   tabsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   tab: {
     paddingHorizontal: 10,
     paddingVertical: 5,
     fontSize: 18,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     opacity: 0.7,
   },
   selectedTab: {
-    fontWeight: "700",
+    fontWeight: '700',
     opacity: 1,
   },
 });
