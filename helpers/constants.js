@@ -14,15 +14,26 @@ export const errorMessages = {
   WRONG_PASSWORD: 'Please enter right password',
 };
 
+export const colorType = {
+  PRIMARY_COLOR: 'primaryColor',
+  LOCKED_COLOR: 'lockedColor',
+  UNLOCKED_COLOR: 'unlockedColor',
+  SETTING_BOX_BORDER_Color: 'settingBoxBorderColor',
+  SETTING_BOX_BACKGROUND_Color: 'settingBoxBackgroundColor',
+  NEW_CONTENT_ICON_COLOR: 'newContentIconColor',
+  ICON_PRIMARY_COLOR: 'iconPrimaryColor',
+  HEADER_TEXT_COLOR: 'headerTextColor',
+};
+
 const colors = {
-  primaryColor: '#006efe',
-  lockedColor: '#fe9a03',
-  unlockedColor: '#01eb00',
-  settingBoxBorderColor: 'grey',
-  settingBoxBackgroundColor: 'white',
-  newContentIconColor: '#006efe',
-  iconPrimaryColor: 'black',
-  headerTextColor: 'black',
+  [colorType.PRIMARY_COLOR]: '#006efe',
+  [colorType.LOCKED_COLOR]: '#fe9a03',
+  [colorType.UNLOCKED_COLOR]: '#01eb00',
+  [colorType.SETTING_BOX_BORDER_Color]: 'grey',
+  [colorType.SETTING_BOX_BACKGROUND_Color]: 'white',
+  [colorType.NEW_CONTENT_ICON_COLOR]: '#006efe',
+  [colorType.ICON_PRIMARY_COLOR]: 'black',
+  [colorType.HEADER_TEXT_COLOR]: 'black',
 };
 
 export const dataType = {

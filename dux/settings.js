@@ -3,6 +3,7 @@ import { defaultSettings, settingTypes } from '../helpers/constants';
 const LOAD_INITIAL_SETTINGS = `[settings] load initial settings`;
 const UPDATE_TIME_FORMAT = `[settings] update time format`;
 const UPDATE_NEW_CONTENT_ICON_DEFAULT_POSITION = `[settings] update new content icon default position`;
+const UPDATE_COLOR = `[settings] update color`;
 
 export const loadInitialSettings = (settings) => ({
   type: LOAD_INITIAL_SETTINGS,
@@ -19,6 +20,11 @@ export const updateNewContentIconDefaultPosition = (positionString) => ({
   payload: positionString,
 });
 
+export const updateColor = ({ colorType, color }) => ({
+  type: UPDATE_COLOR,
+  payload: { colorType, color },
+});
+
 const initialState = defaultSettings;
 
 const settingsReducer = (state = initialState, action) => {
@@ -33,6 +39,16 @@ const settingsReducer = (state = initialState, action) => {
       return {
         ...state,
         [settingTypes.NEW_CONTENT_ICON_POSITION]: action.payload,
+      };
+
+    case UPDATE_COLOR:
+      const { color, colorType } = action.payload;
+      return {
+        ...state,
+        [settingTypes.COLORS]: {
+          ...state[settingTypes.COLORS],
+          [colorType]: color,
+        },
       };
 
     default:

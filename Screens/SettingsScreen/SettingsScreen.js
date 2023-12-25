@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SettingTimeFormat } from '../../components/SettingTimeFormat';
 import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
+import { SettingColors } from '../../components/SettingColors';
 import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
 
@@ -31,6 +32,7 @@ export const SettingsScreen = () => {
       <View style={styles.settingsContainer}>
         <SettingTimeFormat />
         <SettingNewContentIconPosition />
+        <SettingColors />
       </View>
     </View>
   );

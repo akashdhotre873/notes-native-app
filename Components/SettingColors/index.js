@@ -1,0 +1,1 @@
+export { SettingColors } from './SettingColors';
