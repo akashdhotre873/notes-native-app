@@ -1,10 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Divider, TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 import { recognizedColors } from '../../helpers/constants';
 import { useDispatch } from 'react-redux';
 import { updateColor } from '../../dux/settings';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const ColorBox = ({ color, style = {} }) => (
   <View style={[styles.colorBox, { backgroundColor: color }, style]} />
@@ -44,18 +45,32 @@ export const ColorCard = ({ text, color, colorType }) => {
       <View style={styles.colorContainer}>
         <Text style={styles.text}>{text}</Text>
         <View style={styles.colorValueContainer}>
-          {isValidColor && <ColorBox color={editing ? colorValue : color} />}
+          {isValidColor ? (
+            <ColorBox color={editing ? colorValue : color} />
+          ) : (
+            <View style={styles.errorTextContainer}>
+              <MaterialIcons
+                name="error-outline"
+                size={14}
+                color="red"
+                style={styles.errorIcon}
+              />
+              <Text style={styles.invalidColorText}>Invalid color</Text>
+            </View>
+          )}
           {!editing && (
-            <>
+            <Pressable
+              onPress={() => setEditing(true)}
+              style={{ flexDirection: 'row' }}
+            >
               <Text style={styles.colorText}>{color}</Text>
               <Feather
                 name="edit-2"
                 size={16}
                 color="black"
                 style={styles.editIcon}
-                onPress={() => setEditing(true)}
               />
-            </>
+            </Pressable>
           )}
         </View>
       </View>
@@ -175,10 +190,8 @@ const styles = StyleSheet.create({
   cancelButton: {
     flex: 1,
     marginBottom: 7,
-    // margin: 10,
     paddingVertical: 6,
     borderRadius: 5,
-    // elevation: 5,
     backgroundColor: 'white',
     marginRight: 5,
     borderWidth: 1,
@@ -190,6 +203,16 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'row',
-    // flexGrow: 1,
+  },
+  invalidColorText: {
+    fontSize: 12,
+    color: 'red',
+  },
+  errorIcon: {
+    marginRight: 3,
+  },
+  errorTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
