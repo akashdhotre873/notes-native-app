@@ -14,14 +14,21 @@ export const ColorCard = ({ text, color, colorType }) => {
   const dispatch = useDispatch();
   const [colorValue, setColorValue] = useState(color);
   const [editing, setEditing] = useState(false);
-  const [selection, setSelection] = useState({
+  const defaultSelection = {
     start: 0,
-    end: colorValue.length,
-  });
+    end: color.length,
+  };
+  const [selection, setSelection] = useState(defaultSelection);
 
   const onSave = () => {
     setEditing(false);
     dispatch(updateColor({ color: colorValue, colorType }));
+  };
+
+  const onCancel = () => {
+    setEditing(false);
+    setColorValue(color);
+    setSelection(defaultSelection);
   };
 
   const onChange = (newValue) => {
@@ -37,7 +44,7 @@ export const ColorCard = ({ text, color, colorType }) => {
       <View style={styles.colorContainer}>
         <Text style={styles.text}>{text}</Text>
         <View style={styles.colorValueContainer}>
-          {isValidColor && <ColorBox color={color} />}
+          {isValidColor && <ColorBox color={editing ? colorValue : color} />}
           {!editing && (
             <>
               <Text style={styles.colorText}>{color}</Text>
@@ -78,10 +85,7 @@ export const ColorCard = ({ text, color, colorType }) => {
           />
 
           <View style={styles.buttonsContainer}>
-            <Pressable
-              onPress={() => setEditing(false)}
-              style={styles.cancelButton}
-            >
+            <Pressable onPress={onCancel} style={styles.cancelButton}>
               <Text style={styles.buttonText}>Cancel</Text>
             </Pressable>
 

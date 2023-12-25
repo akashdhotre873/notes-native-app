@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
-import { Divider } from 'react-native-paper';
 import { ColorCard } from './ColorCard';
 import { colorType } from '../../helpers/constants';
 
@@ -26,14 +25,11 @@ export const SettingColors = () => {
       >
         <View style={styles.colorsContainer}>
           <ColorCard
+            key={primaryColor}
             text="Primary Color"
             color={primaryColor}
             colorType={colorType.PRIMARY_COLOR}
           />
-          <Divider />
-          {/* <View style={styles.colorContainer}></View>
-
-          <View style={styles.colorContainer}></View> */}
         </View>
       </View>
     </View>
