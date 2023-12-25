@@ -18,7 +18,7 @@ const EllipsisText = ({ text }) => {
   return <Text>{text}</Text>;
 };
 
-export const ColorCard = ({ text, color, colorType }) => {
+export const ColorCard = ({ text, color, colorType, scollToView }) => {
   const dispatch = useDispatch();
   const [colorValue, setColorValue] = useState(color);
   const [editing, setEditing] = useState(false);
@@ -43,6 +43,19 @@ export const ColorCard = ({ text, color, colorType }) => {
     setColorValue(newValue.toLowerCase());
   };
 
+  const onLayout = (event) => {
+    const layout = event.nativeEvent.layout;
+    // using setTimeout as a work around for bug in react native
+    setTimeout(
+      () =>
+        scollToView({
+          x: layout.x,
+          y: layout.y + layout.height + 100,
+        }),
+      100
+    );
+  };
+
   const regex = /(^#[a-f0-9]{3}$)|(^#[a-f0-9]{6}$)/;
   const isValidColor =
     regex.test(colorValue) || recognizedColors.includes(colorValue);
@@ -51,7 +64,12 @@ export const ColorCard = ({ text, color, colorType }) => {
     <View style={[styles.container, editing ? { paddingBottom: 25 } : {}]}>
       <View style={styles.colorContainer}>
         <Text style={styles.text}>{text}</Text>
-        <View style={styles.colorValueContainer}>
+        <View
+          style={[
+            styles.colorValueContainer,
+            editing ? { justifyContent: 'flex-end' } : {},
+          ]}
+        >
           {isValidColor ? (
             <ColorBox color={editing ? colorValue : color} />
           ) : (
@@ -110,7 +128,7 @@ export const ColorCard = ({ text, color, colorType }) => {
             }
           />
 
-          <View style={styles.buttonsContainer}>
+          <View style={styles.buttonsContainer} onLayout={onLayout}>
             <Pressable onPress={onCancel} style={styles.cancelButton}>
               <Text style={styles.buttonText}>Cancel</Text>
             </Pressable>
@@ -146,7 +164,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 3,
     justifyContent: 'space-between',
-    // backgroundColor: 'yellow',
   },
   colorBox: {
     width: 14,

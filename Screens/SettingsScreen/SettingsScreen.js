@@ -7,14 +7,20 @@ import { SettingNewContentIconPosition } from '../../components/SettingNewConten
 import { SettingColors } from '../../components/SettingColors';
 import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
+import { useRef } from 'react';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation();
   const { iconPrimaryColor, primaryColor, headerTextColor } =
     useSelector(getColors);
+  const scrollViewRef = useRef();
+
+  const scollToView = ({ x, y }) => {
+    scrollViewRef.current.scrollTo({ x, y });
+  };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <View style={[styles.actionBar, { backgroundColor: primaryColor }]}>
         <Ionicons
           name="arrow-back"
@@ -32,10 +38,11 @@ export const SettingsScreen = () => {
       <ScrollView
         style={styles.settingsContainer}
         keyboardShouldPersistTaps="always"
+        ref={scrollViewRef}
       >
         <SettingTimeFormat />
         <SettingNewContentIconPosition />
-        <SettingColors />
+        <SettingColors scollToView={scollToView} />
       </ScrollView>
     </View>
   );
@@ -60,6 +67,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   settingsContainer: {
+    flex: 1,
     paddingHorizontal: 24,
     marginTop: 40,
     paddingBottom: 20,

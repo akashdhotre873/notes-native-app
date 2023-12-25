@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
 import { ColorCard } from './ColorCard';
 import { colorType } from '../../helpers/constants';
 import { Divider } from 'react-native-paper';
 
-export const SettingColors = () => {
+export const SettingColors = ({ scollToView }) => {
   const {
     settingBoxBorderColor,
     settingBoxBackgroundColor,
@@ -38,6 +38,7 @@ export const SettingColors = () => {
             text="Primary Color"
             color={primaryColor}
             colorType={colorType.PRIMARY_COLOR}
+            scollToView={scollToView}
           />
 
           <Divider />
@@ -47,6 +48,7 @@ export const SettingColors = () => {
             text="Locked content indicator"
             color={lockedColor}
             colorType={colorType.LOCKED_COLOR}
+            scollToView={scollToView}
           />
 
           <Divider />
@@ -56,6 +58,7 @@ export const SettingColors = () => {
             text="Not locked content indicator"
             color={unlockedColor}
             colorType={colorType.UNLOCKED_COLOR}
+            scollToView={scollToView}
           />
 
           <Divider />
@@ -65,6 +68,7 @@ export const SettingColors = () => {
             text="New content icon color"
             color={newContentIconColor}
             colorType={colorType.NEW_CONTENT_ICON_COLOR}
+            scollToView={scollToView}
           />
 
           <Divider />
@@ -74,16 +78,20 @@ export const SettingColors = () => {
             text="Icon colors"
             color={iconPrimaryColor}
             colorType={colorType.ICON_PRIMARY_COLOR}
+            scollToView={scollToView}
           />
 
           <Divider />
 
-          <ColorCard
-            key={`${colorType.HEADER_TEXT_COLOR} ${headerTextColor}`}
-            text="Header text color"
-            color={headerTextColor}
-            colorType={colorType.HEADER_TEXT_COLOR}
-          />
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+            <ColorCard
+              key={`${colorType.HEADER_TEXT_COLOR} ${headerTextColor}`}
+              text="Header text color"
+              color={headerTextColor}
+              colorType={colorType.HEADER_TEXT_COLOR}
+              scollToView={scollToView}
+            />
+          </KeyboardAvoidingView>
         </View>
       </View>
     </View>
