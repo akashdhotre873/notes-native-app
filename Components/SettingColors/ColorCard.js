@@ -11,6 +11,13 @@ const ColorBox = ({ color, style = {} }) => (
   <View style={[styles.colorBox, { backgroundColor: color }, style]} />
 );
 
+const EllipsisText = ({ text }) => {
+  if (text.length > 8) {
+    return <Text>{text.slice(0, 6)}...</Text>;
+  }
+  return <Text>{text}</Text>;
+};
+
 export const ColorCard = ({ text, color, colorType }) => {
   const dispatch = useDispatch();
   const [colorValue, setColorValue] = useState(color);
@@ -41,7 +48,7 @@ export const ColorCard = ({ text, color, colorType }) => {
     regex.test(colorValue) || recognizedColors.includes(colorValue);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, editing ? { paddingBottom: 25 } : {}]}>
       <View style={styles.colorContainer}>
         <Text style={styles.text}>{text}</Text>
         <View style={styles.colorValueContainer}>
@@ -55,7 +62,9 @@ export const ColorCard = ({ text, color, colorType }) => {
                 color="red"
                 style={styles.errorIcon}
               />
-              <Text style={styles.invalidColorText}>Invalid color</Text>
+              <Text numberOfLines={1} style={styles.invalidColorText}>
+                Invalid color
+              </Text>
             </View>
           )}
           {!editing && (
@@ -63,7 +72,9 @@ export const ColorCard = ({ text, color, colorType }) => {
               onPress={() => setEditing(true)}
               style={{ flexDirection: 'row' }}
             >
-              <Text style={styles.colorText}>{color}</Text>
+              <Text style={styles.colorText}>
+                <EllipsisText text={color} />
+              </Text>
               <Feather
                 name="edit-2"
                 size={16}
@@ -133,6 +144,9 @@ const styles = StyleSheet.create({
   },
   colorValueContainer: {
     flexDirection: 'row',
+    flex: 3,
+    justifyContent: 'space-between',
+    // backgroundColor: 'yellow',
   },
   colorBox: {
     width: 14,
@@ -145,6 +159,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   text: {
+    flex: 7,
     fontSize: 16,
     fontWeight: '500',
   },

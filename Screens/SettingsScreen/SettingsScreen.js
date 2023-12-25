@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SettingTimeFormat } from '../../components/SettingTimeFormat';
@@ -29,11 +29,14 @@ export const SettingsScreen = () => {
         <View style={styles.emptySpace} />
       </View>
 
-      <View style={styles.settingsContainer}>
+      <ScrollView
+        style={styles.settingsContainer}
+        keyboardShouldPersistTaps="always"
+      >
         <SettingTimeFormat />
         <SettingNewContentIconPosition />
         <SettingColors />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -57,7 +60,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   settingsContainer: {
-    marginHorizontal: 24,
+    paddingHorizontal: 24,
     marginTop: 40,
+    paddingBottom: 20,
   },
 });
