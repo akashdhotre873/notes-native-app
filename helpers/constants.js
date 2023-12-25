@@ -140,7 +140,7 @@ export const recognizedColors = [
   'azure',
   'beige',
   'bisque',
-  'blac',
+  'black',
   'blanchedalmond',
   'blue',
   'blueviolet',
