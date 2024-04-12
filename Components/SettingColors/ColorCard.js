@@ -2,10 +2,11 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
-import { recognizedColors } from '../../helpers/constants';
-import { useDispatch } from 'react-redux';
-import { updateColor } from '../../dux/settings';
+import { recognizedColors, settingTypes } from '../../helpers/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getColors, getSettings, updateColor } from '../../dux/settings';
 import { MaterialIcons } from '@expo/vector-icons';
+import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 
 const ColorBox = ({ color, style = {} }) => (
   <View style={[styles.colorBox, { backgroundColor: color }, style]} />
@@ -22,6 +23,8 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
   const dispatch = useDispatch();
   const [colorValue, setColorValue] = useState(color);
   const [editing, setEditing] = useState(false);
+  const colors = useSelector(getColors);
+  const settings = useSelector(getSettings);
   const defaultSelection = {
     start: 0,
     end: color.length,
@@ -31,6 +34,13 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
   const onSave = () => {
     setEditing(false);
     dispatch(updateColor({ color: colorValue, colorType }));
+
+    const updatedColors = { ...colors, [colorType]: colorValue };
+    updateAndSaveSettingsToAsyncStorage({
+      settings,
+      settingType: settingTypes.COLORS,
+      value: updatedColors,
+    });
   };
 
   const onCancel = () => {
