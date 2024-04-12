@@ -16,8 +16,10 @@
     "@react-navigation/native-stack": "^6.9.11",
     "@reduxjs/toolkit": "^1.9.3",
     "crypto-js": "3.3.0",
-    "expo": "~47.0.12",
+    "expo": "^50.0.15",
     "expo-clipboard": "~4.0.1",
+    "expo-localization": "~14.0.0",
+    "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
@@ -31,12 +33,11 @@
     "react-native-web": "~0.18.9",
     "react-redux": "^8.0.5",
     "spacetime": "6.3.0",
-    "uuid": "^9.0.0",
-    "expo-localization": "~14.0.0",
-    "expo-splash-screen": "~0.17.5"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "metro": "^0.80.8"
   },
   "private": true
 }
