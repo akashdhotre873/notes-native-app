@@ -1,4 +1,8 @@
-import { MaterialCommunityIcons , Ionicons , EvilIcons } from '@expo/vector-icons';
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  EvilIcons,
+} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
@@ -171,7 +175,7 @@ export const TodoListCard = ({
     if (status === COMPLETED) {
       return (
         <Ionicons
-          name="md-checkbox"
+          name="checkbox"
           size={22}
           style={[styles.statusIcon, styles.completedStatusIcon]}
           color="black"

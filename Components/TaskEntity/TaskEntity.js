@@ -1,4 +1,8 @@
-import { MaterialCommunityIcons , Ionicons , EvilIcons } from '@expo/vector-icons';
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  EvilIcons,
+} from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -90,7 +94,7 @@ export const TaskEntity = ({
     if (status === COMPLETED) {
       return (
         <Ionicons
-          name="md-checkbox"
+          name="checkbox"
           size={24}
           style={[styles.statusIcon, styles.completedStatusIcon]}
           color="black"
