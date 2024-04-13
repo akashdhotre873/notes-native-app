@@ -4,15 +4,15 @@ import { Entypo } from '@expo/vector-icons';
 import { ShareContentComponent } from '../ShareContentComponent';
 import { useState } from 'react';
 import { shareMethod } from '../../helpers/constants';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const ActionBarMainMenu = ({
   onDelete,
   allowCopyToClicpBoard,
   contentToShare,
 }) => {
-  const { iconPrimaryColor } = useSelector(getColors);
+  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
   const [menuVisible, setMenuVisible] = useState(false);
   const shouldDisplayMenu = onDelete || allowCopyToClicpBoard; // if there are more options, and one of them is present, then show menu
 

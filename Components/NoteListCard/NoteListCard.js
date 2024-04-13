@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { promptCategoryType } from '../../helpers/constants';
 import { showPrompt } from '../../dux/prompt';
 import { getPlainText } from '../../helpers/cryptographyHelper';
@@ -10,6 +10,7 @@ import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const NoteListCard = ({
   note,
@@ -30,7 +31,7 @@ export const NoteListCard = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { lockedColor, unlockedColor } = useSelector(getColors);
+  const { lockedColor, unlockedColor } = useShallowEqualSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(content, password);

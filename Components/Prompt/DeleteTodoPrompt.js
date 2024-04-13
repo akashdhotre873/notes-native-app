@@ -1,24 +1,25 @@
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button, Modal, TextInput } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-import { hidePrompt, showPrompt } from "../../dux/prompt";
-import { deleteTodo, getTodoByName, getTodos } from "../../dux/todos";
-import { errorMessages, promptCategoryType } from "../../helpers/constants";
-import { deleteTodoInAsyncStorage } from "../../helpers/todosHelper";
-import { getHash } from "../../helpers/cryptographyHelper";
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button, Modal, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { deleteTodo, getTodoByName, getTodos } from '../../dux/todos';
+import { errorMessages, promptCategoryType } from '../../helpers/constants';
+import { deleteTodoInAsyncStorage } from '../../helpers/todosHelper';
+import { getHash } from '../../helpers/cryptographyHelper';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const DeleteTodoPrompt = ({
   data: { todoName, shouldGoBack = true },
 }) => {
   const dispatch = useDispatch();
-  const todos = useSelector(getTodos);
-  const todo = useSelector(getTodoByName(todoName));
+  const todos = useShallowEqualSelector(getTodos);
+  const todo = useShallowEqualSelector(getTodoByName(todoName));
   const navigation = useNavigation();
   const { passwordProtected, salt, passwordHash } = todo;
 
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState('');
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -54,7 +55,7 @@ export const DeleteTodoPrompt = ({
       <View>
         <Text style={styles.header}>Delete Todo ?</Text>
         <Text style={styles.content}>
-          Are you sure you want to delete this todo ({" "}
+          Are you sure you want to delete this todo ({' '}
           <Text style={styles.todoNameText}>{todoName}</Text> ) ?
         </Text>
         {passwordProtected && (
@@ -88,10 +89,10 @@ export const DeleteTodoPrompt = ({
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#ffffff",
-    top: "0%",
-    width: "80%",
-    alignSelf: "center",
+    backgroundColor: '#ffffff',
+    top: '0%',
+    width: '80%',
+    alignSelf: 'center',
     elevation: 10,
     borderRadius: 4,
   },
@@ -99,10 +100,10 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 25,
     fontSize: 18,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     letterSpacing: 0.5,
-    fontWeight: "500",
-    color: "red",
+    fontWeight: '500',
+    color: 'red',
   },
   content: {
     paddingTop: 15,
@@ -110,16 +111,16 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   todoNameText: {
-    color: "red",
+    color: 'red',
   },
   passwordArea: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginHorizontal: 20,
     marginBottom: 10,
     marginTop: 10,
   },
   buttonsContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: 'row-reverse',
     marginVertical: 15,
     marginLeft: 20,
   },

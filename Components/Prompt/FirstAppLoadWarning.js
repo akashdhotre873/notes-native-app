@@ -1,16 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { hidePrompt } from "../../dux/prompt";
-import { Button, Modal } from "react-native-paper";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
-import { getWarnings } from "../../dux/warnings";
-import { updateWarningsInAsyncStorage } from "../../helpers/warningsHelper";
-import { warnings } from "../../helpers/constants";
+import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { hidePrompt } from '../../dux/prompt';
+import { Button, Modal } from 'react-native-paper';
+import { useEffect, useState } from 'react';
+import { useRef } from 'react';
+import { getWarnings } from '../../dux/warnings';
+import { updateWarningsInAsyncStorage } from '../../helpers/warningsHelper';
+import { warnings } from '../../helpers/constants';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const FirstAppLoadWarning = () => {
   const dispatch = useDispatch();
-  const warningsList = useSelector(getWarnings);
+  const warningsList = useShallowEqualSelector(getWarnings);
 
   const [remainingTime, setRemainingTime] = useState(15); // 15 seconds
   const [onConfirmButtonEnabled, setOnConfirmButtonEnabled] = useState(false);
@@ -64,22 +65,22 @@ export const FirstAppLoadWarning = () => {
         <View style={styles.warningPointsContainer}>
           <Text style={styles.warningPointsHeader}>
             This Note App stores data in Async Storage of the app. The app
-            {highLight(" does not ")}
+            {highLight(' does not ')}
             take backup as there are no servers used. So please keep in mind
             these points before you use the app
           </Text>
 
           <Text style={styles.warningPoint}>
-            {`\u2022`} If you {highLight("uninstall")} the app, data will be
-            {highLight(" lost forever")}.
+            {`\u2022`} If you {highLight('uninstall')} the app, data will be
+            {highLight(' lost forever')}.
           </Text>
           <Text style={styles.warningPoint}>
-            {`\u2022`} If you {highLight("clear the app data")}, data will be
-            {highLight(" lost forever")}.
+            {`\u2022`} If you {highLight('clear the app data')}, data will be
+            {highLight(' lost forever')}.
           </Text>
           <Text style={styles.warningPoint}>
             {`\u2022`} If you choose to protect your notes or todos with
-            password and {highLight("forget the password")}, there is no way to
+            password and {highLight('forget the password')}, there is no way to
             reset the password. So if you can't remember the password,
             {highLight(" you can't retrieve your notes or todos")}.
           </Text>
@@ -108,10 +109,10 @@ export const FirstAppLoadWarning = () => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#ffffff",
-    top: "-5%",
-    width: "90%",
-    alignSelf: "center",
+    backgroundColor: '#ffffff',
+    top: '-5%',
+    width: '90%',
+    alignSelf: 'center',
     elevation: 10,
     borderRadius: 5,
   },
@@ -119,19 +120,19 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 25,
     fontSize: 18,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     letterSpacing: 1,
-    fontWeight: "500",
-    color: "red",
+    fontWeight: '500',
+    color: 'red',
   },
   smallHelperText: {
     marginTop: 2,
     paddingLeft: 25,
     fontSize: 12,
-    color: "red",
+    color: 'red',
   },
   content: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginHorizontal: 25,
     marginBottom: 10,
     marginTop: 10,
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   warningPointsHeader: {
-    color: "blue",
+    color: 'blue',
     paddingBottom: 5,
   },
   warningPoint: {
@@ -150,14 +151,14 @@ const styles = StyleSheet.create({
   infoText: {
     paddingTop: 15,
     paddingHorizontal: 25,
-    color: "blue",
+    color: 'blue',
   },
   highLight: {
-    fontWeight: "500",
-    textTransform: "uppercase",
+    fontWeight: '500',
+    textTransform: 'uppercase',
   },
   buttonsContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: 'row-reverse',
     marginVertical: 15,
     marginLeft: 20,
   },

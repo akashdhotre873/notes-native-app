@@ -1,9 +1,9 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
 import { ColorCard } from './ColorCard';
 import { colorType } from '../../helpers/constants';
 import { Divider } from 'react-native-paper';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingColors = ({ scollToView }) => {
   const {
@@ -15,7 +15,7 @@ export const SettingColors = ({ scollToView }) => {
     newContentIconColor,
     iconPrimaryColor,
     headerTextColor,
-  } = useSelector(getColors);
+  } = useShallowEqualSelector(getColors);
 
   return (
     <View style={styles.container}>

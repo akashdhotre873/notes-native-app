@@ -1,7 +1,7 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { StyleSheet, View, ScrollView, BackHandler } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ActionBar } from '../../components/ActionBar';
 import { TodoListCard } from '../../components/TodoListCard';
 import { showPrompt } from '../../dux/prompt';
@@ -13,13 +13,14 @@ import { getUUID } from '../../helpers/cryptographyHelper';
 import { getSortInfoFor } from '../../dux/sort';
 import { sortTodos } from '../../helpers/sortHelper';
 import { NewContent } from '../../components/NewContent';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  const todos = useSelector(getTodos);
-  const { selectedSortParameter, selectedSortOrder } = useSelector(
+  const todos = useShallowEqualSelector(getTodos);
+  const { selectedSortParameter, selectedSortOrder } = useShallowEqualSelector(
     getSortInfoFor(dataType.TODO)
   );
 

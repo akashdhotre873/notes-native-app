@@ -1,9 +1,9 @@
 import { StatusBar } from 'react-native';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const StatusBarContainer = () => {
-  const { primaryColor } = useSelector(getColors);
+  const { primaryColor } = useShallowEqualSelector(getColors);
 
   return <StatusBar backgroundColor={primaryColor} barStyle="dark-content" />;
 };

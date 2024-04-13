@@ -1,18 +1,18 @@
-import { useSelector } from "react-redux";
-import { promptCategoryType } from "../../../helpers/constants";
-import { getPromptData } from "../../../dux/prompt";
-import { ConfirmPassword } from "../../Prompt/ConfirmPassword";
-import { CreatePassword } from "../../Prompt/CreatePassword";
-import { ErrorPrompt } from "../../Prompt/ErrorPrompt";
-import { ExitWithoutSaving } from "../../Prompt/ExitWithoutSaving";
-import { DeleteNotePrompt } from "../../Prompt/DeleteNotePrompt";
-import { DeleteTodoPrompt } from "../../Prompt/DeleteTodoPrompt";
-import { UpdateTaskStatus } from "../../Prompt/UpdateTaskStatus";
-import { UpdateTodoStatus } from "../../Prompt/UpdateTodoStatus";
-import { FirstAppLoadWarning } from "../../Prompt/FirstAppLoadWarning";
+import { promptCategoryType } from '../../../helpers/constants';
+import { getPromptData } from '../../../dux/prompt';
+import { ConfirmPassword } from '../../Prompt/ConfirmPassword';
+import { CreatePassword } from '../../Prompt/CreatePassword';
+import { ErrorPrompt } from '../../Prompt/ErrorPrompt';
+import { ExitWithoutSaving } from '../../Prompt/ExitWithoutSaving';
+import { DeleteNotePrompt } from '../../Prompt/DeleteNotePrompt';
+import { DeleteTodoPrompt } from '../../Prompt/DeleteTodoPrompt';
+import { UpdateTaskStatus } from '../../Prompt/UpdateTaskStatus';
+import { UpdateTodoStatus } from '../../Prompt/UpdateTodoStatus';
+import { FirstAppLoadWarning } from '../../Prompt/FirstAppLoadWarning';
+import { useShallowEqualSelector } from '../../../hooks/useShallowEqualSelector';
 
 export const Promtps = () => {
-  const { category, data } = useSelector(getPromptData);
+  const { category, data } = useShallowEqualSelector(getPromptData);
 
   const {
     CONFIRM_PASSWORD_PROMPT,
@@ -42,9 +42,7 @@ export const Promtps = () => {
       {category === UPDATE_TODO_STATUS_PROMPT && (
         <UpdateTodoStatus data={data} />
       )}
-      {category === FIRST_APP_LOAD_WARNING_PROMPT && (
-        <FirstAppLoadWarning data={data} />
-      )}
+      {category === FIRST_APP_LOAD_WARNING_PROMPT && <FirstAppLoadWarning />}
     </>
   );
 };

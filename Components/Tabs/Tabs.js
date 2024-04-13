@@ -1,13 +1,14 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getSelectedTab, setSelectedTab } from '../../dux/tabs';
 import { tabs } from '../../helpers/constants';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const Tabs = () => {
   const dispatch = useDispatch();
-  const selectedTab = useSelector(getSelectedTab);
-  const { primaryColor } = useSelector(getColors);
+  const selectedTab = useShallowEqualSelector(getSelectedTab);
+  const { primaryColor } = useShallowEqualSelector(getColors);
 
   const onPress = (tabName) => {
     dispatch(setSelectedTab(tabName));

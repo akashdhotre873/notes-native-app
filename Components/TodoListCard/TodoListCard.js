@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { promptCategoryType, todoStatus } from '../../helpers/constants';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
-import { getDateString, getTimeString } from '../../helpers/timeHelper';
+import { getDateString } from '../../helpers/timeHelper';
 import { showPrompt } from '../../dux/prompt';
 import { getTodos, updateTodo } from '../../dux/todos';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -15,6 +15,7 @@ import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
@@ -39,8 +40,9 @@ export const TodoListCard = ({
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const todos = useSelector(getTodos);
-  const { primaryColor, lockedColor, unlockedColor } = useSelector(getColors);
+  const todos = useShallowEqualSelector(getTodos);
+  const { primaryColor, lockedColor, unlockedColor } =
+    useShallowEqualSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(tasks, password);

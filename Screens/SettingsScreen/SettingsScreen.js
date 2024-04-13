@@ -5,14 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 import { SettingTimeFormat } from '../../components/SettingTimeFormat';
 import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
 import { SettingColors } from '../../components/SettingColors';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
 import { useRef } from 'react';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation();
   const { iconPrimaryColor, primaryColor, headerTextColor } =
-    useSelector(getColors);
+    useShallowEqualSelector(getColors);
   const scrollViewRef = useRef();
 
   const scollToView = ({ x, y }) => {

@@ -10,11 +10,12 @@ import {
   updateTimeFormat,
 } from '../../dux/settings';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const DisplayTimeFormatMenuItem = ({ timeFormat }) => {
-  const selectedTimeFormat = useSelector(getTimeFormat);
+  const selectedTimeFormat = useShallowEqualSelector(getTimeFormat);
   const isSelectedTimeFormat = timeFormat.format === selectedTimeFormat;
 
   return (
@@ -40,13 +41,13 @@ const DisplayTimeFormatMenuItem = ({ timeFormat }) => {
 export const SettingTimeFormat = () => {
   const dispatch = useDispatch();
   const [timeFormatMenuVisible, setTimeFormatMenuVisible] = useState(false);
-  const selectedTimeFormat = useSelector(getTimeFormat);
+  const selectedTimeFormat = useShallowEqualSelector(getTimeFormat);
   const selectedTimeFormatDetails = timeFormats.find(
     (currentFormat) => currentFormat.format === selectedTimeFormat
   );
-  const settings = useSelector(getSettings);
+  const settings = useShallowEqualSelector(getSettings);
   const { settingBoxBorderColor, settingBoxBackgroundColor } =
-    useSelector(getColors);
+    useShallowEqualSelector(getColors);
 
   const closeTimeFormatMenu = () => {
     setTimeFormatMenuVisible(false);

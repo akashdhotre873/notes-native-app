@@ -11,7 +11,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ActionBar } from '../../components/ActionBar';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
 import { showPrompt } from '../../dux/prompt';
@@ -34,6 +34,7 @@ import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -52,8 +53,8 @@ export const TodoEditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const todos = useSelector(getTodos);
-  const { iconPrimaryColor } = useSelector(getColors);
+  const todos = useShallowEqualSelector(getTodos);
+  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
 
   const {
     name: header = '',

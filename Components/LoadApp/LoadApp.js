@@ -46,7 +46,7 @@ export const LoadApp = () => {
         warningsList.find(
           (warning) => warning.name === warnings.FIRST_APP_LOAD_WARNING
         ) || {};
-      const { warned } = firstAppLoadWarning;
+      const { warned = false } = firstAppLoadWarning;
       setFirstAppLoadWarned(warned);
     };
 

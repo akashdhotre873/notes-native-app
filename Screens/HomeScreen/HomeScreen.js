@@ -4,13 +4,13 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { TabBar } from '../../components/TabBar';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const Tab = createMaterialTopTabNavigator();
 
 export const HomeScreen = () => {
-  const { iconPrimaryColor } = useSelector(getColors);
+  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
 
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>

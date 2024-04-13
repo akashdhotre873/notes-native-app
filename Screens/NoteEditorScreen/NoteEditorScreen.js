@@ -11,7 +11,7 @@ import {
 import { ActionBar } from '../../components/ActionBar';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getNotes, updateNote } from '../../dux/notes';
 import { updateNoteInAsyncStorage } from '../../helpers/notesHelper';
 import {
@@ -27,6 +27,7 @@ import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
 
@@ -34,8 +35,8 @@ export const NoteEditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const notes = useSelector(getNotes);
-  const { iconPrimaryColor } = useSelector(getColors);
+  const notes = useShallowEqualSelector(getNotes);
+  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
 
   const {
     name: header = '',

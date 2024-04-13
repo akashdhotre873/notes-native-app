@@ -2,7 +2,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ActionBar } from '../../components/ActionBar';
 import { NoteListCard } from '../../components/NoteListCard';
 import { getNotes } from '../../dux/notes';
@@ -12,13 +12,14 @@ import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortNotes } from '../../helpers/sortHelper';
 import { getSortInfoFor } from '../../dux/sort';
 import { NewContent } from '../../components/NewContent';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const NotesHomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  const notes = useSelector(getNotes);
-  const { selectedSortParameter, selectedSortOrder } = useSelector(
+  const notes = useShallowEqualSelector(getNotes);
+  const { selectedSortParameter, selectedSortOrder } = useShallowEqualSelector(
     getSortInfoFor(dataType.NOTE)
   );
   const [searchValue, setSearchValue] = useState('');

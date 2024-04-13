@@ -3,10 +3,11 @@ import { TextInput } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 import { recognizedColors, settingTypes } from '../../helpers/constants';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getColors, getSettings, updateColor } from '../../dux/settings';
 import { MaterialIcons } from '@expo/vector-icons';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const ColorBox = ({ color, style = {} }) => (
   <View style={[styles.colorBox, { backgroundColor: color }, style]} />
@@ -23,8 +24,8 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
   const dispatch = useDispatch();
   const [colorValue, setColorValue] = useState(color);
   const [editing, setEditing] = useState(false);
-  const colors = useSelector(getColors);
-  const settings = useSelector(getSettings);
+  const colors = useShallowEqualSelector(getColors);
+  const settings = useShallowEqualSelector(getSettings);
   const defaultSelection = {
     start: 0,
     end: color.length,

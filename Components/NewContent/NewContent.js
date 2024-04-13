@@ -9,13 +9,13 @@ import { newContentIconPosition } from '../../helpers/constants';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { getColors, getNewContentIconPosition } from '../../dux/settings';
 import { useKeyBoardVisible } from '../../hooks/useKeyBoardVisible';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const NewContent = ({ iconOnClick }) => {
-  const { newContentIconColor } = useSelector(getColors);
-  const iconPosition = useSelector(getNewContentIconPosition);
+  const { newContentIconColor } = useShallowEqualSelector(getColors);
+  const iconPosition = useShallowEqualSelector(getNewContentIconPosition);
   const isIconOnTheRight = iconPosition === newContentIconPosition.RIGHT;
   const [isIconOnTheRightSide, setIsIconOnTheRightSide] =
     useState(isIconOnTheRight);

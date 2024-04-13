@@ -4,12 +4,12 @@ import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SETTINGS_SCREEN_PATH } from '../../helpers/pagePathHelper';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const TabBar = ({ state, descriptors, navigation }) => {
   const stackNavigation = useNavigation();
-  const { iconPrimaryColor, primaryColor } = useSelector(getColors);
+  const { iconPrimaryColor, primaryColor } = useShallowEqualSelector(getColors);
 
   return (
     <View style={{ flexDirection: 'row' }}>

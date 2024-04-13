@@ -7,8 +7,8 @@ import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
 import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const ActionBar = ({
   title,
@@ -23,7 +23,7 @@ export const ActionBar = ({
 }) => {
   const [searching, setSearching] = useState(false);
   const { primaryColor, iconPrimaryColor, headerTextColor } =
-    useSelector(getColors);
+    useShallowEqualSelector(getColors);
 
   return (
     <View style={[styles.container, { backgroundColor: primaryColor }]}>

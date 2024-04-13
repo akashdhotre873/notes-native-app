@@ -6,20 +6,21 @@ import {
   sortOrder as sortOrderConstant,
   sortParameter,
 } from '../../helpers/constants';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getAllSortInfo, getSortInfoFor, updateSortInfo } from '../../dux/sort';
 import { updateSortingInfoInAsync } from '../../helpers/sortHelper';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { ASCENDING, DESCENDING } = sortOrderConstant;
 
 export const ActionBarSortOrderMenu = ({ sortItem }) => {
   const dispatch = useDispatch();
-  const { selectedSortParameter, selectedSortOrder } = useSelector(
+  const { selectedSortParameter, selectedSortOrder } = useShallowEqualSelector(
     getSortInfoFor(sortItem)
   );
-  const allSortingInfo = useSelector(getAllSortInfo);
-  const { iconPrimaryColor } = useSelector(getColors);
+  const allSortingInfo = useShallowEqualSelector(getAllSortInfo);
+  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
 
   const [menuVisible, setMenuVisible] = useState(false);
   const shouldDisplayMenu = !!sortItem;

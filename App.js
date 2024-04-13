@@ -7,7 +7,7 @@ import {
   TODO_EDITOR_SCREEN_PATH,
 } from './helpers/pagePathHelper';
 import { HomeScreen } from './screens/HomeScreen';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import store from './store/store';
 import { LoadApp } from './components/LoadApp';
 import { NoteEditorScreen } from './screens/NoteEditorScreen';
@@ -20,11 +20,12 @@ import { SettingsScreen } from './screens/SettingsScreen';
 import { ConfigProtectedLayout } from './components/ConfigProtectedLayout';
 import { StatusBarContainer } from './components/StatusBarContainer';
 import * as SplashScreen from 'expo-splash-screen';
+import { useShallowEqualSelector } from './hooks/useShallowEqualSelector';
 
 const Stack = createNativeStackNavigator();
 
 const OtherComponents = () => {
-  const showPrompt = useSelector(shouldShowPrompt);
+  const showPrompt = useShallowEqualSelector(shouldShowPrompt);
 
   return <>{showPrompt && <Promtps />}</>;
 };

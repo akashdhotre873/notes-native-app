@@ -3,10 +3,11 @@ import { promptCategoryType, taskStatus } from '../../helpers/constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { showPrompt } from '../../dux/prompt';
 import PropTypes from 'prop-types';
 import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;
 
@@ -17,7 +18,7 @@ export const TaskEntity = ({
   autoFocusTaskId,
 }) => {
   const dispatch = useDispatch();
-  const { primaryColor } = useSelector(getColors);
+  const { primaryColor } = useShallowEqualSelector(getColors);
 
   const { status, id, value } = task;
 
