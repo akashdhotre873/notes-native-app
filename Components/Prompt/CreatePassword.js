@@ -1,9 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+
 import { hidePrompt } from '../../dux/prompt';
-import { Ionicons } from '@expo/vector-icons';
 
 export const CreatePassword = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export const CreatePassword = ({ data: { onAccept } }) => {
 
   return (
     <Modal
-      visible={true}
+      visible
       contentContainerStyle={styles.modal}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}

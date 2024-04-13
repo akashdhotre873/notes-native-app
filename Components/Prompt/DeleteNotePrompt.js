@@ -1,14 +1,15 @@
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { errorMessages, promptCategoryType } from '../../helpers/constants';
-import { hidePrompt, showPrompt } from '../../dux/prompt';
-import { getHash } from '../../helpers/cryptographyHelper';
+
 import { deleteNote, getNoteByName, getNotes } from '../../dux/notes';
-import { useNavigation } from '@react-navigation/native';
+import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { errorMessages, promptCategoryType } from '../../helpers/constants';
+import { getHash } from '../../helpers/cryptographyHelper';
 import { deleteNoteInAsyncStorage } from '../../helpers/notesHelper';
-import { Ionicons } from '@expo/vector-icons';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const DeleteNotePrompt = ({

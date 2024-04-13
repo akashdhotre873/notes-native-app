@@ -1,26 +1,27 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as SplashScreen from 'expo-splash-screen';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+
+import { ConfigProtectedLayout } from './components/ConfigProtectedLayout';
+import { LoadApp } from './components/LoadApp';
+import { StatusBarContainer } from './components/StatusBarContainer';
+import { Promtps } from './components/shared/Prompts';
+import { shouldShowPrompt } from './dux/prompt';
 import {
   HOME_SCREEN_PATH,
   NOTE_EDITOR_SCREEN_PATH,
   SETTINGS_SCREEN_PATH,
   TODO_EDITOR_SCREEN_PATH,
 } from './helpers/pagePathHelper';
-import { HomeScreen } from './screens/HomeScreen';
-import { Provider } from 'react-redux';
-import store from './store/store';
-import { LoadApp } from './components/LoadApp';
-import { NoteEditorScreen } from './screens/NoteEditorScreen';
-import { shouldShowPrompt } from './dux/prompt';
-import { Promtps } from './components/shared/Prompts';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { TodoEditorScreen } from './screens/TodoEditorScreen';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { SettingsScreen } from './screens/SettingsScreen';
-import { ConfigProtectedLayout } from './components/ConfigProtectedLayout';
-import { StatusBarContainer } from './components/StatusBarContainer';
-import * as SplashScreen from 'expo-splash-screen';
 import { useShallowEqualSelector } from './hooks/useShallowEqualSelector';
+import { HomeScreen } from './screens/HomeScreen';
+import { NoteEditorScreen } from './screens/NoteEditorScreen';
+import { SettingsScreen } from './screens/SettingsScreen';
+import { TodoEditorScreen } from './screens/TodoEditorScreen';
+import store from './store/store';
 
 const Stack = createNativeStackNavigator();
 

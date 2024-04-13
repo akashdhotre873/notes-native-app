@@ -1,4 +1,5 @@
 import { StatusBar } from 'react-native';
+
 import { getColors } from '../../dux/settings';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 

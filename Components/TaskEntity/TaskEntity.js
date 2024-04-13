@@ -1,12 +1,11 @@
-import { StyleSheet, TextInput, View } from 'react-native';
-import { promptCategoryType, taskStatus } from '../../helpers/constants';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
-import { showPrompt } from '../../dux/prompt';
+import { MaterialCommunityIcons , Ionicons , EvilIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import { showPrompt } from '../../dux/prompt';
 import { getColors } from '../../dux/settings';
+import { promptCategoryType, taskStatus } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;

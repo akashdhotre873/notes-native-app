@@ -1,11 +1,12 @@
+import { Entypo } from '@expo/vector-icons';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Menu } from 'react-native-paper';
-import { Entypo } from '@expo/vector-icons';
-import { ShareContentComponent } from '../ShareContentComponent';
-import { useState } from 'react';
-import { shareMethod } from '../../helpers/constants';
+
 import { getColors } from '../../dux/settings';
+import { shareMethod } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { ShareContentComponent } from '../ShareContentComponent';
 
 export const ActionBarMainMenu = ({
   onDelete,

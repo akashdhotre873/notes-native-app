@@ -1,3 +1,6 @@
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -8,25 +11,22 @@ import {
   BackHandler,
   TextInput,
 } from 'react-native';
-import { ActionBar } from '../../components/ActionBar';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { ActionBar } from '../../components/ActionBar';
+import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
+import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { getNotes, updateNote } from '../../dux/notes';
-import { updateNoteInAsyncStorage } from '../../helpers/notesHelper';
+import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
+import { dataType, promptCategoryType } from '../../helpers/constants';
 import {
   getCipherText,
   getHash,
   getUUID,
 } from '../../helpers/cryptographyHelper';
-import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
-import { showPrompt } from '../../dux/prompt';
-import { dataType, promptCategoryType } from '../../helpers/constants';
+import { updateNoteInAsyncStorage } from '../../helpers/notesHelper';
 import { getDateString } from '../../helpers/timeHelper';
-import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getColors } from '../../dux/settings';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_NOTE_PROMPT } = promptCategoryType;
@@ -51,7 +51,7 @@ export const NoteEditorScreen = () => {
   } = route?.params || {};
 
   const getUpdatedDate = (dateString) => {
-    return Boolean(dateString) ? new Date(dateString) : new Date();
+    return dateString ? new Date(dateString) : new Date();
   };
 
   const [title, setTitle] = useState(header);
@@ -121,7 +121,7 @@ export const NoteEditorScreen = () => {
     );
 
     updateNoteInAsyncStorage({
-      notes: notes,
+      notes,
       previousNoteName: previousNoteName.current,
       currentNoteName: title.trim(),
       content: contentToSave,
@@ -153,7 +153,7 @@ export const NoteEditorScreen = () => {
             size={33}
             color={iconPrimaryColor}
             style={[stylesForIcon, { opacity: 0.5 }]}
-            disabled={true}
+            disabled
           />
         ),
       };
@@ -209,7 +209,7 @@ export const NoteEditorScreen = () => {
     );
   };
 
-  const backAction = () => {
+  const backAction = useCallback(() => {
     if (contentIsSaved) {
       return false; // false -> user will go back from the screen
     }
@@ -221,7 +221,7 @@ export const NoteEditorScreen = () => {
     );
 
     return true; // true -> user will stay on the same screen
-  };
+  }, [dispatch, contentIsSaved, navigation]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -230,7 +230,7 @@ export const NoteEditorScreen = () => {
     );
 
     return () => backHandler.remove();
-  }, [contentIsSaved]);
+  }, [contentIsSaved, backAction]);
 
   const getLeftIcon = (stylesForIcon) => (
     <Ionicons
@@ -252,7 +252,7 @@ export const NoteEditorScreen = () => {
             {...getActionBarProps()}
             onDelete={!newNote && onDelete}
             contentToShare={!newNote && contentToShare} // can't share a note till it's saved
-            allowCopyToClicpBoard={true}
+            allowCopyToClicpBoard
           />
           {error.hasError && (
             <View style={styles.errorMessageContainer}>

@@ -1,3 +1,5 @@
+import { AntDesign } from '@expo/vector-icons';
+import { useState, useRef } from 'react';
 import {
   Animated,
   Dimensions,
@@ -5,11 +7,9 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
-import { newContentIconPosition } from '../../helpers/constants';
-import { AntDesign } from '@expo/vector-icons';
-import { useState } from 'react';
-import { useRef } from 'react';
+
 import { getColors, getNewContentIconPosition } from '../../dux/settings';
+import { newContentIconPosition } from '../../helpers/constants';
 import { useKeyBoardVisible } from '../../hooks/useKeyBoardVisible';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
@@ -50,7 +50,11 @@ export const NewContent = ({ iconOnClick }) => {
   };
 
   const toggleLayout = () => {
-    isIconOnTheRightSide ? moveToLeft() : moveToRight();
+    if (isIconOnTheRightSide) {
+      moveToLeft();
+    } else {
+      moveToRight();
+    }
   };
 
   if (isKeyboardVisible) {
@@ -94,7 +98,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     padding: 0,
-    margin: 0,
     margin: -10,
   },
   text: {

@@ -1,16 +1,17 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { promptCategoryType } from '../../helpers/constants';
+
 import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
+import { promptCategoryType } from '../../helpers/constants';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
-import { getDateString } from '../../helpers/timeHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
-import { TimeDisplayComponent } from '../TimeDisplayComponent';
-import { Ionicons } from '@expo/vector-icons';
-import { getColors } from '../../dux/settings';
+import { getDateString } from '../../helpers/timeHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TimeDisplayComponent } from '../TimeDisplayComponent';
 
 export const NoteListCard = ({
   note,
@@ -174,7 +175,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     opacity: 0.9,
   },
-  lockIcon: {},
   lockedStyles: {
     width: 7,
     borderBottomLeftRadius: 7,

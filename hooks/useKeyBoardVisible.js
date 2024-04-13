@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState , useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
 export const useKeyBoardVisible = () => {

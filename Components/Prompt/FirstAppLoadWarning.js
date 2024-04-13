@@ -1,12 +1,12 @@
+import { useEffect, useState , useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { hidePrompt } from '../../dux/prompt';
 import { Button, Modal } from 'react-native-paper';
-import { useEffect, useState } from 'react';
-import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { hidePrompt } from '../../dux/prompt';
 import { getWarnings } from '../../dux/warnings';
-import { updateWarningsInAsyncStorage } from '../../helpers/warningsHelper';
 import { warnings } from '../../helpers/constants';
+import { updateWarningsInAsyncStorage } from '../../helpers/warningsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const FirstAppLoadWarning = () => {
@@ -53,7 +53,7 @@ export const FirstAppLoadWarning = () => {
 
   return (
     <Modal
-      visible={true}
+      visible
       contentContainerStyle={styles.modal}
       style={{ marginTop: 0 }}
       dismissable={false}

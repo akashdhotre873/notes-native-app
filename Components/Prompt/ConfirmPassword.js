@@ -1,11 +1,12 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { errorMessages, promptCategoryType } from '../../helpers/constants';
+
 import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
-import { Ionicons } from '@expo/vector-icons';
 
 export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
   const dispatch = useDispatch();

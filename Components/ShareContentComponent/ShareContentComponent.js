@@ -1,9 +1,10 @@
+import * as Clipboard from "expo-clipboard";
 import React from "react";
 import { Alert, Share, Pressable, ToastAndroid } from "react-native";
+
 import { dataType, shareMethod } from "../../helpers/constants";
 import { formatNoteToShare } from "../../helpers/notesHelper";
 import { formatTodoToShare } from "../../helpers/todosHelper";
-import * as Clipboard from "expo-clipboard";
 
 export const ShareContentComponent = ({
   children,
@@ -47,7 +48,7 @@ export const ShareContentComponent = ({
     }
     if (shareType === shareMethod.CLIPBOARD) {
       copyToClipBoard();
-      return;
+      
     }
   };
 

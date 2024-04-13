@@ -1,21 +1,20 @@
+import { MaterialCommunityIcons , Ionicons , EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
+
+import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
+import { getTodos, updateTodo } from '../../dux/todos';
 import { promptCategoryType, todoStatus } from '../../helpers/constants';
 import { getPlainText } from '../../helpers/cryptographyHelper';
 import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
-import { getDateString } from '../../helpers/timeHelper';
-import { showPrompt } from '../../dux/prompt';
-import { getTodos, updateTodo } from '../../dux/todos';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
-import { TimeDisplayComponent } from '../TimeDisplayComponent';
-import { getColors } from '../../dux/settings';
+import { getDateString } from '../../helpers/timeHelper';
+import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TimeDisplayComponent } from '../TimeDisplayComponent';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
 
@@ -97,7 +96,7 @@ export const TodoListCard = ({
       })
     );
     updateTodoInAsyncStorage({
-      todos: todos,
+      todos,
       previousTodoName: name,
       currentTodoName: name,
       tasks,

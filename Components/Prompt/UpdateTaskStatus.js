@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+
 import { hidePrompt } from '../../dux/prompt';
 import { taskStatus } from '../../helpers/constants';
-import PropTypes from 'prop-types';
 
 const { IN_PROGRESS, UNSURE } = taskStatus;
 
@@ -26,7 +27,7 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
 
   return (
     <Modal
-      visible={true}
+      visible
       contentContainerStyle={styles.modal}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}

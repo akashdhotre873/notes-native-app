@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, Modal, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+
 import { hidePrompt, showPrompt } from '../../dux/prompt';
 import { deleteTodo, getTodoByName, getTodos } from '../../dux/todos';
 import { errorMessages, promptCategoryType } from '../../helpers/constants';
-import { deleteTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { getHash } from '../../helpers/cryptographyHelper';
+import { deleteTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const DeleteTodoPrompt = ({
@@ -70,7 +71,7 @@ export const DeleteTodoPrompt = ({
             placeholder="Enter password"
             style={styles.passwordArea}
             autoFocus
-            secureTextEntry={true}
+            secureTextEntry
           />
         )}
 

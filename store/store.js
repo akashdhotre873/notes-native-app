@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+
+import appInfoReducer from '../dux/appInfo';
 import notesReducer from '../dux/notes';
 import promptReducer from '../dux/prompt';
+import settingsReducer from '../dux/settings';
+import sortReducer from '../dux/sort';
 import tabsReducer from '../dux/tabs';
 import todosReducer from '../dux/todos';
 import warningsReducer from '../dux/warnings';
-import sortReducer from '../dux/sort';
-import settingsReducer from '../dux/settings';
-import appInfoReducer from '../dux/appInfo';
 
 export default configureStore({
   reducer: {

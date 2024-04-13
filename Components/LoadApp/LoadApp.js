@@ -1,23 +1,21 @@
+import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { setIsAppLoaded } from '../../dux/appInfo';
 import { setNotes } from '../../dux/notes';
+import { showPrompt } from '../../dux/prompt';
+import { loadInitialSettings } from '../../dux/settings';
+import { loadInitialSortInfo } from '../../dux/sort';
 import { setTodos } from '../../dux/todos';
-import {
-  clearAsyncStorage,
-  getItemFromAsyncStorage,
-} from '../../helpers/asyncStorageHelper';
+import { setWarningsList } from '../../dux/warnings';
+import { getItemFromAsyncStorage } from '../../helpers/asyncStorageHelper';
 import {
   defaultSettings,
   defaultSortingInfo,
   promptCategoryType,
   warnings,
 } from '../../helpers/constants';
-import { showPrompt } from '../../dux/prompt';
-import { setWarningsList } from '../../dux/warnings';
-import { loadInitialSortInfo } from '../../dux/sort';
-import { loadInitialSettings } from '../../dux/settings';
-import { setIsAppLoaded } from '../../dux/appInfo';
-import * as SplashScreen from 'expo-splash-screen';
 
 export const LoadApp = () => {
   const dispatch = useDispatch();
@@ -76,7 +74,7 @@ export const LoadApp = () => {
     };
 
     loadEverything();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!firstAppLoadWarned) {

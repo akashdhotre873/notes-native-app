@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
+
 import { hidePrompt } from "../../dux/prompt";
 
 export const ExitWithoutSaving = ({ data: { onAccept } }) => {
@@ -17,7 +18,7 @@ export const ExitWithoutSaving = ({ data: { onAccept } }) => {
 
   return (
     <Modal
-      visible={true}
+      visible
       contentContainerStyle={styles.modal}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}

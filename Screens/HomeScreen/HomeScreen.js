@@ -1,11 +1,12 @@
-import { NotesHomeScreen } from '../NotesHomeScreen';
-import { TodosHomeScreen } from '../TodosHomeScreen';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TabBar } from '../../components/TabBar';
-import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { StyleSheet } from 'react-native';
+
+import { TabBar } from '../../components/TabBar';
 import { getColors } from '../../dux/settings';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { NotesHomeScreen } from '../NotesHomeScreen';
+import { TodosHomeScreen } from '../TodosHomeScreen';
 
 const Tab = createMaterialTopTabNavigator();
 

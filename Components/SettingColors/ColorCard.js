@@ -1,11 +1,11 @@
+import { Feather , MaterialIcons } from '@expo/vector-icons';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { Feather } from '@expo/vector-icons';
-import { useState } from 'react';
-import { recognizedColors, settingTypes } from '../../helpers/constants';
 import { useDispatch } from 'react-redux';
+
 import { getColors, getSettings, updateColor } from '../../dux/settings';
-import { MaterialIcons } from '@expo/vector-icons';
+import { recognizedColors, settingTypes } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 

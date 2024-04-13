@@ -1,8 +1,9 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
-import { getColors } from '../../dux/settings';
-import { ColorCard } from './ColorCard';
-import { colorType } from '../../helpers/constants';
 import { Divider } from 'react-native-paper';
+
+import { ColorCard } from './ColorCard';
+import { getColors } from '../../dux/settings';
+import { colorType } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingColors = ({ scollToView }) => {

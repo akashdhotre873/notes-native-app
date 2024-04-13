@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import {
   Alert,
   StyleSheet,
@@ -6,16 +7,16 @@ import {
   View,
   Switch,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+
 import {
   getColors,
   getNewContentIconPosition,
   getSettings,
   updateNewContentIconDefaultPosition,
 } from '../../dux/settings';
-import { useDispatch } from 'react-redux';
 import { newContentIconPosition, settingTypes } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
-import { Ionicons } from '@expo/vector-icons';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingNewContentIconPosition = () => {

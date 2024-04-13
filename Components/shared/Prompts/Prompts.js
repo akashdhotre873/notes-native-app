@@ -1,15 +1,15 @@
-import { promptCategoryType } from '../../../helpers/constants';
 import { getPromptData } from '../../../dux/prompt';
+import { promptCategoryType } from '../../../helpers/constants';
+import { useShallowEqualSelector } from '../../../hooks/useShallowEqualSelector';
 import { ConfirmPassword } from '../../Prompt/ConfirmPassword';
 import { CreatePassword } from '../../Prompt/CreatePassword';
-import { ErrorPrompt } from '../../Prompt/ErrorPrompt';
-import { ExitWithoutSaving } from '../../Prompt/ExitWithoutSaving';
 import { DeleteNotePrompt } from '../../Prompt/DeleteNotePrompt';
 import { DeleteTodoPrompt } from '../../Prompt/DeleteTodoPrompt';
+import { ErrorPrompt } from '../../Prompt/ErrorPrompt';
+import { ExitWithoutSaving } from '../../Prompt/ExitWithoutSaving';
+import { FirstAppLoadWarning } from '../../Prompt/FirstAppLoadWarning';
 import { UpdateTaskStatus } from '../../Prompt/UpdateTaskStatus';
 import { UpdateTodoStatus } from '../../Prompt/UpdateTodoStatus';
-import { FirstAppLoadWarning } from '../../Prompt/FirstAppLoadWarning';
-import { useShallowEqualSelector } from '../../../hooks/useShallowEqualSelector';
 
 export const Promtps = () => {
   const { category, data } = useShallowEqualSelector(getPromptData);

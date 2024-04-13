@@ -1,18 +1,18 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View, ScrollView, BackHandler } from 'react-native';
 import { useDispatch } from 'react-redux';
+
 import { ActionBar } from '../../components/ActionBar';
+import { NewContent } from '../../components/NewContent';
 import { TodoListCard } from '../../components/TodoListCard';
 import { showPrompt } from '../../dux/prompt';
+import { getSortInfoFor } from '../../dux/sort';
 import { getTodos } from '../../dux/todos';
 import { dataType, promptCategoryType } from '../../helpers/constants';
-import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
-import { useEffect } from 'react';
 import { getUUID } from '../../helpers/cryptographyHelper';
-import { getSortInfoFor } from '../../dux/sort';
+import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortTodos } from '../../helpers/sortHelper';
-import { NewContent } from '../../components/NewContent';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const TodosHomeScreen = () => {
@@ -51,7 +51,7 @@ export const TodosHomeScreen = () => {
     return () => setSelectedTodoName('');
   }, [isFocused]);
 
-  const backAction = () => {
+  const backAction = useCallback(() => {
     if (!selectedTodoName) {
       const canExit = false;
       return canExit;
@@ -59,7 +59,7 @@ export const TodosHomeScreen = () => {
     setSelectedTodoName('');
     const canNotExit = true;
     return canNotExit;
-  };
+  }, [selectedTodoName]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -68,7 +68,7 @@ export const TodosHomeScreen = () => {
     );
 
     return () => backHandler.remove();
-  }, [selectedTodoName]);
+  }, [selectedTodoName, backAction]);
 
   const onSearchValueChange = (newValue) => {
     setSearchValue(newValue);

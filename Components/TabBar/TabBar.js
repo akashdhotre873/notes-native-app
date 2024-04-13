@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { Text, View, Pressable } from 'react-native';
-import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { SETTINGS_SCREEN_PATH } from '../../helpers/pagePathHelper';
+import * as React from 'react';
+import { Text, View, Pressable , StyleSheet } from 'react-native';
+
+
 import { getColors } from '../../dux/settings';
+import { SETTINGS_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const TabBar = ({ state, descriptors, navigation }) => {

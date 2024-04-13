@@ -41,7 +41,7 @@ const settingsReducer = (state = initialState, action) => {
         [settingTypes.NEW_CONTENT_ICON_POSITION]: action.payload,
       };
 
-    case UPDATE_COLOR:
+    case UPDATE_COLOR: {
       const { color, colorType } = action.payload;
       return {
         ...state,
@@ -50,6 +50,7 @@ const settingsReducer = (state = initialState, action) => {
           [colorType]: color,
         },
       };
+    }
 
     default:
       return state;

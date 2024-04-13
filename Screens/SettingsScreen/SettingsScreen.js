@@ -1,12 +1,12 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { SettingTimeFormat } from '../../components/SettingTimeFormat';
-import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
+import React, { useRef } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+
 import { SettingColors } from '../../components/SettingColors';
+import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
+import { SettingTimeFormat } from '../../components/SettingTimeFormat';
 import { getColors } from '../../dux/settings';
-import { useRef } from 'react';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingsScreen = () => {

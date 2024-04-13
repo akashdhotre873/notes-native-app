@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { promptCategoryType } from "../../helpers/constants";
+
 import { showPrompt } from "../../dux/prompt";
+import { promptCategoryType } from "../../helpers/constants";
 
 export const AddPasswordArea = ({
   onSave,
@@ -15,7 +16,7 @@ export const AddPasswordArea = ({
   const dispatch = useDispatch();
 
   const removePassword = (password, switchOn) => {
-    const noteIsSaved = onSave({ hasPassword: false, password: password });
+    const noteIsSaved = onSave({ hasPassword: false, password });
     if (noteIsSaved) {
       setPasswordProtected(switchOn);
     }

@@ -1,17 +1,17 @@
+import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { settingTypes, timeFormats } from '../../helpers/constants';
-import React from 'react';
 import { Divider, Menu } from 'react-native-paper';
-import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
+import { useDispatch } from 'react-redux';
+
 import {
   getColors,
   getSettings,
   getTimeFormat,
   updateTimeFormat,
 } from '../../dux/settings';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
+import { settingTypes, timeFormats } from '../../helpers/constants';
+import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const DisplayTimeFormatMenuItem = ({ timeFormat }) => {

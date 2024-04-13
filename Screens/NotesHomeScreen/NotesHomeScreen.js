@@ -1,17 +1,17 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+
 import { ActionBar } from '../../components/ActionBar';
+import { NewContent } from '../../components/NewContent';
 import { NoteListCard } from '../../components/NoteListCard';
 import { getNotes } from '../../dux/notes';
 import { showPrompt } from '../../dux/prompt';
+import { getSortInfoFor } from '../../dux/sort';
 import { dataType, promptCategoryType } from '../../helpers/constants';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortNotes } from '../../helpers/sortHelper';
-import { getSortInfoFor } from '../../dux/sort';
-import { NewContent } from '../../components/NewContent';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const NotesHomeScreen = () => {
@@ -49,7 +49,7 @@ export const NotesHomeScreen = () => {
     return () => setSelectedNoteName('');
   }, [isFocused]);
 
-  const backAction = () => {
+  const backAction = useCallback(() => {
     if (!selectedNoteName) {
       const canExit = false;
       return canExit;
@@ -57,7 +57,7 @@ export const NotesHomeScreen = () => {
     setSelectedNoteName('');
     const canNotExit = true;
     return canNotExit;
-  };
+  }, [selectedNoteName]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -66,7 +66,7 @@ export const NotesHomeScreen = () => {
     );
 
     return () => backHandler.remove();
-  }, [selectedNoteName]);
+  }, [selectedNoteName, backAction]);
 
   const onSearchValueChange = (newValue) => {
     setSearchValue(newValue);

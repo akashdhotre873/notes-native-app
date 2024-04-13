@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import { useDispatch } from "react-redux";
+
 import { hidePrompt } from "../../dux/prompt";
 
 export const ErrorPrompt = ({ data: { errorMessage } }) => {

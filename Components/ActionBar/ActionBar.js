@@ -1,14 +1,15 @@
+import { Ionicons , MaterialIcons } from '@expo/vector-icons';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { TextInput } from 'react-native-paper';
+
+
+import { getColors } from '../../dux/settings';
 import { shareMethod } from '../../helpers/constants';
-import { ShareContentComponent } from '../ShareContentComponent';
-import { Ionicons } from '@expo/vector-icons';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { ActionBarMainMenu } from '../ActionBarMainMenu';
 import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
-import { useState } from 'react';
-import { TextInput } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
-import { getColors } from '../../dux/settings';
-import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { ShareContentComponent } from '../ShareContentComponent';
 
 export const ActionBar = ({
   title,

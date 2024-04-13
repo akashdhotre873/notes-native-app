@@ -1,15 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { Divider, Menu } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { Divider, Menu } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+
+import { getColors } from '../../dux/settings';
+import { getAllSortInfo, getSortInfoFor, updateSortInfo } from '../../dux/sort';
 import {
   sortOrder as sortOrderConstant,
   sortParameter,
 } from '../../helpers/constants';
-import { useDispatch } from 'react-redux';
-import { getAllSortInfo, getSortInfoFor, updateSortInfo } from '../../dux/sort';
 import { updateSortingInfoInAsync } from '../../helpers/sortHelper';
-import { getColors } from '../../dux/settings';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { ASCENDING, DESCENDING } = sortOrderConstant;

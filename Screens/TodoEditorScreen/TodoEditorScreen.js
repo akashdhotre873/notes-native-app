@@ -1,6 +1,6 @@
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   BackHandler,
   Pressable,
@@ -12,9 +12,13 @@ import {
   TextInput,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
+
 import { ActionBar } from '../../components/ActionBar';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
+import { TaskEntity } from '../../components/TaskEntity';
+import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { getTodos, updateTodo } from '../../dux/todos';
 import {
   dataType,
@@ -22,18 +26,13 @@ import {
   taskStatus,
   todoStatus,
 } from '../../helpers/constants';
-import { getDateString } from '../../helpers/timeHelper';
-import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import {
   getCipherText,
   getHash,
   getUUID,
 } from '../../helpers/cryptographyHelper';
-import { TaskEntity } from '../../components/TaskEntity';
-import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getColors } from '../../dux/settings';
+import { getDateString } from '../../helpers/timeHelper';
+import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
@@ -70,7 +69,7 @@ export const TodoEditorScreen = () => {
   } = route?.params || {};
 
   const getUpdatedDate = (dateString) => {
-    return Boolean(dateString) ? new Date(dateString) : new Date();
+    return dateString ? new Date(dateString) : new Date();
   };
   const originalTasks = JSON.parse(originalTasksStringified).map((task) => {
     task.dateCreated = getUpdatedDate(task.dateCreated);
@@ -182,7 +181,7 @@ export const TodoEditorScreen = () => {
       })
     );
     updateTodoInAsyncStorage({
-      todos: todos,
+      todos,
       previousTodoName: previousTodoName.current,
       currentTodoName: title.trim(),
       tasks: tasksToSave,
@@ -215,7 +214,7 @@ export const TodoEditorScreen = () => {
             size={33}
             color={iconPrimaryColor}
             style={[stylesForIcon, { opacity: 0.5 }]}
-            disabled={true}
+            disabled
           />
         ),
       };
@@ -279,7 +278,7 @@ export const TodoEditorScreen = () => {
     autoFocusTaskId.current = newTaskId;
   };
 
-  const backAction = () => {
+  const backAction = useCallback(() => {
     if (TasksAreSaved) {
       return false; // false -> user will go back from the screen
     }
@@ -291,7 +290,7 @@ export const TodoEditorScreen = () => {
     );
 
     return true; // true -> user will stay on the same screen
-  };
+  }, [dispatch, TasksAreSaved, navigation]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -300,7 +299,7 @@ export const TodoEditorScreen = () => {
     );
 
     return () => backHandler.remove();
-  }, [TasksAreSaved]);
+  }, [TasksAreSaved, backAction]);
 
   const getLeftIcon = (stylesForIcon) => (
     <Ionicons
@@ -322,7 +321,7 @@ export const TodoEditorScreen = () => {
             {...getActionBarProps()}
             onDelete={!newTodo && onDelete}
             contentToShare={!newTodo && contentToShare} // can't share a todo till it's saved
-            allowCopyToClicpBoard={true}
+            allowCopyToClicpBoard
           />
           {error.hasError && (
             <View style={styles.errorMessageContainer}>
