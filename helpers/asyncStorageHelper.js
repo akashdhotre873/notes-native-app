@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getItemFromAsyncStorage = async (key) => {
   const jsonValue = await AsyncStorage.getItem(key);
@@ -11,4 +11,12 @@ export const setItemToAsyncStorage = async (key, value) => {
 
 export const clearAsyncStorage = () => {
   AsyncStorage.clear();
+};
+
+export const getItemsFromAsyncStorage = async () => {
+  const keys = await AsyncStorage.getAllKeys();
+  const stringifiedValue = await AsyncStorage.multiGet(keys);
+
+  const values = stringifiedValue.map((v) => JSON.parse(v[1]));
+  console.log(values);
 };

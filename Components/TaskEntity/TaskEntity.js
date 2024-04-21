@@ -12,7 +12,7 @@ import { getColors } from '../../dux/settings';
 import { promptCategoryType, taskStatus } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
-const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = taskStatus;
+const { CREATED, IN_PROGRESS, COMPLETED } = taskStatus;
 
 export const TaskEntity = ({
   task,
@@ -28,12 +28,12 @@ export const TaskEntity = ({
   const updateTasks = (newTaskValue) => {
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
-      prevTasks.map((task) => {
-        if (task.id === id) {
-          task.value = newTaskValue;
-          task.dateUpdated = new Date();
+      prevTasks.map((prevTask) => {
+        if (prevTask.id === id) {
+          prevTask.value = newTaskValue;
+          prevTask.dateUpdated = new Date();
         }
-        return task;
+        return prevTask;
       })
     );
   };
@@ -41,19 +41,19 @@ export const TaskEntity = ({
   const updateTask = ({ newStatus }) => {
     setTasksAreSaved(false);
     setTasks((prevTasks) =>
-      prevTasks.map((task) => {
-        if (task.id === id) {
-          task.status = newStatus;
-          task.dateUpdated = new Date();
+      prevTasks.map((prevTask) => {
+        if (prevTask.id === id) {
+          prevTask.status = newStatus;
+          prevTask.dateUpdated = new Date();
         }
-        return task;
+        return prevTask;
       })
     );
   };
 
   const deleteTask = () => {
     setTasksAreSaved(false);
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    setTasks((prevTasks) => prevTasks.filter((prevTask) => prevTask.id !== id));
   };
 
   const modifyTaskStatus = () => {
@@ -103,19 +103,19 @@ export const TaskEntity = ({
         />
       );
     }
-    if (status === UNSURE) {
-      return (
-        <EvilIcons
-          style={styles.statusIcon}
-          name="question"
-          size={24}
-          color="black"
-          onPress={() => updateTask({ newStatus: CREATED })}
-          onLongPress={modifyTaskStatus}
-        />
-      );
-    }
-    return null;
+
+    // if status === UNSURE -> default case
+
+    return (
+      <EvilIcons
+        style={styles.statusIcon}
+        name="question"
+        size={24}
+        color="black"
+        onPress={() => updateTask({ newStatus: CREATED })}
+        onLongPress={modifyTaskStatus}
+      />
+    );
   };
 
   const getStyleForTask = () => {
