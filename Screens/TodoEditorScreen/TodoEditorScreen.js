@@ -366,10 +366,7 @@ export const TodoEditorScreen = () => {
       <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         {tasks.map((task) => {
           return (
-            <View
-              key={task.dueDate.toString() + task.id}
-              style={styles.taskContainer}
-            >
+            <View key={task.id} style={styles.taskContainer}>
               <TaskEntity
                 setTasksAreSaved={setTasksAreSaved}
                 task={task}
