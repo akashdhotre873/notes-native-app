@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { ExportFile } from '../../components/ExportFile';
 import { SettingColors } from '../../components/SettingColors';
 import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
 import { SettingTimeFormat } from '../../components/SettingTimeFormat';
@@ -43,6 +44,8 @@ export const SettingsScreen = () => {
         <SettingTimeFormat />
         <SettingNewContentIconPosition />
         <SettingColors scollToView={scollToView} />
+
+        <ExportFile />
       </ScrollView>
     </View>
   );
