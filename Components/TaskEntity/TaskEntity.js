@@ -125,7 +125,11 @@ export const TaskEntity = ({
         opacity: 0.6,
       },
     };
-    return taskStyles[status] || {};
+    return (
+      taskStyles[status] || {
+        textDecorationLine: 'none',
+      }
+    );
   };
 
   return (
