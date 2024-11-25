@@ -1,4 +1,4 @@
-import { Feather , MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
@@ -26,11 +26,6 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
   const [editing, setEditing] = useState(false);
   const colors = useShallowEqualSelector(getColors);
   const settings = useShallowEqualSelector(getSettings);
-  const defaultSelection = {
-    start: 0,
-    end: color.length,
-  };
-  const [selection, setSelection] = useState(defaultSelection);
 
   const onSave = () => {
     setEditing(false);
@@ -47,7 +42,6 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
   const onCancel = () => {
     setEditing(false);
     setColorValue(color);
-    setSelection(defaultSelection);
   };
 
   const onChange = (newValue) => {
@@ -128,8 +122,7 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
             underlineStyle={{ display: 'none' }}
             placeholder="Enter color"
             maxLength={20}
-            selection={selection}
-            onFocus={() => setSelection(null)}
+            selectTextOnFocus
             right={
               <TextInput.Icon
                 icon="close"
