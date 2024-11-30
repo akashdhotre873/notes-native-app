@@ -8,6 +8,7 @@ import { NewContent } from '../../components/NewContent';
 import { NoteListCard } from '../../components/NoteListCard';
 import { getNotes } from '../../dux/notes';
 import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { getSortInfoFor } from '../../dux/sort';
 import { dataType, promptCategoryType } from '../../helpers/constants';
 import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
@@ -22,8 +23,8 @@ export const NotesHomeScreen = () => {
   const { selectedSortParameter, selectedSortOrder } = useShallowEqualSelector(
     getSortInfoFor(dataType.NOTE)
   );
+  const { backgroundColor } = useShallowEqualSelector(getColors);
   const [searchValue, setSearchValue] = useState('');
-
   const [selectedNoteName, setSelectedNoteName] = useState('');
 
   const sortAlgo = (noteFirst, noteSecond) => {
@@ -74,7 +75,7 @@ export const NotesHomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <ActionBar
         title="All Notes"
         onDelete={selectedNoteName ? onDelete : null}
@@ -114,7 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardsContainer: {
-    backgroundColor: '#f8f8f3',
     marginTop: 5,
     flex: 1,
   },

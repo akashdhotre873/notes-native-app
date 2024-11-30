@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Switch } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { StyleSheet, View } from 'react-native';
+import { Switch } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 
-import { showPrompt } from "../../dux/prompt";
-import { promptCategoryType } from "../../helpers/constants";
+import { showPrompt } from '../../dux/prompt';
+import { promptCategoryType } from '../../helpers/constants';
+import { TextContainer } from '../TextContainer';
 
 export const AddPasswordArea = ({
   onSave,
@@ -55,7 +56,7 @@ export const AddPasswordArea = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Password Protected : </Text>
+      <TextContainer style={styles.text}>Password Protected : </TextContainer>
       <Switch
         value={passwordProtected}
         onValueChange={onToggleSwitch}
@@ -67,10 +68,10 @@ export const AddPasswordArea = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: "black",
+    borderBottomColor: 'black',
   },
   text: {
     paddingVertical: 18,

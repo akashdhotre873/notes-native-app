@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt, showPrompt } from '../../dux/prompt';
 import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
+import { TextContainer } from '../TextContainer';
 
 export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,9 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text style={styles.enterPasswordText}>Enter Password</Text>
+        <TextContainer style={styles.enterPasswordText}>
+          Enter Password
+        </TextContainer>
 
         <View style={styles.passwordAreaContainer}>
           <TextInput

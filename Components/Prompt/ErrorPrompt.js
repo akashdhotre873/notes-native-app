@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Button, Modal } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { StyleSheet, TextContainer, View } from 'react-native';
+import { Button, Modal } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 
-import { hidePrompt } from "../../dux/prompt";
+import { hidePrompt } from '../../dux/prompt';
 
 export const ErrorPrompt = ({ data: { errorMessage } }) => {
   const dispatch = useDispatch();
@@ -19,9 +19,11 @@ export const ErrorPrompt = ({ data: { errorMessage } }) => {
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text style={styles.oopsMessage}>Oops</Text>
+        <TextContainer style={styles.oopsMessage}>Oops</TextContainer>
 
-        <Text style={styles.errorMessage}>{errorMessage}</Text>
+        <TextContainer style={styles.errorMessage}>
+          {errorMessage}
+        </TextContainer>
 
         <Button mode="text" onPress={closeHandler} style={styles.button}>
           Okay
@@ -33,10 +35,10 @@ export const ErrorPrompt = ({ data: { errorMessage } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#ffffff",
-    top: "-10%",
-    width: "80%",
-    alignSelf: "center",
+    backgroundColor: '#ffffff',
+    top: '-10%',
+    width: '80%',
+    alignSelf: 'center',
     elevation: 10,
     borderRadius: 4,
   },
@@ -44,13 +46,13 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 25,
     fontSize: 18,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     letterSpacing: 0.5,
-    fontWeight: "500",
-    color: "red",
+    fontWeight: '500',
+    color: 'red',
   },
   errorMessage: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginHorizontal: 25,
     marginBottom: 10,
     marginTop: 10,
@@ -60,6 +62,6 @@ const styles = StyleSheet.create({
   button: {
     marginRight: 15,
     marginBottom: 15,
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
   },
 });

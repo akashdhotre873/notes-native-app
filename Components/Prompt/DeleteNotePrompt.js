@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
@@ -11,6 +11,7 @@ import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
 import { deleteNoteInAsyncStorage } from '../../helpers/notesHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const DeleteNotePrompt = ({
   data: { noteName, shouldGoBack = true },
@@ -55,13 +56,16 @@ export const DeleteNotePrompt = ({
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text style={styles.header}>Delete Note ?</Text>
-        <Text style={styles.content}>
+        <TextContainer style={styles.header}>Delete Note ?</TextContainer>
+        <TextContainer style={styles.content}>
           Are you sure you want to delete this note ({' '}
-          <Text style={styles.noteNameText}>{noteName}</Text> ) ?
-        </Text>
+          <TextContainer style={styles.noteNameText}>{noteName}</TextContainer>{' '}
+          ) ?
+        </TextContainer>
         {passwordProtected && (
-          <Text style={styles.content}>Enter password to delete note.</Text>
+          <TextContainer style={styles.content}>
+            Enter password to delete note.
+          </TextContainer>
         )}
 
         {passwordProtected && (

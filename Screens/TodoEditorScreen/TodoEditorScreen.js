@@ -6,7 +6,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
   TextInput,
@@ -16,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { ActionBar } from '../../components/ActionBar';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
 import { TaskEntity } from '../../components/TaskEntity';
+import { TextContainer } from '../../components/TextContainer';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { showPrompt } from '../../dux/prompt';
 import { getColors } from '../../dux/settings';
@@ -325,7 +325,9 @@ export const TodoEditorScreen = () => {
           />
           {error.hasError && (
             <View style={styles.errorMessageContainer}>
-              <Text style={styles.errorMessage}>({error.errorMessage})</Text>
+              <TextContainer style={styles.errorMessage}>
+                ({error.errorMessage})
+              </TextContainer>
             </View>
           )}
           <AddPasswordArea
@@ -348,17 +350,19 @@ export const TodoEditorScreen = () => {
               onFocus={() => setSelection(null)}
             />
             <Pressable onPress={addNewTodo} style={styles.addTodoTextContainer}>
-              <Text style={styles.addTodoText}>+ Add Todo</Text>
+              <TextContainer style={styles.addTodoText}>
+                + Add Todo
+              </TextContainer>
             </Pressable>
           </View>
           {dateUpdated && (
             <View style={styles.timeContainer}>
-              <Text style={styles.dateModifiedText}>
+              <TextContainer style={styles.dateModifiedText}>
                 <TimeDisplayComponent date={dateUpdated} />
-              </Text>
-              <Text style={styles.dateModifiedText}>
+              </TextContainer>
+              <TextContainer style={styles.dateModifiedText}>
                 {getDateString(dateUpdated)}
-              </Text>
+              </TextContainer>
             </View>
           )}
         </View>

@@ -5,7 +5,7 @@ import {
 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { StyleSheet, View, Pressable, Text } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { showPrompt } from '../../dux/prompt';
@@ -18,6 +18,7 @@ import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { getDateString } from '../../helpers/timeHelper';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
 
 const { CREATED, IN_PROGRESS, COMPLETED, UNSURE } = todoStatus;
@@ -252,7 +253,7 @@ export const TodoListCard = ({
         <View style={styles.nameContainer}>
           {getIconForTodo()}
           {searchValueMatches && searchValue !== '' ? (
-            <Text style={[styles.name, getStyleForTodo()]}>
+            <TextContainer style={[styles.name, getStyleForTodo()]}>
               {[...name].map((nameChar, index) => {
                 const shouldHighLight = matchedIndices.includes(index);
                 return (
@@ -260,7 +261,7 @@ export const TodoListCard = ({
                     key={nameChar + index}
                     style={shouldHighLight ? {} : { opacity: 0.8 }}
                   >
-                    <Text
+                    <TextContainer
                       style={[
                         styles.nameChar,
                         getStyleForTodo(),
@@ -268,23 +269,27 @@ export const TodoListCard = ({
                       ]}
                     >
                       {nameChar}
-                    </Text>
+                    </TextContainer>
                   </View>
                 );
               })}
-            </Text>
+            </TextContainer>
           ) : (
-            <Text style={[styles.name, getStyleForTodo()]}>{name}</Text>
+            <TextContainer style={[styles.name, getStyleForTodo()]}>
+              {name}
+            </TextContainer>
           )}
         </View>
         <View style={styles.timeContainer}>
-          <Text style={styles.lastModifiedText}>Last Modified :</Text>
-          <Text style={styles.dateModifiedText}>
+          <TextContainer style={styles.lastModifiedText}>
+            Last Modified :
+          </TextContainer>
+          <TextContainer style={styles.dateModifiedText}>
             <TimeDisplayComponent date={dateUpdated} />
-          </Text>
-          <Text style={styles.dateModifiedText}>
+          </TextContainer>
+          <TextContainer style={styles.dateModifiedText}>
             {getDateString(dateUpdated)}
-          </Text>
+          </TextContainer>
         </View>
       </View>
     </Pressable>

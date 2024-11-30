@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt } from '../../dux/prompt';
+import { TextContainer } from '../TextContainer';
 
 export const CreatePassword = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();
@@ -28,7 +29,9 @@ export const CreatePassword = ({ data: { onAccept } }) => {
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text style={styles.createPasswordText}>Create Password</Text>
+        <TextContainer style={styles.createPasswordText}>
+          Create Password
+        </TextContainer>
 
         <View style={styles.passwordAreaContainer}>
           <TextInput

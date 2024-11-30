@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt } from '../../dux/prompt';
 import { taskStatus } from '../../helpers/constants';
+import { TextContainer } from '../TextContainer';
 
 const { IN_PROGRESS, UNSURE } = taskStatus;
 
@@ -33,9 +34,13 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text style={styles.header}>Change Task Status ?</Text>
+        <TextContainer style={styles.header}>
+          Change Task Status ?
+        </TextContainer>
 
-        <Text style={styles.content}>Move task to the following status</Text>
+        <TextContainer style={styles.content}>
+          Move task to the following status
+        </TextContainer>
 
         <View style={styles.buttonsContainer}>
           <Pressable
@@ -43,9 +48,9 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
             android_ripple={{ color: '#fcf' }}
             onPress={() => changeStatus(IN_PROGRESS)}
           >
-            <Text style={[styles.button, styles.inProgressButton]}>
+            <TextContainer style={[styles.button, styles.inProgressButton]}>
               Work In Progress
-            </Text>
+            </TextContainer>
           </Pressable>
 
           <Pressable
@@ -53,9 +58,9 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
             android_ripple={{ color: '#fcf' }}
             onPress={() => changeStatus(UNSURE)}
           >
-            <Text style={[styles.button, styles.unsureButton]}>
+            <TextContainer style={[styles.button, styles.unsureButton]}>
               Mark As Unsure (may not do it)
-            </Text>
+            </TextContainer>
           </Pressable>
 
           <Pressable
@@ -63,9 +68,9 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
             android_ripple={{ color: '#fcf' }}
             onPress={deleteTaskHandler}
           >
-            <Text style={[styles.button, styles.deleteButton]}>
+            <TextContainer style={[styles.button, styles.deleteButton]}>
               Delete Task
-            </Text>
+            </TextContainer>
           </Pressable>
 
           <Pressable
@@ -73,7 +78,9 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
             android_ripple={{ color: '#fcf' }}
             onPress={closeHandler}
           >
-            <Text style={[styles.button, styles.cancelButton]}>Cancel</Text>
+            <TextContainer style={[styles.button, styles.cancelButton]}>
+              Cancel
+            </TextContainer>
           </Pressable>
         </View>
       </View>

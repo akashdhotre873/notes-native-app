@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { showPrompt } from '../../dux/prompt';
@@ -11,6 +11,7 @@ import { NOTE_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { runSearchAlgorithm } from '../../helpers/searchHelper';
 import { getDateString } from '../../helpers/timeHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 import { TimeDisplayComponent } from '../TimeDisplayComponent';
 
 export const NoteListCard = ({
@@ -32,7 +33,8 @@ export const NoteListCard = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { lockedColor, unlockedColor } = useShallowEqualSelector(getColors);
+  const { lockedColor, unlockedColor, cardBackgroundColor } =
+    useShallowEqualSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(content, password);
@@ -75,6 +77,7 @@ export const NoteListCard = ({
     <Pressable
       style={[
         styles.container,
+        { backgroundColor: cardBackgroundColor },
         selectedNoteName === name ? styles.selectedToDelete : {},
       ]}
       onPress={onPress}
@@ -98,7 +101,7 @@ export const NoteListCard = ({
       )}
       <View style={styles.innerContainer}>
         {searchValueMatches && searchValue !== '' ? (
-          <Text style={styles.name}>
+          <TextContainer style={styles.name}>
             {[...name].map((nameChar, index) => {
               const shouldHighLight = matchedIndices.includes(index);
               return (
@@ -106,30 +109,32 @@ export const NoteListCard = ({
                   key={nameChar + index}
                   style={shouldHighLight ? {} : { opacity: 0.8 }}
                 >
-                  <Text
+                  <TextContainer
                     style={[
                       styles.nameChar,
                       shouldHighLight ? styles.hightLightChar : {},
                     ]}
                   >
                     {nameChar}
-                  </Text>
+                  </TextContainer>
                 </View>
               );
             })}
-          </Text>
+          </TextContainer>
         ) : (
-          <Text style={styles.name}>{name}</Text>
+          <TextContainer style={styles.name}>{name}</TextContainer>
         )}
 
         <View style={styles.timeContainer}>
-          <Text style={styles.lastModifiedText}>Last Modified :</Text>
-          <Text style={styles.dateModifiedText}>
+          <TextContainer style={styles.lastModifiedText}>
+            Last Modified :
+          </TextContainer>
+          <TextContainer style={styles.dateModifiedText}>
             <TimeDisplayComponent date={dateUpdated} />
-          </Text>
-          <Text style={styles.dateModifiedText}>
+          </TextContainer>
+          <TextContainer style={styles.dateModifiedText}>
             {getDateString(dateUpdated)}
-          </Text>
+          </TextContainer>
         </View>
       </View>
     </Pressable>

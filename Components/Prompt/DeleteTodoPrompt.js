@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Modal, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
@@ -10,6 +10,7 @@ import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
 import { deleteTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const DeleteTodoPrompt = ({
   data: { todoName, shouldGoBack = true },
@@ -54,13 +55,16 @@ export const DeleteTodoPrompt = ({
       style={{ marginTop: 0 }}
     >
       <View>
-        <Text style={styles.header}>Delete Todo ?</Text>
-        <Text style={styles.content}>
+        <TextContainer style={styles.header}>Delete Todo ?</TextContainer>
+        <TextContainer style={styles.content}>
           Are you sure you want to delete this todo ({' '}
-          <Text style={styles.todoNameText}>{todoName}</Text> ) ?
-        </Text>
+          <TextContainer style={styles.todoNameText}>{todoName}</TextContainer>{' '}
+          ) ?
+        </TextContainer>
         {passwordProtected && (
-          <Text style={styles.content}>Enter password to delete todo.</Text>
+          <TextContainer style={styles.content}>
+            Enter password to delete todo.
+          </TextContainer>
         )}
 
         {passwordProtected && (

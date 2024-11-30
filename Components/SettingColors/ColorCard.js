@@ -1,6 +1,6 @@
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +8,7 @@ import { getColors, getSettings, updateColor } from '../../dux/settings';
 import { recognizedColors, settingTypes } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 const ColorBox = ({ color, style = {} }) => (
   <View style={[styles.colorBox, { backgroundColor: color }, style]} />
@@ -15,9 +16,9 @@ const ColorBox = ({ color, style = {} }) => (
 
 const EllipsisText = ({ text }) => {
   if (text.length > 8) {
-    return <Text>{text.slice(0, 6)}...</Text>;
+    return <TextContainer>{text.slice(0, 6)}...</TextContainer>;
   }
-  return <Text>{text}</Text>;
+  return <TextContainer>{text}</TextContainer>;
 };
 
 export const ColorCard = ({ text, color, colorType, scollToView }) => {
@@ -68,7 +69,7 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
   return (
     <View style={[styles.container, editing ? { paddingBottom: 25 } : {}]}>
       <View style={styles.colorContainer}>
-        <Text style={styles.text}>{text}</Text>
+        <TextContainer style={styles.text}>{text}</TextContainer>
         <View
           style={[
             styles.colorValueContainer,
@@ -85,9 +86,9 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
                 color="red"
                 style={styles.errorIcon}
               />
-              <Text numberOfLines={1} style={styles.invalidColorText}>
+              <TextContainer numberOfLines={1} style={styles.invalidColorText}>
                 Invalid color
-              </Text>
+              </TextContainer>
             </View>
           )}
           {!editing && (
@@ -95,9 +96,9 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
               onPress={() => setEditing(true)}
               style={{ flexDirection: 'row' }}
             >
-              <Text style={styles.colorText}>
+              <TextContainer style={styles.colorText}>
                 <EllipsisText text={color} />
-              </Text>
+              </TextContainer>
               <Feather
                 name="edit-2"
                 size={16}
@@ -134,7 +135,7 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
 
           <View style={styles.buttonsContainer} onLayout={onLayout}>
             <Pressable onPress={onCancel} style={styles.cancelButton}>
-              <Text style={styles.buttonText}>Cancel</Text>
+              <TextContainer style={styles.buttonText}>Cancel</TextContainer>
             </Pressable>
 
             <Pressable
@@ -147,7 +148,7 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
               ]}
               disabled={!isValidColor}
             >
-              <Text style={styles.buttonText}>Save</Text>
+              <TextContainer style={styles.buttonText}>Save</TextContainer>
             </Pressable>
           </View>
         </View>

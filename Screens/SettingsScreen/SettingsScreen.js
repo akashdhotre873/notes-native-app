@@ -1,17 +1,18 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { SettingColors } from '../../components/SettingColors';
+import { SettingColorScheme } from '../../components/SettingColorScheme';
 import { SettingNewContentIconPosition } from '../../components/SettingNewContentIconPosition';
 import { SettingTimeFormat } from '../../components/SettingTimeFormat';
+import { TextContainer } from '../../components/TextContainer';
 import { getColors } from '../../dux/settings';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation();
-  const { iconPrimaryColor, primaryColor, headerTextColor } =
+  const { iconPrimaryColor, primaryColor, headerTextColor, backgroundColor } =
     useShallowEqualSelector(getColors);
   const scrollViewRef = useRef();
 
@@ -20,7 +21,7 @@ export const SettingsScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor }}>
       <View style={[styles.actionBar, { backgroundColor: primaryColor }]}>
         <Ionicons
           name="arrow-back"
@@ -29,9 +30,11 @@ export const SettingsScreen = () => {
           style={styles.backIcon}
           onPress={() => navigation.goBack()}
         />
-        <Text style={[styles.settingsText, { color: headerTextColor }]}>
+        <TextContainer
+          style={[styles.settingsText, { color: headerTextColor }]}
+        >
           Settings
-        </Text>
+        </TextContainer>
         <View style={styles.emptySpace} />
       </View>
 
@@ -42,7 +45,7 @@ export const SettingsScreen = () => {
       >
         <SettingTimeFormat />
         <SettingNewContentIconPosition />
-        <SettingColors scollToView={scollToView} />
+        <SettingColorScheme scollToView={scollToView} />
       </ScrollView>
     </View>
   );

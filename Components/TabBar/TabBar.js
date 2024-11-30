@@ -1,12 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { Text, View, Pressable , StyleSheet } from 'react-native';
-
+import { View, Pressable, StyleSheet } from 'react-native';
 
 import { getColors } from '../../dux/settings';
 import { SETTINGS_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const TabBar = ({ state, descriptors, navigation }) => {
   const stackNavigation = useNavigation();
@@ -22,8 +22,8 @@ export const TabBar = ({ state, descriptors, navigation }) => {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -61,14 +61,14 @@ export const TabBar = ({ state, descriptors, navigation }) => {
             {tabBarBadgeIsPresent ? (
               <TabBarBadge style={styles.icon} isFocused={isFocused} />
             ) : (
-              <Text
+              <TextContainer
                 style={[
                   styles.label,
                   isFocused ? styles.selectedLabel : styles.unselectedLabel,
                 ]}
               >
                 {label}
-              </Text>
+              </TextContainer>
             )}
           </Pressable>
         );

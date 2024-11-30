@@ -14,7 +14,8 @@ import { useKeyBoardVisible } from '../../hooks/useKeyBoardVisible';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const NewContent = ({ iconOnClick }) => {
-  const { newContentIconColor } = useShallowEqualSelector(getColors);
+  const { newContentIconColor, backgroundColor } =
+    useShallowEqualSelector(getColors);
   const iconPosition = useShallowEqualSelector(getNewContentIconPosition);
   const isIconOnTheRight = iconPosition === newContentIconPosition.RIGHT;
   const [isIconOnTheRightSide, setIsIconOnTheRightSide] =
@@ -72,7 +73,7 @@ export const NewContent = ({ iconOnClick }) => {
       <Pressable
         onPress={iconOnClick}
         onLongPress={toggleLayout}
-        style={styles.innerContainer}
+        style={[styles.innerContainer, { backgroundColor }]}
         android_ripple={{ color: 'black' }}
       >
         <AntDesign
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     elevation: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#1f1f1f',
     borderRadius: 60,
   },
   icon: {

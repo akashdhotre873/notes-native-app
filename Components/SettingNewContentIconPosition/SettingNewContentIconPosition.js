@@ -1,12 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  View,
-  Switch,
-} from 'react-native';
+import { Alert, StyleSheet, ToastAndroid, View, Switch } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -18,6 +11,7 @@ import {
 import { newContentIconPosition, settingTypes } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const SettingNewContentIconPosition = () => {
   const dispatch = useDispatch();
@@ -54,9 +48,9 @@ export const SettingNewContentIconPosition = () => {
   return (
     <View style={styles.container}>
       <View style={styles.settingHeaderContainer}>
-        <Text style={styles.settingTypeText}>
+        <TextContainer style={styles.settingTypeText}>
           Default New Content Icon position
-        </Text>
+        </TextContainer>
         <Ionicons
           name="information-circle-outline"
           size={16}
@@ -75,9 +69,9 @@ export const SettingNewContentIconPosition = () => {
           },
         ]}
       >
-        <Text style={styles.positionText}>
+        <TextContainer style={styles.positionText}>
           {isIconOnTheRightSide ? 'Right' : 'Left'}
-        </Text>
+        </TextContainer>
         <Switch
           trackColor={{
             true: '#7380fa',

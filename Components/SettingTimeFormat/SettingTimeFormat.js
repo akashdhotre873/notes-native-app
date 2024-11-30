@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Divider, Menu } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ import {
 import { settingTypes, timeFormats } from '../../helpers/constants';
 import { updateAndSaveSettingsToAsyncStorage } from '../../helpers/settingsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 const DisplayTimeFormatMenuItem = ({ timeFormat }) => {
   const selectedTimeFormat = useShallowEqualSelector(getTimeFormat);
@@ -20,19 +21,19 @@ const DisplayTimeFormatMenuItem = ({ timeFormat }) => {
 
   return (
     <View style={styles.timeFormatMenuItemContainer}>
-      <Text
+      <TextContainer
         style={[
           styles.timeFormatMenuItem,
           isSelectedTimeFormat ? styles.selectedTimeFormat : {},
         ]}
       >
         "{timeFormat.displayString}"
-      </Text>
+      </TextContainer>
       <View>
-        <Text style={styles.timeFormatExample}>
+        <TextContainer style={styles.timeFormatExample}>
           {'   '}
           (Ex: {timeFormat.example})
-        </Text>
+        </TextContainer>
       </View>
     </View>
   );
@@ -66,7 +67,7 @@ export const SettingTimeFormat = () => {
   return (
     <View style={styles.container}>
       <View style={{ paddingLeft: 5, marginBottom: 5 }}>
-        <Text style={styles.timeFormatText}>Time Format</Text>
+        <TextContainer style={styles.timeFormatText}>Time Format</TextContainer>
       </View>
 
       <Menu
@@ -84,14 +85,14 @@ export const SettingTimeFormat = () => {
             ]}
           >
             <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.timeFormatValue}>
+              <TextContainer style={styles.timeFormatValue}>
                 "{selectedTimeFormatDetails.displayString}"
-              </Text>
+              </TextContainer>
               <View>
-                <Text style={styles.timeFormatDispalyExample}>
+                <TextContainer style={styles.timeFormatDispalyExample}>
                   {'   '}
                   (Ex: {selectedTimeFormatDetails.example})
-                </Text>
+                </TextContainer>
               </View>
             </View>
             <Ionicons

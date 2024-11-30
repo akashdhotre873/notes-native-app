@@ -1,8 +1,7 @@
-import { Ionicons , MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
-
 
 import { getColors } from '../../dux/settings';
 import { shareMethod } from '../../helpers/constants';
@@ -10,6 +9,7 @@ import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { ActionBarMainMenu } from '../ActionBarMainMenu';
 import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
 import { ShareContentComponent } from '../ShareContentComponent';
+import { TextContainer } from '../TextContainer';
 
 export const ActionBar = ({
   title,
@@ -47,9 +47,9 @@ export const ActionBar = ({
             }
           />
         ) : (
-          <Text style={[styles.title, { color: headerTextColor }]}>
+          <TextContainer style={[styles.title, { color: headerTextColor }]}>
             {title}
-          </Text>
+          </TextContainer>
         )}
       </View>
       <View style={styles.rightSideIcons}>

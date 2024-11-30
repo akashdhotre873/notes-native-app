@@ -1,5 +1,5 @@
-import { useEffect, useState , useRef } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +8,7 @@ import { getWarnings } from '../../dux/warnings';
 import { warnings } from '../../helpers/constants';
 import { updateWarningsInAsyncStorage } from '../../helpers/warningsHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const FirstAppLoadWarning = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ export const FirstAppLoadWarning = () => {
   }, [remainingTime]);
 
   const highLight = (string) => {
-    return <Text style={styles.highLight}>{string}</Text>;
+    return <TextContainer style={styles.highLight}>{string}</TextContainer>;
   };
 
   return (
@@ -59,42 +60,44 @@ export const FirstAppLoadWarning = () => {
       dismissable={false}
     >
       <View>
-        <Text style={styles.header}>Attention!</Text>
-        <Text style={styles.smallHelperText}>(Please read carefully)</Text>
+        <TextContainer style={styles.header}>Attention!</TextContainer>
+        <TextContainer style={styles.smallHelperText}>
+          (Please read carefully)
+        </TextContainer>
 
         <View style={styles.warningPointsContainer}>
-          <Text style={styles.warningPointsHeader}>
+          <TextContainer style={styles.warningPointsHeader}>
             This Note App stores data in Async Storage of the app. The app
             {highLight(' does not ')}
             take backup as there are no servers used. So please keep in mind
             these points before you use the app
-          </Text>
+          </TextContainer>
 
-          <Text style={styles.warningPoint}>
+          <TextContainer style={styles.warningPoint}>
             {`\u2022`} If you {highLight('uninstall')} the app, data will be
             {highLight(' lost forever')}.
-          </Text>
-          <Text style={styles.warningPoint}>
+          </TextContainer>
+          <TextContainer style={styles.warningPoint}>
             {`\u2022`} If you {highLight('clear the app data')}, data will be
             {highLight(' lost forever')}.
-          </Text>
-          <Text style={styles.warningPoint}>
+          </TextContainer>
+          <TextContainer style={styles.warningPoint}>
             {`\u2022`} If you choose to protect your notes or todos with
             password and {highLight('forget the password')}, there is no way to
             reset the password. So if you can't remember the password,
             {highLight(" you can't retrieve your notes or todos")}.
-          </Text>
+          </TextContainer>
         </View>
 
         {remainingTime > 0 && (
-          <Text style={styles.infoText}>
+          <TextContainer style={styles.infoText}>
             You can close this pop-up in {highLight(remainingTime)} seconds.
-          </Text>
+          </TextContainer>
         )}
 
         <View style={styles.buttonsContainer}>
           <Button
-            mode="text"
+            mode="TextContainer"
             onPress={onConfirm}
             textColor="red"
             disabled={!onConfirmButtonEnabled}

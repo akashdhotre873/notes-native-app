@@ -14,6 +14,8 @@ import { LoadApp } from './components/LoadApp';
 import { StatusBarContainer } from './components/StatusBarContainer';
 import { Promtps } from './components/shared/Prompts';
 import { shouldShowPrompt } from './dux/prompt';
+import { getColorScheme } from './dux/settings';
+import { colorSchemes } from './helpers/constants';
 import {
   HOME_SCREEN_PATH,
   NOTE_EDITOR_SCREEN_PATH,
@@ -26,8 +28,6 @@ import { NoteEditorScreen } from './screens/NoteEditorScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { TodoEditorScreen } from './screens/TodoEditorScreen';
 import store from './store/store';
-import { getColorScheme } from './dux/settings';
-import { colorSchemes } from './helpers/constants';
 
 const Stack = createNativeStackNavigator();
 

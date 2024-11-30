@@ -1,10 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { getColors } from '../../dux/settings';
 import { getSelectedTab, setSelectedTab } from '../../dux/tabs';
 import { tabs } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const Tabs = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,14 @@ export const Tabs = () => {
         {tabs.map(({ name: tabName, value: tabValue }) => {
           return (
             <Pressable key={tabValue} onPress={() => onPress(tabValue)}>
-              <Text
+              <TextContainer
                 style={[
                   styles.tab,
                   selectedTab === tabValue ? styles.selectedTab : {},
                 ]}
               >
                 {tabName}
-              </Text>
+              </TextContainer>
             </Pressable>
           );
         })}

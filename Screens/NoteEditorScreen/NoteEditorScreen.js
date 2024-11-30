@@ -5,7 +5,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
   BackHandler,
@@ -15,6 +14,7 @@ import { useDispatch } from 'react-redux';
 
 import { ActionBar } from '../../components/ActionBar';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
+import { TextContainer } from '../../components/TextContainer';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { getNotes, updateNote } from '../../dux/notes';
 import { showPrompt } from '../../dux/prompt';
@@ -256,7 +256,9 @@ export const NoteEditorScreen = () => {
           />
           {error.hasError && (
             <View style={styles.errorMessageContainer}>
-              <Text style={styles.errorMessage}>({error.errorMessage})</Text>
+              <TextContainer style={styles.errorMessage}>
+                ({error.errorMessage})
+              </TextContainer>
             </View>
           )}
           <AddPasswordArea
@@ -279,12 +281,12 @@ export const NoteEditorScreen = () => {
           />
           {dateUpdated && (
             <View style={styles.timeContainer}>
-              <Text style={styles.dateModifiedText}>
+              <TextContainer style={styles.dateModifiedText}>
                 <TimeDisplayComponent date={dateUpdated} />
-              </Text>
-              <Text style={styles.dateModifiedText}>
+              </TextContainer>
+              <TextContainer style={styles.dateModifiedText}>
                 {getDateString(dateUpdated)}
-              </Text>
+              </TextContainer>
             </View>
           )}
         </View>
