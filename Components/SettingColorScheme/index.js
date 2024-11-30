@@ -1,0 +1,1 @@
+export { SettingColorScheme } from './SettingColorScheme';
