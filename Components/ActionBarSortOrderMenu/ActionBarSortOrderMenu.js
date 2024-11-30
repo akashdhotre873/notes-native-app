@@ -35,7 +35,7 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
     setMenuVisible(true);
   };
 
-  const getFilpedSortOrder = (sortOrder) => {
+  const getFlipedSortOrder = (sortOrder) => {
     return sortOrder === ASCENDING ? DESCENDING : ASCENDING;
   };
 
@@ -45,7 +45,7 @@ export const ActionBarSortOrderMenu = ({ sortItem }) => {
     // if same parameter is selected, sort in reverse order, if other parameter is selected sort in ascending order of new parameter
     const newSortOrder =
       selectedSortParameter === newSortParameter
-        ? getFilpedSortOrder(selectedSortOrder)
+        ? getFlipedSortOrder(selectedSortOrder)
         : ASCENDING;
 
     dispatch(
