@@ -1,9 +1,16 @@
-import { defaultSettings, settingTypes } from '../helpers/constants';
+import {
+  lightSchemeColors,
+  colorSchemes,
+  darkSchemeColors,
+  defaultSettings,
+  settingTypes,
+} from '../helpers/constants';
 
 const LOAD_INITIAL_SETTINGS = `[settings] load initial settings`;
 const UPDATE_TIME_FORMAT = `[settings] update time format`;
 const UPDATE_NEW_CONTENT_ICON_DEFAULT_POSITION = `[settings] update new content icon default position`;
 const UPDATE_COLOR = `[settings] update color`;
+const UPDATE_COLOR_SCHEME = `[settings] update color scheme`;
 
 export const loadInitialSettings = (settings) => ({
   type: LOAD_INITIAL_SETTINGS,
@@ -23,6 +30,11 @@ export const updateNewContentIconDefaultPosition = (positionString) => ({
 export const updateColor = ({ colorType, color }) => ({
   type: UPDATE_COLOR,
   payload: { colorType, color },
+});
+
+export const updateColorScheme = ({ colorScheme }) => ({
+  type: UPDATE_COLOR_SCHEME,
+  payload: { colorScheme },
 });
 
 const initialState = defaultSettings;
@@ -52,6 +64,14 @@ const settingsReducer = (state = initialState, action) => {
       };
     }
 
+    case UPDATE_COLOR_SCHEME: {
+      const { colorScheme } = action.payload;
+      return {
+        ...state,
+        [settingTypes.COLOR_SCHEME]: colorScheme,
+      };
+    }
+
     default:
       return state;
   }
@@ -68,4 +88,17 @@ export const getSettings = ({ settings }) => settings;
 export const getNewContentIconPosition = ({ settings }) =>
   settings[settingTypes.NEW_CONTENT_ICON_POSITION];
 
-export const getColors = ({ settings }) => settings[settingTypes.COLORS];
+export const getColors = ({ settings }) => {
+  const schemeColors = {
+    [colorSchemes.LIGHT]: lightSchemeColors,
+    [colorSchemes.DARK]: darkSchemeColors,
+    [colorSchemes.CUSTOM]: settings[settingTypes.COLORS],
+  };
+  const currentColorScheme = settings[settingTypes.COLOR_SCHEME];
+  return schemeColors[currentColorScheme];
+};
+
+// export const getColors = ({ settings }) => settings[settingTypes.COLORS];
+
+export const getColorScheme = ({ settings }) =>
+  settings[settingTypes.COLOR_SCHEME];

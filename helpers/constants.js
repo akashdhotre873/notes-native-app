@@ -18,22 +18,42 @@ export const colorType = {
   PRIMARY_COLOR: 'primaryColor',
   LOCKED_COLOR: 'lockedColor',
   UNLOCKED_COLOR: 'unlockedColor',
-  SETTING_BOX_BORDER_Color: 'settingBoxBorderColor',
-  SETTING_BOX_BACKGROUND_Color: 'settingBoxBackgroundColor',
+  SETTING_BOX_BORDER_COLOR: 'settingBoxBorderColor',
+  SETTING_BOX_BACKGROUND_COLOR: 'settingBoxBackgroundColor',
   NEW_CONTENT_ICON_COLOR: 'newContentIconColor',
   ICON_PRIMARY_COLOR: 'iconPrimaryColor',
   HEADER_TEXT_COLOR: 'headerTextColor',
+  BACKGROUND_COLOR: 'backgroundColor',
+  PRIMARY_TEXT_COLOR: 'primaryTextColor',
+  CARD_BACKGROUND_COLOR: 'cardBackgroundColor',
 };
 
-const colors = {
+export const lightSchemeColors = {
   [colorType.PRIMARY_COLOR]: '#006efe',
   [colorType.LOCKED_COLOR]: '#fe9a03',
   [colorType.UNLOCKED_COLOR]: '#01eb00',
-  [colorType.SETTING_BOX_BORDER_Color]: 'grey',
-  [colorType.SETTING_BOX_BACKGROUND_Color]: 'white',
+  [colorType.SETTING_BOX_BORDER_COLOR]: 'grey',
+  [colorType.SETTING_BOX_BACKGROUND_COLOR]: 'white',
   [colorType.NEW_CONTENT_ICON_COLOR]: '#006efe',
   [colorType.ICON_PRIMARY_COLOR]: 'black',
   [colorType.HEADER_TEXT_COLOR]: 'black',
+  [colorType.BACKGROUND_COLOR]: 'white',
+  [colorType.PRIMARY_TEXT_COLOR]: 'black',
+  [colorType.CARD_BACKGROUND_COLOR]: 'white',
+};
+
+export const darkSchemeColors = {
+  [colorType.PRIMARY_COLOR]: '#080808',
+  [colorType.LOCKED_COLOR]: '#fe9a03',
+  [colorType.UNLOCKED_COLOR]: '#01eb00',
+  [colorType.SETTING_BOX_BORDER_COLOR]: 'grey',
+  [colorType.SETTING_BOX_BACKGROUND_COLOR]: '#37373d',
+  [colorType.NEW_CONTENT_ICON_COLOR]: '#717171',
+  [colorType.ICON_PRIMARY_COLOR]: '#f8f8f3',
+  [colorType.HEADER_TEXT_COLOR]: '#f8f8f3',
+  [colorType.BACKGROUND_COLOR]: '#1f1f1f',
+  [colorType.PRIMARY_TEXT_COLOR]: '#f8f8f3',
+  [colorType.CARD_BACKGROUND_COLOR]: '#37373d',
 };
 
 export const dataType = {
@@ -124,12 +144,20 @@ export const settingTypes = {
   TIME_FORMAT: 'TIME_FORMAT',
   NEW_CONTENT_ICON_POSITION: 'NEW_CONTENT_ICON_POSITION',
   COLORS: 'COLORS',
+  COLOR_SCHEME: 'COLOR_SCHEME',
+};
+
+export const colorSchemes = {
+  DARK: 'DARK',
+  LIGHT: 'LIGHT',
+  CUSTOM: 'CUSTOM',
 };
 
 export const defaultSettings = {
   [settingTypes.TIME_FORMAT]: timeFormats[0].format,
   [settingTypes.NEW_CONTENT_ICON_POSITION]: newContentIconPosition.RIGHT,
-  [settingTypes.COLORS]: colors,
+  [settingTypes.COLORS]: lightSchemeColors,
+  [settingTypes.COLOR_SCHEME]: colorSchemes.LIGHT,
 };
 
 export const recognizedColors = [
