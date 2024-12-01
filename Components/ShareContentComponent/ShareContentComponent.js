@@ -1,10 +1,10 @@
-import * as Clipboard from "expo-clipboard";
-import React from "react";
-import { Alert, Share, Pressable, ToastAndroid } from "react-native";
+import * as Clipboard from 'expo-clipboard';
+import React from 'react';
+import { Alert, Share, Pressable, ToastAndroid } from 'react-native';
 
-import { dataType, shareMethod } from "../../helpers/constants";
-import { formatNoteToShare } from "../../helpers/notesHelper";
-import { formatTodoToShare } from "../../helpers/todosHelper";
+import { dataType, shareMethod } from '../../helpers/constants';
+import { formatNoteToShare } from '../../helpers/notesHelper';
+import { formatTodoToShare } from '../../helpers/todosHelper';
 
 export const ShareContentComponent = ({
   children,
@@ -14,8 +14,8 @@ export const ShareContentComponent = ({
   callBack = () => {},
 }) => {
   const contentToShare = {
-    title: "", // is not used
-    message: "",
+    title: '', // is not used
+    message: '',
   };
   if (type === dataType.NOTE) {
     contentToShare.message = formatNoteToShare(content);
@@ -35,7 +35,7 @@ export const ShareContentComponent = ({
   };
 
   const copyToClipBoard = async () => {
-    const toastMessage = "Copied to clipboard!";
+    const toastMessage = 'Copied to clipboard!';
     ToastAndroid.show(toastMessage, ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     await Clipboard.setStringAsync(contentToShare.message);
   };
@@ -48,7 +48,6 @@ export const ShareContentComponent = ({
     }
     if (shareType === shareMethod.CLIPBOARD) {
       copyToClipBoard();
-      
     }
   };
 

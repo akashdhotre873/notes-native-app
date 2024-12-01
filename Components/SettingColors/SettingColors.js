@@ -16,6 +16,7 @@ export const SettingColors = ({ scollToView }) => {
     newContentIconColor,
     iconPrimaryColor,
     headerTextColor,
+    backgroundColor,
   } = useShallowEqualSelector(getColors);
 
   return (
@@ -35,6 +36,16 @@ export const SettingColors = ({ scollToView }) => {
             text="Primary Color"
             color={primaryColor}
             colorType={colorType.PRIMARY_COLOR}
+            scollToView={scollToView}
+          />
+
+          <Divider />
+
+          <ColorCard
+            key={`${colorType.BACKGROUND_COLOR} ${backgroundColor}`}
+            text="Background color"
+            color={backgroundColor}
+            colorType={colorType.BACKGROUND_COLOR}
             scollToView={scollToView}
           />
 
