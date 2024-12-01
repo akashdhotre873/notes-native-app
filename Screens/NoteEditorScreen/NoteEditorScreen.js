@@ -8,13 +8,13 @@ import {
   TouchableWithoutFeedback,
   View,
   BackHandler,
-  TextInput,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { ActionBar } from '../../components/ActionBar';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
 import { TextContainer } from '../../components/TextContainer';
+import { TextInputContainer } from '../../components/TextInputContainer';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { getNotes, updateNote } from '../../dux/notes';
 import { showPrompt } from '../../dux/prompt';
@@ -36,7 +36,8 @@ export const NoteEditorScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const notes = useShallowEqualSelector(getNotes);
-  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
+  const { iconPrimaryColor, backgroundColor } =
+    useShallowEqualSelector(getColors);
 
   const {
     name: header = '',
@@ -184,6 +185,7 @@ export const NoteEditorScreen = () => {
   };
 
   const onPress = () => {
+    setSelection({ start: content?.length, end: content?.length });
     contentRef.current?.focus();
   };
 
@@ -243,7 +245,10 @@ export const NoteEditorScreen = () => {
   );
 
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable
+      style={[styles.container, { backgroundColor }]}
+      onPress={onPress}
+    >
       <TouchableWithoutFeedback>
         <View>
           <ActionBar
@@ -270,14 +275,13 @@ export const NoteEditorScreen = () => {
             salt={salt}
           />
 
-          <TextInput
+          <TextInputContainer
             placeholder="Title"
-            style={styles.title}
+            style={[styles.title, { backgroundColor }]}
             value={title}
             onChangeText={changeTitle}
             autoFocus={!title}
-            selection={selection}
-            onFocus={() => setSelection(null)}
+            selectTextOnFocus
           />
           {dateUpdated && (
             <View style={styles.timeContainer}>
@@ -291,14 +295,20 @@ export const NoteEditorScreen = () => {
           )}
         </View>
       </TouchableWithoutFeedback>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
-        <TextInput
+      <ScrollView
+        style={[styles.container, { backgroundColor }]}
+        keyboardShouldPersistTaps="always"
+      >
+        <TextInputContainer
           placeholder="Add note here"
           style={styles.content}
           multiline
+          editable
           value={content}
           onChangeText={changeContent}
-          ref={contentRef}
+          componentRef={contentRef}
+          selection={selection}
+          onFocus={() => setSelection(null)}
         />
         <View style={styles.marginBottom} />
       </ScrollView>
@@ -318,6 +328,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   content: {
+    flex: 1,
+    minHeight: 500,
+    textAlignVertical: 'top',
     paddingTop: 10,
     paddingLeft: 15,
     paddingRight: 10,

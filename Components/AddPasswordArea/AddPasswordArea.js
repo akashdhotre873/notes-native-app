@@ -3,7 +3,9 @@ import { Switch } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { promptCategoryType } from '../../helpers/constants';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { TextContainer } from '../TextContainer';
 
 export const AddPasswordArea = ({
@@ -15,6 +17,8 @@ export const AddPasswordArea = ({
   salt,
 }) => {
   const dispatch = useDispatch();
+
+  const { backgroundColor } = useShallowEqualSelector(getColors);
 
   const removePassword = (password, switchOn) => {
     const noteIsSaved = onSave({ hasPassword: false, password });
@@ -55,7 +59,7 @@ export const AddPasswordArea = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <TextContainer style={styles.text}>Password Protected : </TextContainer>
       <Switch
         value={passwordProtected}

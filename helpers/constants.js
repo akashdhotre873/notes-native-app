@@ -37,7 +37,7 @@ export const lightSchemeColors = {
   [colorType.NEW_CONTENT_ICON_COLOR]: '#006efe',
   [colorType.ICON_PRIMARY_COLOR]: 'black',
   [colorType.HEADER_TEXT_COLOR]: 'black',
-  [colorType.BACKGROUND_COLOR]: 'white',
+  [colorType.BACKGROUND_COLOR]: '#f8f8f3',
   [colorType.PRIMARY_TEXT_COLOR]: 'black',
   [colorType.CARD_BACKGROUND_COLOR]: 'white',
 };
