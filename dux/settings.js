@@ -95,7 +95,11 @@ export const getColors = ({ settings }) => {
     [colorSchemes.CUSTOM]: settings[settingTypes.COLORS],
   };
   const currentColorScheme = settings[settingTypes.COLOR_SCHEME];
-  return schemeColors[currentColorScheme];
+
+  return {
+    ...lightSchemeColors, // returns default color from light scheme if not set in custom scheme
+    ...schemeColors[currentColorScheme],
+  };
 };
 
 // export const getColors = ({ settings }) => settings[settingTypes.COLORS];
