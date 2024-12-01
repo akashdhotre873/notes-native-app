@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-import { getColors } from '../../dux/settings';
-import { shareMethod } from '../../helpers/constants';
+import { getColors, getColorScheme } from '../../dux/settings';
+import { colorSchemes, shareMethod } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { ActionBarMainMenu } from '../ActionBarMainMenu';
 import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
@@ -25,6 +25,10 @@ export const ActionBar = ({
   const [searching, setSearching] = useState(false);
   const { primaryColor, iconPrimaryColor, headerTextColor } =
     useShallowEqualSelector(getColors);
+  const colorScheme = useShallowEqualSelector(getColorScheme);
+
+  const searchBackGroundColor =
+    colorSchemes.LIGHT === colorScheme ? { backgroundColor: '#ffffff' } : {};
 
   return (
     <View style={[styles.container, { backgroundColor: primaryColor }]}>
@@ -34,7 +38,7 @@ export const ActionBar = ({
           <TextInput
             value={searchValue}
             onChangeText={onSearchValueChange}
-            style={styles.searchTextArea}
+            style={[styles.searchTextArea, searchBackGroundColor]}
             autoFocus
             underlineStyle={{ display: 'none' }}
             placeholder="search"
@@ -153,7 +157,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 18,
     width: '95%',
-    backgroundColor: '#ffffff',
     height: 32,
   },
   closeIconForTextInput: {
