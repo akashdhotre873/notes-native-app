@@ -4,7 +4,7 @@ import {
   EvilIcons,
 } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { showPrompt } from '../../dux/prompt';

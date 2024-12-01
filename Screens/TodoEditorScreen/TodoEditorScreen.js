@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-  TextInput,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -16,6 +15,7 @@ import { ActionBar } from '../../components/ActionBar';
 import { AddPasswordArea } from '../../components/AddPasswordArea/AddPasswordArea';
 import { TaskEntity } from '../../components/TaskEntity';
 import { TextContainer } from '../../components/TextContainer';
+import { TextInputContainer } from '../../components/TextInputContainer';
 import { TimeDisplayComponent } from '../../components/TimeDisplayComponent';
 import { showPrompt } from '../../dux/prompt';
 import { getColors } from '../../dux/settings';
@@ -34,7 +34,6 @@ import {
 import { getDateString } from '../../helpers/timeHelper';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
-import { TextInputContainer } from '../../components/TextInputContainer';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
