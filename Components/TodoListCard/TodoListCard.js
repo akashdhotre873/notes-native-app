@@ -45,13 +45,8 @@ export const TodoListCard = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const todos = useShallowEqualSelector(getTodos);
-  const {
-    primaryColor,
-    lockedColor,
-    unlockedColor,
-    cardBackgroundColor,
-    iconPrimaryColor,
-  } = useShallowEqualSelector(getColors);
+  const { lockedColor, unlockedColor, cardBackgroundColor, iconPrimaryColor } =
+    useShallowEqualSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(tasks, password);

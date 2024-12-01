@@ -7,6 +7,7 @@ import { ActionBar } from '../../components/ActionBar';
 import { NewContent } from '../../components/NewContent';
 import { TodoListCard } from '../../components/TodoListCard';
 import { showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { getSortInfoFor } from '../../dux/sort';
 import { getTodos } from '../../dux/todos';
 import { dataType, promptCategoryType } from '../../helpers/constants';
@@ -14,7 +15,6 @@ import { getUUID } from '../../helpers/cryptographyHelper';
 import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortTodos } from '../../helpers/sortHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
-import { getColors } from '../../dux/settings';
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
