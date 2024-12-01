@@ -1,16 +1,23 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { TextContainer } from '../TextContainer';
+import { TextInputContainer } from '../TextInputContainer';
 
 export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
   const dispatch = useDispatch();
+
+  const { backgroundColor, iconPrimaryColor } =
+    useShallowEqualSelector(getColors);
+
   const [enteredPassword, setEnteredPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,7 +43,7 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}
     >
@@ -46,7 +53,7 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
         </TextContainer>
 
         <View style={styles.passwordAreaContainer}>
-          <TextInput
+          <TextInputContainer
             value={enteredPassword}
             onChangeText={setEnteredPassword}
             textContentType="password"
@@ -60,20 +67,24 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
               onPress={() => setShowPassword(!showPassword)}
               name="eye-off"
               size={20}
-              color="black"
+              color={iconPrimaryColor}
             />
           ) : (
             <Ionicons
               onPress={() => setShowPassword(!showPassword)}
               name="eye"
               size={20}
-              color="black"
+              color={iconPrimaryColor}
             />
           )}
         </View>
 
         <View style={styles.buttonsContainer}>
-          <Button mode="text" onPress={onConfirm}>
+          <Button
+            mode="text"
+            onPress={onConfirm}
+            disabled={enteredPassword.length < 1}
+          >
             Confirm
           </Button>
           <Button mode="text" onPress={closeHandler}>
@@ -87,7 +98,6 @@ export const ConfirmPassword = ({ data: { onAccept, passwordHash, salt } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '-10%',
     width: '80%',
     alignSelf: 'center',
@@ -103,7 +113,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   passwordArea: {
-    backgroundColor: '#ffffff',
     marginBottom: 10,
     marginTop: 10,
     paddingTop: 10,

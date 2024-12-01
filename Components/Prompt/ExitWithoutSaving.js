@@ -3,10 +3,14 @@ import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { TextContainer } from '../TextContainer';
 
 export const ExitWithoutSaving = ({ data: { onAccept } }) => {
   const dispatch = useDispatch();
+
+  const { backgroundColor } = useShallowEqualSelector(getColors);
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -20,16 +24,18 @@ export const ExitWithoutSaving = ({ data: { onAccept } }) => {
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}
     >
       <View>
-        <TextContainer style={styles.header}>Unsaved Note !</TextContainer>
+        <TextContainer style={styles.header}>Unsaved Content !</TextContainer>
 
-        <TextContainer style={styles.content}>
-          You are trying to exit without saving the note! All changes will be
-          lost!!!
+        <TextContainer style={[styles.content, { marginTop: 15 }]}>
+          You are trying to exit without saving the content!
+        </TextContainer>
+        <TextContainer style={[styles.content, { marginBottom: 15 }]}>
+          All changes will be lost !!!
         </TextContainer>
 
         <View style={styles.buttonsContainer}>
@@ -47,7 +53,6 @@ export const ExitWithoutSaving = ({ data: { onAccept } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '-10%',
     width: '80%',
     alignSelf: 'center',
@@ -64,10 +69,7 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   content: {
-    backgroundColor: '#ffffff',
     marginHorizontal: 25,
-    marginBottom: 10,
-    marginTop: 10,
   },
   buttonsContainer: {
     flexDirection: 'row-reverse',

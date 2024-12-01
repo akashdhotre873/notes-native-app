@@ -4,6 +4,7 @@ import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { getWarnings } from '../../dux/warnings';
 import { warnings } from '../../helpers/constants';
 import { updateWarningsInAsyncStorage } from '../../helpers/warningsHelper';
@@ -12,7 +13,9 @@ import { TextContainer } from '../TextContainer';
 
 export const FirstAppLoadWarning = () => {
   const dispatch = useDispatch();
+
   const warningsList = useShallowEqualSelector(getWarnings);
+  const { backgroundColor } = useShallowEqualSelector(getColors);
 
   const [remainingTime, setRemainingTime] = useState(15); // 15 seconds
   const [onConfirmButtonEnabled, setOnConfirmButtonEnabled] = useState(false);
@@ -48,14 +51,18 @@ export const FirstAppLoadWarning = () => {
     }
   }, [remainingTime]);
 
-  const highLight = (string) => {
-    return <TextContainer style={styles.highLight}>{string}</TextContainer>;
+  const highLight = (string, stylesForText = {}) => {
+    return (
+      <TextContainer style={[styles.highLight, stylesForText]}>
+        {string}
+      </TextContainer>
+    );
   };
 
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       style={{ marginTop: 0 }}
       dismissable={false}
     >
@@ -68,7 +75,7 @@ export const FirstAppLoadWarning = () => {
         <View style={styles.warningPointsContainer}>
           <TextContainer style={styles.warningPointsHeader}>
             This Note App stores data in Async Storage of the app. The app
-            {highLight(' does not ')}
+            {highLight(' does not ', { color: 'blue' })}
             take backup as there are no servers used. So please keep in mind
             these points before you use the app
           </TextContainer>
@@ -112,7 +119,6 @@ export const FirstAppLoadWarning = () => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '-5%',
     width: '90%',
     alignSelf: 'center',
@@ -135,7 +141,6 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   content: {
-    backgroundColor: '#ffffff',
     marginHorizontal: 25,
     marginBottom: 10,
     marginTop: 10,
@@ -163,6 +168,6 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row-reverse',
     marginVertical: 15,
-    marginLeft: 20,
+    marginRight: 20,
   },
 });

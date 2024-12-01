@@ -1,26 +1,33 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { deleteNote, getNoteByName, getNotes } from '../../dux/notes';
 import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
 import { deleteNoteInAsyncStorage } from '../../helpers/notesHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { TextContainer } from '../TextContainer';
+import { TextInputContainer } from '../TextInputContainer';
 
 export const DeleteNotePrompt = ({
   data: { noteName, shouldGoBack = true },
 }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const notes = useShallowEqualSelector(getNotes);
   const note = useShallowEqualSelector(getNoteByName(noteName));
-  const navigation = useNavigation();
+  const { backgroundColor, iconPrimaryColor } =
+    useShallowEqualSelector(getColors);
+
   const { passwordProtected, salt, passwordHash } = note;
+
   const [enteredPassword, setEnteredPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -51,7 +58,7 @@ export const DeleteNotePrompt = ({
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}
     >
@@ -70,7 +77,7 @@ export const DeleteNotePrompt = ({
 
         {passwordProtected && (
           <View style={styles.passwordAreaContainer}>
-            <TextInput
+            <TextInputContainer
               value={enteredPassword}
               onChangeText={setEnteredPassword}
               textContentType="password"
@@ -84,14 +91,14 @@ export const DeleteNotePrompt = ({
                 onPress={() => setShowPassword(!showPassword)}
                 name="eye-off"
                 size={20}
-                color="black"
+                color={iconPrimaryColor}
               />
             ) : (
               <Ionicons
                 onPress={() => setShowPassword(!showPassword)}
                 name="eye"
                 size={20}
-                color="black"
+                color={iconPrimaryColor}
               />
             )}
           </View>
@@ -112,7 +119,6 @@ export const DeleteNotePrompt = ({
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '0%',
     width: '80%',
     alignSelf: 'center',
@@ -137,7 +143,6 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   passwordArea: {
-    backgroundColor: '#ffffff',
     marginBottom: 10,
     marginTop: 10,
     paddingTop: 10,

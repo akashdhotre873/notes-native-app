@@ -1,11 +1,16 @@
-import { StyleSheet, TextContainer, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextContainer } from '../TextContainer';
 
 export const ErrorPrompt = ({ data: { errorMessage } }) => {
   const dispatch = useDispatch();
+
+  const { backgroundColor } = useShallowEqualSelector(getColors);
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -14,7 +19,7 @@ export const ErrorPrompt = ({ data: { errorMessage } }) => {
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}
     >
@@ -35,7 +40,6 @@ export const ErrorPrompt = ({ data: { errorMessage } }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '-10%',
     width: '80%',
     alignSelf: 'center',
@@ -52,7 +56,6 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   errorMessage: {
-    backgroundColor: '#ffffff',
     marginHorizontal: 25,
     marginBottom: 10,
     marginTop: 10,

@@ -12,7 +12,7 @@ export const hidePrompt = () => ({
 
 const initialState = {
   showPrompt: false,
-  category: "",
+  category: '',
   data: {},
 };
 

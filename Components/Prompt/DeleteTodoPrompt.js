@@ -1,27 +1,35 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, Modal, TextInput } from 'react-native-paper';
+import { Button, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt, showPrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { deleteTodo, getTodoByName, getTodos } from '../../dux/todos';
 import { errorMessages, promptCategoryType } from '../../helpers/constants';
 import { getHash } from '../../helpers/cryptographyHelper';
 import { deleteTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { TextContainer } from '../TextContainer';
+import { TextInputContainer } from '../TextInputContainer';
 
 export const DeleteTodoPrompt = ({
   data: { todoName, shouldGoBack = true },
 }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const todos = useShallowEqualSelector(getTodos);
   const todo = useShallowEqualSelector(getTodoByName(todoName));
-  const navigation = useNavigation();
+  const { backgroundColor, iconPrimaryColor } =
+    useShallowEqualSelector(getColors);
+
   const { passwordProtected, salt, passwordHash } = todo;
 
   const [enteredPassword, setEnteredPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -50,7 +58,7 @@ export const DeleteTodoPrompt = ({
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}
     >
@@ -68,15 +76,32 @@ export const DeleteTodoPrompt = ({
         )}
 
         {passwordProtected && (
-          <TextInput
-            value={enteredPassword}
-            onChangeText={setEnteredPassword}
-            textContentType="password"
-            placeholder="Enter password"
-            style={styles.passwordArea}
-            autoFocus
-            secureTextEntry
-          />
+          <View style={styles.passwordAreaContainer}>
+            <TextInputContainer
+              value={enteredPassword}
+              onChangeText={setEnteredPassword}
+              textContentType="password"
+              placeholder="Enter password"
+              style={styles.passwordArea}
+              autoFocus
+              secureTextEntry={!showPassword}
+            />
+            {showPassword ? (
+              <Ionicons
+                onPress={() => setShowPassword(!showPassword)}
+                name="eye-off"
+                size={20}
+                color={iconPrimaryColor}
+              />
+            ) : (
+              <Ionicons
+                onPress={() => setShowPassword(!showPassword)}
+                name="eye"
+                size={20}
+                color={iconPrimaryColor}
+              />
+            )}
+          </View>
         )}
 
         <View style={styles.buttonsContainer}>
@@ -94,7 +119,6 @@ export const DeleteTodoPrompt = ({
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '0%',
     width: '80%',
     alignSelf: 'center',
@@ -119,14 +143,23 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   passwordArea: {
-    backgroundColor: '#ffffff',
-    marginHorizontal: 20,
     marginBottom: 10,
     marginTop: 10,
+    paddingTop: 10,
+    fontSize: 20,
   },
   buttonsContainer: {
     flexDirection: 'row-reverse',
     marginVertical: 15,
     marginLeft: 20,
+  },
+  passwordAreaContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginRight: 30,
+    marginLeft: 25,
+    borderBottomWidth: 2,
+    borderBottomColor: '#006efe',
   },
 });

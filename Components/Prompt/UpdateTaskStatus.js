@@ -4,13 +4,17 @@ import { Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { hidePrompt } from '../../dux/prompt';
+import { getColors } from '../../dux/settings';
 import { taskStatus } from '../../helpers/constants';
+import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { TextContainer } from '../TextContainer';
 
 const { IN_PROGRESS, UNSURE } = taskStatus;
 
 export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
   const dispatch = useDispatch();
+
+  const { backgroundColor } = useShallowEqualSelector(getColors);
 
   const closeHandler = () => {
     dispatch(hidePrompt());
@@ -29,7 +33,7 @@ export const UpdateTaskStatus = ({ data: { updateTask, deleteTask } }) => {
   return (
     <Modal
       visible
-      contentContainerStyle={styles.modal}
+      contentContainerStyle={[styles.modal, { backgroundColor }]}
       onDismiss={closeHandler}
       style={{ marginTop: 0 }}
     >
@@ -97,7 +101,6 @@ UpdateTaskStatus.propTypes = {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: '#ffffff',
     top: '-5%',
     width: '80%',
     alignSelf: 'center',
@@ -113,7 +116,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   content: {
-    backgroundColor: '#ffffff',
     marginHorizontal: 25,
     marginBottom: 10,
     marginTop: 20,
