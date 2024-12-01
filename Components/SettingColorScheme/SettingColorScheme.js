@@ -3,6 +3,7 @@ import { StyleSheet, View, Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  getColors,
   getColorScheme,
   getSettings,
   updateColorScheme,
@@ -17,6 +18,7 @@ export const SettingColorScheme = ({ scollToView }) => {
   const dispatch = useDispatch();
   const colorScheme = useSelector(getColorScheme);
   const settings = useShallowEqualSelector(getSettings);
+  const { settingBoxBorderColor } = useShallowEqualSelector(getColors);
 
   const setColorScheme = (selectedColorScheme) => {
     dispatch(updateColorScheme({ colorScheme: selectedColorScheme }));
@@ -29,87 +31,101 @@ export const SettingColorScheme = ({ scollToView }) => {
   };
 
   const getStylesBasedOnLifecycle = (
-    schemeOfButton,
-    activeStyles,
-    inactiveStyles
+    lightSchemeStyles,
+    darkSchemeStyles,
+    customSchemeStyles
   ) => {
-    return colorScheme === schemeOfButton ? activeStyles : inactiveStyles;
+    if (colorSchemes.LIGHT === colorScheme) return lightSchemeStyles;
+    if (colorSchemes.DARK === colorScheme) return darkSchemeStyles;
+    return customSchemeStyles;
   };
 
   return (
     <View style={styles.container}>
       <View style={{ paddingLeft: 5, marginBottom: 5 }}>
-        <TextContainer style={styles.colorsText}>Colors</TextContainer>
+        <TextContainer style={styles.colorsText}>Color Scheme</TextContainer>
       </View>
 
-      <View style={styles.buttonsContainer}>
+      <View
+        style={[
+          styles.buttonsContainer,
+          { borderColor: settingBoxBorderColor },
+        ]}
+      >
         <Pressable
           style={[
             styles.button,
             styles.lightButtonContainer,
             getStylesBasedOnLifecycle(
-              colorSchemes.LIGHT,
-              styles.lightButtonContainerActive,
-              {}
+              styles.lightButtonContainerLightScheme,
+              styles.lightButtonContainerDarkScheme,
+              styles.lightButtonContainerCusomScheme
             ),
           ]}
           onPress={() => setColorScheme(colorSchemes.LIGHT)}
         >
           <MaterialIcons
-            style={styles.icon}
+            style={[
+              styles.icon,
+              getStylesBasedOnLifecycle(
+                styles.lightIconLightScheme,
+                styles.lightIconDarkScheme,
+                styles.lightIconCustomScheme
+              ),
+            ]}
             name="light-mode"
-            size={getStylesBasedOnLifecycle(colorSchemes.LIGHT, 28, 24)}
-            color={getStylesBasedOnLifecycle(
-              colorSchemes.LIGHT,
-              'black',
-              'white'
-            )}
+            size={24} //{getStylesBasedOnLifecycle(30, 24, 24)}
+            color={getStylesBasedOnLifecycle('black', 'white', 'black')}
           />
           <TextContainer
             style={[
               styles.buttonText,
-              styles.lightButton,
               getStylesBasedOnLifecycle(
-                colorSchemes.LIGHT,
-                styles.lightButtonActive,
-                {}
+                styles.lightButtonLightScheme,
+                styles.lightButtonDarkScheme,
+                styles.lightButtonCusomScheme
               ),
             ]}
           >
             Light
           </TextContainer>
         </Pressable>
+
+        {/* <View style={{ height: '50%', width: 1 }} /> */}
+
         <Pressable
           style={[
             styles.button,
             styles.darkButtonContainer,
             getStylesBasedOnLifecycle(
-              colorSchemes.DARK,
-              styles.darkButtonContainerActive,
-              {}
+              styles.darkButtonContainerLightScheme,
+              styles.darkButtonContainerDarkScheme,
+              styles.darkButtonContainerCusomScheme
             ),
           ]}
           // background={PressableRipp}
           onPress={() => setColorScheme(colorSchemes.DARK)}
         >
           <MaterialIcons
-            style={styles.icon}
+            style={[
+              styles.icon,
+              getStylesBasedOnLifecycle(
+                styles.darkIconLightScheme,
+                styles.darkIconDarkScheme,
+                styles.darkIconCustomScheme
+              ),
+            ]}
             name="dark-mode"
-            size={getStylesBasedOnLifecycle(colorSchemes.DARK, 28, 24)}
-            color={getStylesBasedOnLifecycle(
-              colorSchemes.DARK,
-              'white',
-              'black'
-            )}
+            size={24} //{getStylesBasedOnLifecycle(24, 30, 24)}
+            color={getStylesBasedOnLifecycle('black', 'white', 'black')}
           />
           <TextContainer
             style={[
               styles.buttonText,
-              styles.darkButton,
               getStylesBasedOnLifecycle(
-                colorSchemes.DARK,
-                styles.darkButtonActive,
-                {}
+                styles.darkButtonLightScheme,
+                styles.darkButtonDarkScheme,
+                styles.darkButtonCustomScheme
               ),
             ]}
           >
@@ -121,31 +137,33 @@ export const SettingColorScheme = ({ scollToView }) => {
             styles.button,
             styles.customButtonContainer,
             getStylesBasedOnLifecycle(
-              colorSchemes.CUSTOM,
-              styles.customButtonContainerActive,
-              {}
+              styles.customButtonContainerLightScheme,
+              styles.customButtonContainerDarkScheme,
+              styles.customButtonContainerCustomScheme
             ),
           ]}
           onPress={() => setColorScheme(colorSchemes.CUSTOM)}
         >
           <MaterialIcons
-            style={styles.icon}
+            style={[
+              styles.icon,
+              getStylesBasedOnLifecycle(
+                styles.customIconLightScheme,
+                styles.customIconDarkScheme,
+                styles.customIconCustomScheme
+              ),
+            ]}
             name="mode-edit"
-            size={getStylesBasedOnLifecycle(colorSchemes.CUSTOM, 28, 24)}
-            color={getStylesBasedOnLifecycle(
-              colorSchemes.CUSTOM,
-              'black',
-              'white'
-            )}
+            size={24} //{getStylesBasedOnLifecycle(30, 30, 24)}
+            color={getStylesBasedOnLifecycle('black', 'white', 'black')}
           />
           <TextContainer
             style={[
               styles.buttonText,
-              styles.customButton,
               getStylesBasedOnLifecycle(
-                colorSchemes.LIGHT,
-                styles.customButtonActive,
-                {}
+                styles.customButtonLightScheme,
+                styles.customButtonDarkScheme,
+                styles.customButtonCustomScheme
               ),
             ]}
           >
@@ -174,69 +192,100 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     display: 'flex',
-    // backgroundColor: 'yellow',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     justifyContent: 'space-between',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   button: {
     flex: 1,
     padding: 9,
-    // paddingHorizontal: 15,
-    backgroundColor: 'red',
     flexDirection: 'column',
-    // alignContent: 'center',
-    // alignItems: 'center',
-    // marginHorizontal: 1,
   },
   buttonText: {
     fontSize: 18,
     color: 'black',
     textAlign: 'center',
-    // backgroundColor: 'yellow',
   },
   lightButtonContainer: {
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
-    backgroundColor: 'black',
   },
-  darkButtonContainer: {
-    backgroundColor: 'white',
-  },
+  darkButtonContainer: {},
   customButtonContainer: {
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },
-  lightButtonContainerActive: {
+  lightButtonContainerLightScheme: {
     elevation: 50,
     backgroundColor: 'white',
   },
-  darkButtonContainerActive: {
+  lightButtonContainerDarkScheme: {
+    backgroundColor: '#37373d',
+  },
+  lightButtonContainerCusomScheme: {},
+  darkButtonContainerLightScheme: {},
+  darkButtonContainerDarkScheme: {
     elevation: 50,
     backgroundColor: 'black',
   },
-  customButtonContainerActive: {
+  darkButtonContainerCustomScheme: {
+    backgroundColor: 'white',
+  },
+  customButtonContainerLightScheme: {},
+  customButtonContainerDarkScheme: {
+    backgroundColor: '#37373d',
+  },
+  customButtonContainerCustomScheme: {
     elevation: 50,
+    backgroundColor: 'white',
   },
-  lightButton: {
-    color: 'white',
-  },
-  darkButton: {
+  lightButtonLightScheme: {
     color: 'black',
   },
-  customButton: {
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
+  lightButtonDarkScheme: {
+    color: 'white',
+    opacity: 0.3,
   },
-  lightButtonActive: {
+  darkButtonLightScheme: {
     color: 'black',
+    opacity: 0.3,
   },
-  darkButtonActive: {
+  darkButtonDarkScheme: {
     color: 'white',
   },
-  customButtonActive: {},
+  customButtonLightScheme: {
+    opacity: 0.3,
+  },
+  customButtonDarkScheme: {
+    opacity: 0.3,
+  },
+  customButtonCustomScheme: {
+    color: 'black',
+  },
+
   icon: {
     alignSelf: 'center',
-
-    // backgroundColor: 'green',
   },
+  lightIconLightScheme: {},
+  lightIconDarkScheme: {
+    opacity: 0.3,
+  },
+  lightIconCustomScheme: {
+    opacity: 0.3,
+  },
+  darkIconLightScheme: {
+    opacity: 0.3,
+  },
+  darkIconDarkScheme: {},
+  darkIconCustomScheme: {
+    opacity: 0.3,
+  },
+  customIconLightScheme: {
+    opacity: 0.3,
+  },
+  customIconDarkScheme: {
+    opacity: 0.3,
+  },
+  customIconCustomScheme: {},
 });
