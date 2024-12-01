@@ -34,6 +34,7 @@ import {
 import { getDateString } from '../../helpers/timeHelper';
 import { updateTodoInAsyncStorage } from '../../helpers/todosHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextInputContainer } from '../../components/TextInputContainer';
 
 const { EXIT_WITHOUT_SAVING_PROMPT, DELETE_TODO_PROMPT } = promptCategoryType;
 const {
@@ -53,7 +54,8 @@ export const TodoEditorScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const todos = useShallowEqualSelector(getTodos);
-  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
+  const { iconPrimaryColor, backgroundColor } =
+    useShallowEqualSelector(getColors);
 
   const {
     name: header = '',
@@ -312,7 +314,7 @@ export const TodoEditorScreen = () => {
   );
 
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={[styles.container, { backgroundColor }]}>
       <TouchableWithoutFeedback>
         <View>
           <ActionBar
@@ -340,7 +342,7 @@ export const TodoEditorScreen = () => {
           />
 
           <View style={styles.titleContainer}>
-            <TextInput
+            <TextInputContainer
               placeholder="Title"
               style={styles.title}
               value={title}

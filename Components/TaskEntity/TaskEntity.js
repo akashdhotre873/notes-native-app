@@ -11,6 +11,7 @@ import { showPrompt } from '../../dux/prompt';
 import { getColors } from '../../dux/settings';
 import { promptCategoryType, taskStatus } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { TextInputContainer } from '../TextInputContainer';
 
 const { CREATED, IN_PROGRESS, COMPLETED } = taskStatus;
 
@@ -21,7 +22,7 @@ export const TaskEntity = ({
   autoFocusTaskId,
 }) => {
   const dispatch = useDispatch();
-  const { primaryColor } = useShallowEqualSelector(getColors);
+  const { iconPrimaryColor } = useShallowEqualSelector(getColors);
 
   const { status, id, value } = task;
 
@@ -71,7 +72,7 @@ export const TaskEntity = ({
         <MaterialCommunityIcons
           name="checkbox-blank-outline"
           size={24}
-          color="black"
+          color={iconPrimaryColor}
           style={styles.statusIcon}
           onPress={() => updateTask({ newStatus: IN_PROGRESS })}
           onLongPress={modifyTaskStatus}
@@ -83,7 +84,7 @@ export const TaskEntity = ({
         <MaterialCommunityIcons
           name="checkbox-intermediate"
           size={24}
-          color={primaryColor}
+          color={iconPrimaryColor}
           style={styles.statusIcon}
           onPress={() => updateTask({ newStatus: COMPLETED })}
           onLongPress={modifyTaskStatus}
@@ -97,7 +98,7 @@ export const TaskEntity = ({
           name="checkbox"
           size={24}
           style={[styles.statusIcon, styles.completedStatusIcon]}
-          color="black"
+          color={iconPrimaryColor}
           onPress={() => updateTask({ newStatus: CREATED })}
           onLongPress={modifyTaskStatus}
         />
@@ -111,7 +112,7 @@ export const TaskEntity = ({
         style={styles.statusIcon}
         name="question"
         size={24}
-        color="black"
+        color={iconPrimaryColor}
         onPress={() => updateTask({ newStatus: CREATED })}
         onLongPress={modifyTaskStatus}
       />
@@ -135,7 +136,7 @@ export const TaskEntity = ({
   return (
     <View style={styles.container}>
       {getTaskStatusIcon()}
-      <TextInput
+      <TextInputContainer
         autoFocus={id === autoFocusTaskId}
         placeholder="Add todo here"
         style={[styles.tasks, getStyleForTask()]}
