@@ -45,8 +45,13 @@ export const TodoListCard = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const todos = useShallowEqualSelector(getTodos);
-  const { primaryColor, lockedColor, unlockedColor } =
-    useShallowEqualSelector(getColors);
+  const {
+    primaryColor,
+    lockedColor,
+    unlockedColor,
+    cardBackgroundColor,
+    iconPrimaryColor,
+  } = useShallowEqualSelector(getColors);
 
   const openNote = (password) => {
     const plainText = getPlainText(tasks, password);
@@ -154,7 +159,7 @@ export const TodoListCard = ({
         <MaterialCommunityIcons
           name="checkbox-blank-outline"
           size={22}
-          color="black"
+          color={iconPrimaryColor}
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
           onLongPress={openUpdateTodoStatusPrompt}
@@ -166,7 +171,7 @@ export const TodoListCard = ({
         <MaterialCommunityIcons
           name="checkbox-intermediate"
           size={22}
-          color={primaryColor}
+          color={iconPrimaryColor}
           style={styles.statusIcon}
           onPress={() => updateTodoStatus({ newTodoStatus: COMPLETED })}
           onLongPress={openUpdateTodoStatusPrompt}
@@ -179,7 +184,7 @@ export const TodoListCard = ({
           name="checkbox"
           size={22}
           style={[styles.statusIcon, styles.completedStatusIcon]}
-          color="black"
+          color={iconPrimaryColor}
           onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
           onLongPress={openUpdateTodoStatusPrompt}
         />
@@ -191,7 +196,7 @@ export const TodoListCard = ({
           style={styles.statusIcon}
           name="question"
           size={22}
-          color="black"
+          color={iconPrimaryColor}
           onPress={() => updateTodoStatus({ newTodoStatus: CREATED })}
           onLongPress={openUpdateTodoStatusPrompt}
         />
@@ -202,7 +207,7 @@ export const TodoListCard = ({
       <MaterialCommunityIcons
         name="checkbox-blank-outline"
         size={22}
-        color="black"
+        color={iconPrimaryColor}
         style={styles.statusIcon}
         onPress={() => updateTodoStatus({ newTodoStatus: IN_PROGRESS })}
         onLongPress={openUpdateTodoStatusPrompt}
@@ -228,6 +233,7 @@ export const TodoListCard = ({
       onPress={onPress}
       style={[
         styles.container,
+        { backgroundColor: cardBackgroundColor },
         selectedTodoName === name ? styles.selectedToDelete : {},
       ]}
       onLongPress={() => setSelectedTodoName(toggleName)}

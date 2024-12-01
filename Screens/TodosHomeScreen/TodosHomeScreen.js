@@ -14,18 +14,19 @@ import { getUUID } from '../../helpers/cryptographyHelper';
 import { TODO_EDITOR_SCREEN_PATH } from '../../helpers/pagePathHelper';
 import { sortTodos } from '../../helpers/sortHelper';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
+import { getColors } from '../../dux/settings';
 
 export const TodosHomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const todos = useShallowEqualSelector(getTodos);
+  const { backgroundColor } = useShallowEqualSelector(getColors);
   const { selectedSortParameter, selectedSortOrder } = useShallowEqualSelector(
     getSortInfoFor(dataType.TODO)
   );
 
   const [searchValue, setSearchValue] = useState('');
-
   const [selectedTodoName, setSelectedTodoName] = useState('');
 
   const sortAlgo = (todoFirst, todoSecond) => {
@@ -76,7 +77,7 @@ export const TodosHomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <ActionBar
         title="All Todos"
         onDelete={selectedTodoName ? onDelete : null}
@@ -112,7 +113,6 @@ export const TodosHomeScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   cardsContainer: {
-    backgroundColor: '#f8f8f3',
     marginTop: 5,
     flex: 1,
   },
