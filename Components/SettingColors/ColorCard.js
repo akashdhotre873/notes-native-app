@@ -51,12 +51,16 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
 
   const onLayout = (event) => {
     const layout = event.nativeEvent.layout;
+    if (!editing) {
+      return;
+    }
+
     // using setTimeout as a work around for bug in react native
     setTimeout(
       () =>
         scollToView({
           x: layout.x,
-          y: layout.y + layout.height + 100,
+          y: layout.y,
         }),
       100
     );
@@ -67,9 +71,13 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
     regex.test(colorValue) || recognizedColors.includes(colorValue);
 
   return (
-    <View style={[styles.container, editing ? { paddingBottom: 25 } : {}]}>
+    <View
+      style={[styles.container, editing ? { paddingBottom: 25 } : {}]}
+      onLayout={onLayout}
+    >
       <View style={styles.colorContainer}>
         <TextContainer style={styles.text}>{text}</TextContainer>
+
         <View
           style={[
             styles.colorValueContainer,
@@ -133,7 +141,7 @@ export const ColorCard = ({ text, color, colorType, scollToView }) => {
             }
           />
 
-          <View style={styles.buttonsContainer} onLayout={onLayout}>
+          <View style={styles.buttonsContainer}>
             <Pressable onPress={onCancel} style={styles.cancelButton}>
               <TextContainer style={styles.buttonText}>Cancel</TextContainer>
             </Pressable>

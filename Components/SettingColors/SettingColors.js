@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 
 import { ColorCard } from './ColorCard';
@@ -114,15 +114,15 @@ export const SettingColors = ({ scollToView }) => {
 
           <Divider />
 
-          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-            <ColorCard
-              key={`${colorType.SETTING_BOX_BACKGROUND_COLOR} ${settingBoxBackgroundColor}`}
-              text="Setting Box Background Color"
-              color={settingBoxBackgroundColor}
-              colorType={colorType.SETTING_BOX_BACKGROUND_COLOR}
-              scollToView={scollToView}
-            />
-          </KeyboardAvoidingView>
+          {/* <KeyboardAvoidingView style={{ flex: 1 }} behavior="height"> */}
+          <ColorCard
+            key={`${colorType.SETTING_BOX_BACKGROUND_COLOR} ${settingBoxBackgroundColor}`}
+            text="Setting Box Background Color"
+            color={settingBoxBackgroundColor}
+            colorType={colorType.SETTING_BOX_BACKGROUND_COLOR}
+            scollToView={scollToView}
+          />
+          {/* </KeyboardAvoidingView> */}
         </View>
       </View>
     </View>
