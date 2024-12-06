@@ -12,7 +12,7 @@ import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation();
-  const { iconPrimaryColor, primaryColor, headerTextColor, backgroundColor } =
+  const { iconPrimaryColor, primaryColor, primaryTextColor, backgroundColor } =
     useShallowEqualSelector(getColors);
   const scrollViewRef = useRef();
 
@@ -31,7 +31,7 @@ export const SettingsScreen = () => {
           onPress={() => navigation.goBack()}
         />
         <TextContainer
-          style={[styles.settingsText, { color: headerTextColor }]}
+          style={[styles.settingsText, { color: primaryTextColor }]}
         >
           Settings
         </TextContainer>

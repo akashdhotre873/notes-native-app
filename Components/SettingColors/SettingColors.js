@@ -15,7 +15,6 @@ export const SettingColors = ({ scollToView }) => {
     unlockedColor,
     newContentIconColor,
     iconPrimaryColor,
-    headerTextColor,
     backgroundColor,
     primaryTextColor,
     cardBackgroundColor,
@@ -113,22 +112,14 @@ export const SettingColors = ({ scollToView }) => {
 
           <Divider />
 
-          <ColorCard
-            key={`${colorType.SETTING_BOX_BACKGROUND_COLOR} ${settingBoxBackgroundColor}`}
-            text="Setting Box Background Color"
-            color={settingBoxBackgroundColor}
-            colorType={colorType.SETTING_BOX_BACKGROUND_COLOR}
-            scollToView={scollToView}
-          />
-
           <Divider />
 
           <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
             <ColorCard
-              key={`${colorType.HEADER_TEXT_COLOR} ${headerTextColor}`}
-              text="Header text color"
-              color={headerTextColor}
-              colorType={colorType.HEADER_TEXT_COLOR}
+              key={`${colorType.SETTING_BOX_BACKGROUND_COLOR} ${settingBoxBackgroundColor}`}
+              text="Setting Box Background Color"
+              color={settingBoxBackgroundColor}
+              colorType={colorType.SETTING_BOX_BACKGROUND_COLOR}
               scollToView={scollToView}
             />
           </KeyboardAvoidingView>

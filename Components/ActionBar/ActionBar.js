@@ -23,7 +23,7 @@ export const ActionBar = ({
   onSearchValueChange,
 }) => {
   const [searching, setSearching] = useState(false);
-  const { primaryColor, iconPrimaryColor, headerTextColor } =
+  const { primaryColor, iconPrimaryColor, primaryTextColor } =
     useShallowEqualSelector(getColors);
   const colorScheme = useShallowEqualSelector(getColorScheme);
 
@@ -51,7 +51,7 @@ export const ActionBar = ({
             }
           />
         ) : (
-          <TextContainer style={[styles.title, { color: headerTextColor }]}>
+          <TextContainer style={[styles.title, { color: primaryTextColor }]}>
             {title}
           </TextContainer>
         )}
