@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     display: 'flex',
-    marginHorizontal: 10,
     justifyContent: 'space-between',
     borderWidth: 1,
     borderRadius: 8,

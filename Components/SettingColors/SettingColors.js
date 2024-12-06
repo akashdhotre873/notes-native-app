@@ -17,14 +17,16 @@ export const SettingColors = ({ scollToView }) => {
     iconPrimaryColor,
     headerTextColor,
     backgroundColor,
+    primaryTextColor,
+    cardBackgroundColor,
   } = useShallowEqualSelector(getColors);
 
   return (
     <View style={styles.container}>
       <View
         style={[
-          styles.switchContainer,
           {
+            borderRadius: 7,
             borderColor: settingBoxBorderColor,
             backgroundColor: settingBoxBackgroundColor,
           },
@@ -91,6 +93,36 @@ export const SettingColors = ({ scollToView }) => {
 
           <Divider />
 
+          <ColorCard
+            key={`${colorType.PRIMARY_TEXT_COLOR} ${primaryTextColor}`}
+            text="Primary Text Color"
+            color={primaryTextColor}
+            colorType={colorType.PRIMARY_TEXT_COLOR}
+            scollToView={scollToView}
+          />
+
+          <Divider />
+
+          <ColorCard
+            key={`${colorType.CARD_BACKGROUND_COLOR} ${cardBackgroundColor}`}
+            text="Card Background Color"
+            color={cardBackgroundColor}
+            colorType={colorType.CARD_BACKGROUND_COLOR}
+            scollToView={scollToView}
+          />
+
+          <Divider />
+
+          <ColorCard
+            key={`${colorType.SETTING_BOX_BACKGROUND_COLOR} ${settingBoxBackgroundColor}`}
+            text="Setting Box Background Color"
+            color={settingBoxBackgroundColor}
+            colorType={colorType.SETTING_BOX_BACKGROUND_COLOR}
+            scollToView={scollToView}
+          />
+
+          <Divider />
+
           <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
             <ColorCard
               key={`${colorType.HEADER_TEXT_COLOR} ${headerTextColor}`}
@@ -108,7 +140,8 @@ export const SettingColors = ({ scollToView }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
+    marginTop: 10,
+    borderRadius: 7,
   },
 
   colorsContainer: {
