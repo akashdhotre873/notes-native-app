@@ -45,8 +45,8 @@ export const SelectThemeCard = () => {
 
   const showInfo = () => {
     const infoMessage =
-      'This setting decides the color the given items.' +
-      ' \n1. Color of text in status bar. \n2. Theme for drop downs.';
+      'This setting decides the color the these items.' +
+      ' \n1. Theme of status bar. \n2. Theme of drop downs.';
 
     Alert.alert('Theme Color', infoMessage, null, { cancelable: true });
   };
