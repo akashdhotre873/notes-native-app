@@ -17,7 +17,7 @@ export const SettingNewContentIconPosition = () => {
   const dispatch = useDispatch();
   const iconPosition = useShallowEqualSelector(getNewContentIconPosition);
   const settings = useShallowEqualSelector(getSettings);
-  const { settingBoxBorderColor, settingBoxBackgroundColor } =
+  const { settingBoxBorderColor, settingBoxBackgroundColor, themeColor } =
     useShallowEqualSelector(getColors);
   const isIconOnTheRightSide = iconPosition === newContentIconPosition.RIGHT;
 
@@ -42,7 +42,10 @@ export const SettingNewContentIconPosition = () => {
       "It will get back to it's default position once the app reloads." +
       '\n\nThis setting decides its default position when app loads.';
 
-    Alert.alert('NewContent Icon', infoMessage, null, { cancelable: true });
+    Alert.alert('NewContent Icon', infoMessage, null, {
+      cancelable: true,
+      userInterfaceStyle: themeColor,
+    });
   };
 
   return (
