@@ -20,7 +20,7 @@ export const SelectThemeCard = () => {
 
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const closeTimeFormatMenu = () => {
+  const closeMenu = () => {
     setMenuVisible(false);
   };
 
@@ -35,7 +35,7 @@ export const SelectThemeCard = () => {
       value: updatedColors,
     });
 
-    closeTimeFormatMenu();
+    closeMenu();
   };
 
   const themes = [
@@ -55,11 +55,11 @@ export const SelectThemeCard = () => {
     <View style={styles.container}>
       <Menu
         visible={menuVisible}
-        onDismiss={closeTimeFormatMenu}
+        onDismiss={closeMenu}
         anchor={
           <View
             style={[
-              styles.timeFormatMenuAnchor,
+              styles.themeColorMenuAnchor,
               {
                 borderColor: settingBoxBorderColor,
                 backgroundColor: settingBoxBackgroundColor,
@@ -72,9 +72,7 @@ export const SelectThemeCard = () => {
               }}
               onPress={showInfo}
             >
-              <TextContainer style={styles.timeFormatValue}>
-                Theme{' '}
-              </TextContainer>
+              <TextContainer style={styles.themeText}>Theme </TextContainer>
               <Ionicons
                 name="information-circle-outline"
                 size={16}
@@ -86,7 +84,7 @@ export const SelectThemeCard = () => {
               style={{ flexDirection: 'row' }}
               onPress={() => setMenuVisible(true)}
             >
-              <TextContainer style={styles.timeFormatValue}>
+              <TextContainer style={styles.themeText}>
                 {themeColor === 'light' ? 'Light' : 'Dark'}
               </TextContainer>
 
@@ -127,44 +125,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  timeFormatContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    elevation: 0,
-  },
-  timeFormatText: {
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  timeFormatValue: {
+
+  themeText: {
     fontSize: 16,
     fontWeight: '500',
   },
-  timeFormatDispalyExample: {
-    marginTop: 2,
-    fontSize: 14,
-    opacity: 0.7,
-  },
-  timeFormatMenuAnchor: {
+
+  themeColorMenuAnchor: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 40,
     alignItems: 'center',
-  },
-  selectedTimeFormat: {
-    fontWeight: '700',
-  },
-  timeFormatMenuItem: {
-    fontSize: 16,
-  },
-  timeFormatExample: {
-    fontSize: 12,
-    opacity: 0.5,
-    marginTop: 4,
-  },
-  timeFormatMenuItemContainer: {
-    flexDirection: 'row',
   },
   infoIcon: {
     paddingTop: 3,
