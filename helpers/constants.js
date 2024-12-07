@@ -25,6 +25,12 @@ export const colorType = {
   BACKGROUND_COLOR: 'backgroundColor',
   PRIMARY_TEXT_COLOR: 'primaryTextColor',
   CARD_BACKGROUND_COLOR: 'cardBackgroundColor',
+  THEME_COLOR: 'themeColor',
+};
+
+export const themeColors = {
+  LIGHT: 'light',
+  DARK: 'dark',
 };
 
 export const lightSchemeColors = {
@@ -38,6 +44,7 @@ export const lightSchemeColors = {
   [colorType.BACKGROUND_COLOR]: '#f8f8f3',
   [colorType.PRIMARY_TEXT_COLOR]: 'black',
   [colorType.CARD_BACKGROUND_COLOR]: 'white',
+  [colorType.THEME_COLOR]: themeColors.LIGHT,
 };
 
 export const darkSchemeColors = {
@@ -51,6 +58,7 @@ export const darkSchemeColors = {
   [colorType.BACKGROUND_COLOR]: '#1f1f1f',
   [colorType.PRIMARY_TEXT_COLOR]: '#f8f8f3',
   [colorType.CARD_BACKGROUND_COLOR]: '#37373d',
+  [colorType.THEME_COLOR]: themeColors.DARK,
 };
 
 export const dataType = {

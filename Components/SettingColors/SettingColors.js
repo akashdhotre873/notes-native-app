@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 
 import { ColorCard } from './ColorCard';
+import { SelectThemeCard } from './SelectThemeCard';
 import { getColors } from '../../dux/settings';
 import { colorType } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
@@ -112,9 +113,6 @@ export const SettingColors = ({ scollToView }) => {
 
           <Divider />
 
-          <Divider />
-
-          {/* <KeyboardAvoidingView style={{ flex: 1 }} behavior="height"> */}
           <ColorCard
             key={`${colorType.SETTING_BOX_BACKGROUND_COLOR} ${settingBoxBackgroundColor}`}
             text="Setting Box Background Color"
@@ -122,7 +120,10 @@ export const SettingColors = ({ scollToView }) => {
             colorType={colorType.SETTING_BOX_BACKGROUND_COLOR}
             scollToView={scollToView}
           />
-          {/* </KeyboardAvoidingView> */}
+
+          <Divider />
+
+          <SelectThemeCard />
         </View>
       </View>
     </View>

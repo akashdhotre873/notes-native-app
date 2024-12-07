@@ -14,8 +14,8 @@ import { LoadApp } from './components/LoadApp';
 import { StatusBarContainer } from './components/StatusBarContainer';
 import { Promtps } from './components/shared/Prompts';
 import { shouldShowPrompt } from './dux/prompt';
-import { getColorScheme } from './dux/settings';
-import { colorSchemes } from './helpers/constants';
+import { getColors } from './dux/settings';
+import { themeColors } from './helpers/constants';
 import {
   HOME_SCREEN_PATH,
   NOTE_EDITOR_SCREEN_PATH,
@@ -41,8 +41,8 @@ const OtherComponents = () => {
 SplashScreen.preventAutoHideAsync();
 
 const StoreContainer = () => {
-  const colorScheme = useShallowEqualSelector(getColorScheme);
-  const theme = colorSchemes.DARK === colorScheme ? DarkTheme : DefaultTheme;
+  const { themeColor } = useShallowEqualSelector(getColors);
+  const theme = themeColor === themeColors.DARK ? DarkTheme : DefaultTheme;
   return (
     <PaperProvider theme={theme}>
       <LoadApp />

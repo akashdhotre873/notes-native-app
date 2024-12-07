@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-import { getColors, getColorScheme } from '../../dux/settings';
-import { colorSchemes, shareMethod } from '../../helpers/constants';
+import { getColors } from '../../dux/settings';
+import { shareMethod, themeColors } from '../../helpers/constants';
 import { useShallowEqualSelector } from '../../hooks/useShallowEqualSelector';
 import { ActionBarMainMenu } from '../ActionBarMainMenu';
 import { ActionBarSortOrderMenu } from '../ActionBarSortOrderMenu';
@@ -25,10 +25,10 @@ export const ActionBar = ({
   const [searching, setSearching] = useState(false);
   const { primaryColor, iconPrimaryColor, primaryTextColor } =
     useShallowEqualSelector(getColors);
-  const colorScheme = useShallowEqualSelector(getColorScheme);
+  const { themeColor } = useShallowEqualSelector(getColors);
 
   const searchBackGroundColor =
-    colorSchemes.LIGHT === colorScheme ? { backgroundColor: '#ffffff' } : {};
+    themeColor === themeColors.DARK ? {} : { backgroundColor: '#ffffff' };
 
   return (
     <View style={[styles.container, { backgroundColor: primaryColor }]}>
